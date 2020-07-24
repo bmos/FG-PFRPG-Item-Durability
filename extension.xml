@@ -5,7 +5,7 @@
 		<name>Item Durability</name>
 		<version>1.0.0</version>
 		<author>bmos (Wil Thieme)</author>
-		<description></description>
+		<description>This extension adds hardness, hitpoints, and damage boxes to item sheets. Damage rolled can be dragged to the item damage field to have hardness subtracted and the damaged added to the previous field contents.</description>
 		<ruleset>
 			<name>PFRPG</name>
 		</ruleset>

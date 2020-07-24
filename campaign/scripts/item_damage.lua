@@ -51,14 +51,31 @@ function onDrop(x, y, draginfo)
 	local nHardness = window.hardness.getValue()
 	local nDamageDealt = draginfo.getNumberData()
 	
-	local tEnergyTypes = {'fire','cold','acid','lightning','sonic'}
+	local tPFEnergyHalf = {'fire','cold','acid','lightning','sonic'}
+	local t35eEnergyHalf = {'electricity','fire'}
+	local t35eEnergyQuarter = {'cold'}
 	local tDmgType = fromCSV(draginfo.getDescription())
 
 	for _,v in ipairs(tDmgType) do
-		for _, vv in ipairs(tEnergyTypes) do
-			if string.match(v, vv) then
-				nDamageDealt = nDamageDealt / 2
-				break
+		if DataCommon.isPFRPG() then
+			for _, vv in ipairs(tPFEnergyHalf) do
+				if string.match(v, vv) then
+					nDamageDealt = nDamageDealt / 2
+					break
+				end
+			end
+		else
+			for _, vv in ipairs(t35eEnergyHalf) do
+				if string.match(v, vv) then
+					nDamageDealt = nDamageDealt / 2
+					break
+				end
+			end
+			for _, vv in ipairs(t35eEnergyQuarter) do
+				if string.match(v, vv) then
+					nDamageDealt = nDamageDealt / 4
+					break
+				end
 			end
 		end
 	end
