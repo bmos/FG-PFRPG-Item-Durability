@@ -7,7 +7,7 @@
 <root>
 	<windowclass name="item_main">
 		<margins control="0,0,0,2" />
-		<script file="campaign/scripts/item_main.lua" />
+		<script file="campaign/scripts/item_main2.lua" />
 		<sheetdata>
 			<anchor_column name="columnanchor" />
 			
@@ -61,69 +61,23 @@
 				<static textres="item_label_hardness" />
 			</label_column>
 			<number_columnh name="hardness">
-				<script>
-					function onClickDown(button, x, y)
-						update()
-					end
-					function update()
-						local bReadOnly = WindowManager.getReadOnlyState(window.getDatabaseNode())
-						window.hardness.setReadOnly(bReadOnly)
-					end
-				</script>
+				<hideonvalue>0</hideonvalue>
 			</number_columnh>
 			
 			<label_column name="hitpoints_label">
 				<static textres="item_label_hitpoints" />
 			</label_column>
 			<number_columnh name="hitpoints">
-				<script>
-					function onClickDown(button, x, y)
-						update()
-					end
-					function update()
-						local bReadOnly = WindowManager.getReadOnlyState(window.getDatabaseNode())
-						window.hitpoints.setReadOnly(bReadOnly)
-					end
-				</script>
+				<hideonvalue>0</hideonvalue>
 			</number_columnh>
 			
 			<label_column name="item_damage_label">
 				<static textres="item_label_damage" />
 			</label_column>
 			<number_columnh name="item_damage">
-				<script>
-					function onInit()
-						onValueChanged()
-					end
-					function onValueChanged()
-						local nItemHitpoints = window.hitpoints.getValue()
-						if nItemHitpoints and nItemHitpoints >= 1 then
-							local nDmg = window.item_damage.getValue()
-							local nPercentDmg = nDmg / nItemHitpoints * 100
-							if nPercentDmg >= 100 then
-								window.item_damage.setColor('800D0D0D')
-							elseif nPercentDmg >= 66 then
-								window.item_damage.setColor('FFB22929')
-							elseif nPercentDmg >= 33 then
-								window.item_damage.setColor('FFEB7B00')
-							else
-								window.item_damage.setColor('FF000000')
-							end
-						end
-					end
-					function onDrop(x, y, draginfo)
-						local nDmg = window.item_damage.getValue()
-						local nHardness = window.hardness.getValue()
-						local nDamageDealt = draginfo.getNumberData()
-						local nModifiedDamage = nDamageDealt - nHardness
-						if nModifiedDamage &lt; 1 then
-							window.item_damage.setValue(nDmg)
-						else
-							window.item_damage.setValue(nDmg + nModifiedDamage)
-						end
-					end
-				</script>
+				<script file="campaign/scripts/item_damage.lua" />
 				<nodrop />
+				<hideonvalue>0</hideonvalue>
 			</number_columnh>		
 			
 			<line_column name="divider3" />
