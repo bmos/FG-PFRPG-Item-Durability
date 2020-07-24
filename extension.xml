@@ -17,5 +17,7 @@
 	<base>
 		<!-- Campaign Records -->
 		<includefile source="campaign/record_item.xml" />
+		<!-- Strings -->
+		<includefile source="strings/strings_item_durability.xml" />
 	</base>
 </root>
