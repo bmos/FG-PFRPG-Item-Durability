@@ -111,7 +111,19 @@
 							end
 						end
 					end
+					function onDrop(x, y, draginfo)
+						local nDmg = window.item_damage.getValue()
+						local nHardness = window.hardness.getValue()
+						local nDamageDealt = draginfo.getNumberData()
+						local nModifiedDamage = nDamageDealt - nHardness
+						if nModifiedDamage &lt; 1 then
+							window.item_damage.setValue(nDmg)
+						else
+							window.item_damage.setValue(nDmg + nModifiedDamage)
+						end
+					end
 				</script>
+				<nodrop />
 			</number_columnh>		
 			
 			<line_column name="divider3" />
