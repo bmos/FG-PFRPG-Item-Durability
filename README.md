@@ -8,6 +8,7 @@ This extension has been tested with FantasyGrounds Classic 3.3.11 and FantasyGro
 
 # Features
 * Simplifies tracking hitpoints of weapons, armor, and equipment.
+* Provides visual indication of item damage by color coding the number proportionately to damage.
 
 # Example Image
 <img src="https://i.imgur.com/QTdNW9j.png" alt="item durablity UI example image"/>
