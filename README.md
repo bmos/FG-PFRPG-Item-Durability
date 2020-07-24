@@ -10,4 +10,4 @@ This extension has been tested with FantasyGrounds Classic 3.3.11 and FantasyGro
 * Simplifies tracking hitpoints of weapons, armor, and equipment.
 
 # Example Image
-<img src="https://imgur.com/17d2d638-929f-43d6-b506-a2859e4173e5" alt="item durablity UI example image"/>
+<img src="https://i.imgur.com/QTdNW9j.png" alt="item durablity UI example image"/>
