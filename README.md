@@ -5,6 +5,7 @@ If the damage is energy damage, it is divided in half before removing hardness.
 
 # Compatibility
 This extension has been tested with FantasyGrounds Classic 3.3.11 and FantasyGrounds Unity 4.0.0 (2020-07-16).
+Not compatible with [rmilmines's Advanced Character Inventory Manager for 3.5E and Pathfinder extension](https://www.fantasygrounds.com/forums/showthread.php?57819-Advanced-Character-Iventory-Manager-for-3-5E-and-Pathfinder).
 
 # Features
 * Simplifies tracking hitpoints of weapons, armor, and equipment.
