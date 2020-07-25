@@ -77,7 +77,7 @@
 				<static textres="item_label_damage" />
 			</label_column>
 			<number_columnh name="item_damage">
-				<script file="campaign/scripts/item_damage.lua" />
+				<script file="campaign/scripts/item__calculatedamage.lua" />
 				<nodrop />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
