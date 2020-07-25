@@ -3,14 +3,14 @@
 	<!-- Please see the LICENSE.md file included with this distribution for attribution and copyright information. -->
 	<properties>
 		<name>Item Durability</name>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 		<author>bmos (Wil Thieme)</author>
 		<description>This extension adds hardness, hitpoints, and damage boxes to item sheets. Damage rolled can be dragged to the item damage field to have hardness subtracted and the damaged added to the previous field contents.</description>
 		<ruleset>
 			<name>PFRPG</name>
 		</ruleset>
 		<ruleset>
-			<name>3.5e</name>
+			<name>3.5E</name>
 		</ruleset>
 	</properties>
 
