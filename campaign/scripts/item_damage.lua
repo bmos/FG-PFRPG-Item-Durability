@@ -29,13 +29,13 @@ function fromCSV(s)
 	local fieldstart = 1
 
 	s = s .. '☹'
-	local nPosition = string.find(s, 'TYPE: ', fieldstart)
+	local nTypePosition = string.find(s, 'TYPE: ', fieldstart) + 6
 	local nStop = string.find(s, '☹', fieldstart)
-	s = string.sub(s, nPosition, nStop) -- trim off everything to "TYPE: "
-	nStop = string.find(s, ' %(', fieldstart)
+	s = string.sub(s, nTypePosition, nStop) -- trim off everything to "TYPE: "
+	nStop = string.find(s, '%(', fieldstart) - 2
 	s = string.sub(s, fieldstart, nStop) -- trim off everything to " ("
 
-	s = s .. ','        -- ending comma
+	s = string.lower(s .. ',')        -- ending comma
 	local t = {}        -- table to collect fields
 	repeat
 		local nexti = string.find(s, ',', fieldstart)
@@ -56,30 +56,33 @@ function onDrop(x, y, draginfo)
 	local t35eEnergyQuarter = {'cold'}
 	local tDmgType = fromCSV(draginfo.getDescription())
 
-	for _,v in ipairs(tDmgType) do
+	for _,v in pairs(tDmgType) do
 		if DataCommon.isPFRPG() then
-			for _, vv in ipairs(tPFEnergyHalf) do
-				if string.match(v, vv) then
+			for _, vv in pairs(tPFEnergyHalf) do
+				if v == vv then
 					nDamageDealt = nDamageDealt / 2
 					break
 				end
 			end
 		else
-			for _, vv in ipairs(t35eEnergyHalf) do
-				if string.match(v, vv) then
+			Debug.chat(tDmgType, nDamageDealt)
+			for _, vv in pairs(t35eEnergyHalf) do
+				if v == vv then
 					nDamageDealt = nDamageDealt / 2
 					break
 				end
 			end
-			for _, vv in ipairs(t35eEnergyQuarter) do
-				if string.match(v, vv) then
+			for _, vv in pairs(t35eEnergyQuarter) do
+				if v == vv then
 					nDamageDealt = nDamageDealt / 4
 					break
 				end
 			end
 		end
 	end
-				
+
+	Debug.chat(tDmgType, nDamageDealt)
+
 	local nModifiedDamage = nDamageDealt - nHardness
 
 	if nModifiedDamage < 1 then
