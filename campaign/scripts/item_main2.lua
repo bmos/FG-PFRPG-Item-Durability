@@ -56,7 +56,7 @@ function update()
 	if updateControl('hardness', bReadOnly, bID) then bSection2a = true end
 	if updateControl('hitpoints', bReadOnly, bID) then bSection2a = true end
 	if updateControl('item_damage', bReadOnly, bID) then bSection2a = true end
-	if updateControl('hitpoints', bReadOnly, bID) then item_damage.setVisible(true)	end
+	if updateControl('hitpoints', bReadOnly, bID) then item_damage.setVisible(true); item_damage_label.setVisible(true) end
 	item_damage.setReadOnly(false)
 	
 	local bSection3 = false
