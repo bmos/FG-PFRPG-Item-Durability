@@ -11,13 +11,14 @@ function onValueChanged()
 		local nDmg = window.item_damage.getValue()
 		local nPercentDmg = nDmg / nItemHitpoints * 100
 		if nPercentDmg >= 100 then
-			window.item_damage.setColor('800D0D0D')
-		elseif nPercentDmg >= 66 then
 			window.item_damage.setColor('FFB22929')
-		elseif nPercentDmg >= 33 then
+			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 2)
+		elseif nPercentDmg >= 50 then
 			window.item_damage.setColor('FFEB7B00')
+			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 1)
 		else
 			window.item_damage.setColor('FF000000')
+			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
 		end
 	end
 end
