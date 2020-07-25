@@ -62,6 +62,7 @@
 			</label_column>
 			<number_columnh name="hardness">
 				<hideonvalue>0</hideonvalue>
+				<min>0</min>
 			</number_columnh>
 			
 			<label_column name="hitpoints_label">
@@ -69,6 +70,7 @@
 			</label_column>
 			<number_columnh name="hitpoints">
 				<hideonvalue>0</hideonvalue>
+				<min>0</min>
 			</number_columnh>
 			
 			<label_column name="item_damage_label">
@@ -78,6 +80,7 @@
 				<script file="campaign/scripts/item_damage.lua" />
 				<nodrop />
 				<hideonvalue>0</hideonvalue>
+				<min>0</min>
 			</number_columnh>		
 			
 			<line_column name="divider3" />
