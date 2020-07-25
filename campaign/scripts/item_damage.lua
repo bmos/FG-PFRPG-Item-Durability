@@ -65,7 +65,6 @@ function onDrop(x, y, draginfo)
 				end
 			end
 		else
-			Debug.chat(tDmgType, nDamageDealt)
 			for _, vv in pairs(t35eEnergyHalf) do
 				if v == vv then
 					nDamageDealt = nDamageDealt / 2
