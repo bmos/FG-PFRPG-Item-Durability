@@ -55,6 +55,7 @@ local function calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 		sItemSubstance = sSubstance
 		window.substance.setValue(sItemSubstance)
 	end
+	
 	for k,v in pairs(tSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
@@ -78,6 +79,11 @@ local function calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
 	local sItemSubstance = window.substance.getValue()
+	if sItemSubstance == '' then
+		sItemSubstance = sSubstance
+		window.substance.setValue(sItemSubstance)
+	end
+	
 	for k,v in pairs(tSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
@@ -120,6 +126,11 @@ local function calcItemHHP(sSubstance, tSubstances)
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
 	local sItemSubstance = window.substance.getValue()
+	if sItemSubstance == '' then
+		sItemSubstance = sSubstance
+		window.substance.setValue(sItemSubstance)
+	end
+	
 	for k,v in pairs(tSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
@@ -147,12 +158,26 @@ local function calcItemHHP(sSubstance, tSubstances)
 	end
 end
 
-function checkItemName(sItemName, tSubstances)
+local function parseSpecificItems(tItemParser)
+	tItemParser['vial'] = 'glass'
+	tItemParser['potion'] = 'glass'
+	tItemParser['scroll of'] = 'paper'
+end
+
+local function checkItemName(sItemName, tSubstances)
 	local sSubstance = ''
 	
+	local tItemParser = {}
+	parseSpecificItems(tItemParser)
 	for k,v in pairs(tSubstances) do
 		if string.match(sItemName, k, 1) then
 			sSubstance = k
+			break
+		end
+		for kk,vv in pairs(tItemParser) do
+			if string.match(sItemName, kk, 1) then
+				sSubstance = vv
+			end
 		end
 	end
 	
