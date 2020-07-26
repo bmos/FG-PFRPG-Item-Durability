@@ -118,7 +118,7 @@
 						local nItemBrokenState = DB.getValue(nodeItem, 'broken')
 						local nItemAc = DB.getValue(nodeItem, 'ac')
 
-						if nItemBrokenState == 0 then
+						if nItemBrokenState == 0 and string.lower(window.type.getValue()) == 'armor' then
 							DB.setValue(nodeItem, 'ac.backup', 'number', nItemAc)
 						end
 					end
@@ -146,7 +146,7 @@
 						local nItemBrokenState = DB.getValue(nodeItem, 'broken')
 						local nItemCheckPen = DB.getValue(nodeItem, 'checkpenalty')
 
-						if nItemBrokenState == 0 then
+						if nItemBrokenState == 0 and string.lower(window.type.getValue()) == 'armor' then
 							DB.setValue(nodeItem, 'checkpenalty.backup', 'number', nItemCheckPen)
 						end
 					end
@@ -182,6 +182,18 @@
 			</label_column>
 			<number_columnh name="bonus">
 				<delaykeyupdate />
+				<script>
+					function onValueChanged()
+						local nodeItem = window.getDatabaseNode()
+
+						local nItemBrokenState = DB.getValue(nodeItem, 'broken')
+						local nItemBonus = DB.getValue(nodeItem, 'bonus')
+
+						if nItemBrokenState == 0 and string.lower(window.type.getValue()) == 'armor' then
+							DB.setValue(nodeItem, 'bonus.backup', 'number', nItemBonus)
+						end
+					end
+				</script>
 			</number_columnh>
 
 			<label_column name="aura_label">

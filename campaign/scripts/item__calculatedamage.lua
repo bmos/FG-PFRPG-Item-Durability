@@ -24,6 +24,7 @@ function onValueChanged()
 				BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 2)
 				window.ac.setReadOnly(true)
 				window.checkpenalty.setReadOnly(true)
+				window.bonus.setReadOnly(true)
 			end
 		elseif nPercentDmg >= 50 then
 			window.item_damage.setColor('FFEB7B00')
@@ -35,6 +36,7 @@ function onValueChanged()
 				BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 1)
 				window.ac.setReadOnly(true)
 				window.checkpenalty.setReadOnly(true)
+				window.bonus.setReadOnly(true)
 			end
 		else
 			window.item_damage.setColor('FF000000')
@@ -46,6 +48,7 @@ function onValueChanged()
 				BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 0)
 				window.ac.setReadOnly(false)
 				window.checkpenalty.setReadOnly(false)
+				window.bonus.setReadOnly(false)
 			end
 		end
 	end

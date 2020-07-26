@@ -70,6 +70,9 @@ function brokenArmorPenalties(nodeItem, nItemBrokenState)
 	local nItemAcBak = DB.getValue(nodeItem, 'ac.backup')
 	local nItemCheckPen = DB.getValue(nodeItem, 'checkpenalty')
 	local nItemCheckPenBak = DB.getValue(nodeItem, 'checkpenalty.backup')
+	local nItemBonus = DB.getValue(nodeItem, 'bonus')
+	local nItemBonusBak = DB.getValue(nodeItem, 'bonus.backup')
+	
 	if not nItemAcBak then
 		DB.setValue(nodeItem, 'ac.backup', 'number', nItemAc)
 		nItemAcBak = DB.getValue(nodeItem, 'ac.backup')
@@ -78,14 +81,20 @@ function brokenArmorPenalties(nodeItem, nItemBrokenState)
 		DB.setValue(nodeItem, 'checkpenalty.backup', 'number', nItemCheckPen)
 		nItemCheckPenBak = DB.getValue(nodeItem, 'checkpenalty.backup')
 	end
+	if not nItemBonusBak then
+		DB.setValue(nodeItem, 'bonus.backup', 'number', nItemBonus)
+		nItemBonusBak = DB.getValue(nodeItem, 'bonus.backup')
+	end
 
 	if nItemBrokenState == 1 or nItemBrokenState == 2 then
 		DB.setValue(nodeItem, 'ac', 'number', math.floor(nItemAcBak / 2))
 		DB.setValue(nodeItem, 'checkpenalty', 'number', nItemCheckPenBak * 2)
+		DB.setValue(nodeItem, 'bonus', 'number', math.floor(nItemBonusBak / 2))
 		CharManager.calcItemArmorClass(DB.getChild(nodeItem, "..."))
 	else
 		DB.setValue(nodeItem, 'ac', 'number', nItemAcBak)
 		DB.setValue(nodeItem, 'checkpenalty', 'number', nItemCheckPenBak)
+		DB.setValue(nodeItem, 'bonus', 'number', nItemBonusBak)
 		CharManager.calcItemArmorClass(DB.getChild(nodeItem, "..."))
 	end
 end
