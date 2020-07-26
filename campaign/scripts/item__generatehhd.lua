@@ -32,12 +32,16 @@ local function provideValues(tSubstances, tSizeMult)
 	tSizeMult['fine'] = 0.0625
 end
 
-local function calcArmorHHP(sSubstance, tSubstances, tSizeMult)
+local function calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	local nItemHpAc = window.ac.getValue() * 5
 	local nItemHpBonus = window.bonus.getValue() * 10
 	local nItemHp = nItemHpAc + nItemHpBonus
 
 	local sItemSize = string.lower(window.size.getValue())
+	if sItemSize == '' then
+		sItemSize = sCharSize
+		window.size.setValue(sItemSize)
+	end
 	for k,v in pairs(tSizeMult) do
 		if k == sItemSize then
 			nItemHp = nItemHp * tSizeMult[k]
@@ -70,7 +74,7 @@ local function calcArmorHHP(sSubstance, tSubstances, tSizeMult)
 	end
 end
 
-local function calcWeaponHHP(sSubstance, tSubstances, tSizeMult)
+local function calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
 	local sItemSubstance = window.substance.getValue()
@@ -87,6 +91,10 @@ local function calcWeaponHHP(sSubstance, tSubstances, tSizeMult)
 	end
 
 	local sItemSize = string.lower(window.size.getValue())
+	if sItemSize == '' then
+		sItemSize = sCharSize
+		window.size.setValue(sItemSize)
+	end
 	for k,v in pairs(tSizeMult) do
 		if k == sItemSize then
 			nItemHpPerIn = nItemHpPerIn * tSizeMult[k]
@@ -159,6 +167,8 @@ end
 function onValueChanged()
 	local sItemName = string.lower(DB.getValue(window.getDatabaseNode(), 'name', ''))
 	local sItemType = string.lower(window.type.getValue())
+
+	local sCharSize = string.lower(DB.getValue(window.getDatabaseNode().getChild('...'), 'size', 'medium'))
 	
 	local tSizeMult = {}
 	local tSubstances = {}
@@ -167,9 +177,9 @@ function onValueChanged()
 	local sSubstance = checkItemName(sItemName, tSubstances)
 
 	if sItemType == 'armor' then
-		calcArmorHHP(sSubstance, tSubstances, tSizeMult)
+		calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	elseif sItemType == 'weapon' then
-		calcArmorHHP(sSubstance, tSubstances, tSizeMult)
+		calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	else
 		calcItemHHP(sSubstance, tSubstances)
 	end
