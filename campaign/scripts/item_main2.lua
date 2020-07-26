@@ -4,6 +4,7 @@
 
 function onInit()
 	update()
+	substance.onValueChanged()
 end
 
 function VisDataCleared()
