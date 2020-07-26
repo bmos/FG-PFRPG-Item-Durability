@@ -15,4 +15,4 @@ It's not compatible with rmilmine's [Advanced Character Inventory Manager](https
 * Automate penalties for damaged armor and/or weapons. 
 
 # Video Demonstration (click for video)
-[<img src="https://i.ytimg.com/vi_webp/PoSVMoIkxQk/sddefault.webp" width="75%">](https://youtu.be/PoSVMoIkxQk)
+[<img src="https://i.ytimg.com/vi_webp/PoSVMoIkxQk/sddefault.webp">](https://youtu.be/PoSVMoIkxQk)
