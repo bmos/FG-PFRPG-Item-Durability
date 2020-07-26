@@ -6,4 +6,7 @@
 	<string name="item_label_hardness">Hardness</string>
 	<string name="item_label_hitpoints">Hitpoints</string>
 	<string name="item_label_damage">Damage</string>
+	<string name="item_label_substance">Substance</string>
+	<string name="item_label_thickness">Thickness (In.)</string>
+	<string name="item_label_size">Size Category</string>
 </root>

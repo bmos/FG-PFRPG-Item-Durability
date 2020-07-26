@@ -81,7 +81,30 @@
 				<nodrop />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
-			</number_columnh>		
+			</number_columnh>
+			
+			<line_column name="divider2b" />
+
+			<label_column name="substance_label">
+				<static textres="item_label_substance" />
+			</label_column>
+			<string_columnh name="substance">
+				<script file="campaign/scripts/item__generatehhd.lua" />
+			</string_columnh>
+			
+			<label_column name="thickness_label">
+				<static textres="item_label_thickness" />
+			</label_column>
+			<number_columnh name="thickness">
+				<script file="campaign/scripts/item__generatehhd.lua" />
+			</number_columnh>
+			
+			<label_column name="size_label">
+				<static textres="item_label_size" />
+			</label_column>
+			<string_columnh name="size">
+				<script file="campaign/scripts/item__generatehhd.lua" />
+			</string_columnh>
 			
 			<line_column name="divider3" />
 
@@ -192,6 +215,8 @@
 						if nItemBrokenState == 0 and string.lower(window.type.getValue()) == 'armor' then
 							DB.setValue(nodeItem, 'bonus.backup', 'number', nItemBonus)
 						end
+						
+						window.substance.onValueChanged()
 					end
 				</script>
 			</number_columnh>

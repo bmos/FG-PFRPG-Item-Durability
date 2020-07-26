@@ -59,6 +59,13 @@ function update()
 	if updateControl('hitpoints', bReadOnly, bID) then item_damage.setVisible(true); item_damage_label.setVisible(true) end
 	item_damage.setReadOnly(false)
 	
+	local bSection2b = false
+	if updateControl('substance', bReadOnly, bID) then bSection2b = true end
+	if updateControl('thickness', bReadOnly, bID) and not bArmor then bSection2b = true end
+	if updateControl('size', bReadOnly, bID) then bSection2b = true end
+	if bArmor then thickness.setVisible(false); thickness_label.setVisible(false) else
+		thickness.setVisible(true); thickness_label.setVisible(true) end
+	
 	local bSection3 = false
 	if updateControl('cost', bReadOnly, bID) then bSection3 = true end
 	if updateControl('weight', bReadOnly, bID) then bSection3 = true end
@@ -91,6 +98,7 @@ function update()
 	divider.setVisible(bSection1 and bSection2)
 	divider2.setVisible((bSection1 or bSection2) and bSection2a)
 	divider2a.setVisible((bSection2a) and bSection3)
+	divider2b.setVisible((bSection2b) and bSection3)
 	divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection3) and bSection4)
 	divider4.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4) and bSection5)
 	divider5.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4 or bSection5) and bSection6)
