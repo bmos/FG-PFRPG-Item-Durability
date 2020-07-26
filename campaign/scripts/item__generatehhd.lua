@@ -208,4 +208,6 @@ function onValueChanged()
 	else
 		calcItemHHP(sSubstance, tSubstances)
 	end
+	
+	window.item_damage.onValueChanged()
 end

@@ -51,6 +51,18 @@ function onValueChanged()
 				window.bonus.setReadOnly(false)
 			end
 		end
+	else
+		window.item_damage.setColor('FF000000')
+		DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
+		if string.lower(window.type.getValue()) == 'weapon' then
+			BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 0)
+		end
+		if string.lower(window.type.getValue()) == 'armor' then
+			BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 0)
+			window.ac.setReadOnly(false)
+			window.checkpenalty.setReadOnly(false)
+			window.bonus.setReadOnly(false)
+		end
 	end
 end
 

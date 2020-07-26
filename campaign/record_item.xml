@@ -32,6 +32,8 @@
 				<script>
 					function onValueChanged()
 						window.update();
+						
+						window.substance.onValueChanged()
 					end
 				</script>
 			</string_columnh>
@@ -69,6 +71,7 @@
 				<static textres="item_label_hitpoints" />
 			</label_column>
 			<number_columnh name="hitpoints">
+				<script file="campaign/scripts/item__calculatedamage.lua" />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
@@ -96,12 +99,14 @@
 				<static textres="item_label_thickness" />
 			</label_column>
 			<number_columnh name="thickness">
+				<script file="campaign/scripts/item__generatehhd.lua" />
 			</number_columnh>
 			
 			<label_column name="size_label">
 				<static textres="item_label_size" />
 			</label_column>
 			<string_columnh name="size">
+				<script file="campaign/scripts/item__generatehhd.lua" />
 			</string_columnh>
 			
 			<line_column name="divider3" />
