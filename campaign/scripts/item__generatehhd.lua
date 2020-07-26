@@ -101,7 +101,7 @@ local function calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 		end
 	end
 
-	local nThickness = 0.125
+	local nThickness = 0
 	if window.thickness.getValue() then
 		nThickness = window.thickness.getValue()
 	end
