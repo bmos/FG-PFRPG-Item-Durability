@@ -204,7 +204,7 @@ function onValueChanged()
 	if sItemType == 'armor' then
 		calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	elseif sItemType == 'weapon' then
-		calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
+		calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	else
 		calcItemHHP(sSubstance, tSubstances)
 	end
