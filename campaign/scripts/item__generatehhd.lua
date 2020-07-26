@@ -40,7 +40,7 @@ local function provideValues(tSubstances, tSizeMult)
 	tSubstances['druchite'] = { ['nHardness'] = 10, ['nHpIn'] = 40 }
 	tSubstances['eel hide'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
 	tSubstances['elysian bronze'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['gold'] = { ['nHardness'] = 5, ['nHpIn'] = 10 } -- I made up this nHpIn
+	tSubstances['gold'] = { ['nHardness'] = 5, ['nHpIn'] = 12 } -- I made up this nHpIn
 	tSubstances['greenwood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
 	tSubstances['griffon mane'] = { ['nHardness'] = 1, ['nHpIn'] = 2 }
 	tSubstances['horacalcum'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
