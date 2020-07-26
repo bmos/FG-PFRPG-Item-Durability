@@ -74,6 +74,9 @@ function onDrop(x, y, draginfo)
 			nDamageDealt = 0
 			break
 		end
+		if string.find(draginfo.getDescription(), '%[CRITICAL%]') then
+			nDamageDealt = nDamageDealt / 2
+		end
 		if DataCommon.isPFRPG() then
 			for _, vv in pairs(tPFEnergyHalf) do
 				if v == vv then
