@@ -15,7 +15,7 @@ local function handleWeaponNodeArgs(nodeItem, tDamagedWeapons)
 	return sItemName
 end
 
-function brokenWeaponPenalties(nodeItem, nItemnBrokenState)
+function brokenWeaponPenalties(nodeItem, nItemBrokenState)
 	local tDamagedWeapons = {}
 	local sItemName = handleWeaponNodeArgs(nodeItem, tDamagedWeapons)
 
@@ -40,7 +40,7 @@ function brokenWeaponPenalties(nodeItem, nItemnBrokenState)
 	local nItemBonus = DB.getValue(nodeItem, 'bonus')
 
 
-	if nItemnBrokenState == 1 or nItemnBrokenState == 2 then
+	if nItemBrokenState == 1 or nItemBrokenState == 2 then
 		for _,v in pairs(tDamagedWeapons) do
 			DB.setValue(v, 'bonus', 'number', nItemBonus - 2)
 			DB.setValue(v, 'critatkrange', 'number', 20)
