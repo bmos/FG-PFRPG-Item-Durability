@@ -42,7 +42,7 @@ function fromCSV(s)
 	local fieldstart = 1
 
 	s = s .. '☹'
-	local nTypePosition = string.find(s, 'TYPE: ', fieldstart) + 6
+	local nTypePosition = string.find(s, '%[TYPE: ', fieldstart) + 7
 	local nStop = string.find(s, '☹', fieldstart)
 	s = string.sub(s, nTypePosition, nStop) -- trim everything but from 'TYPE: ' to "☹"
 	nStop = string.find(s, '%(', fieldstart) - 2
@@ -74,33 +74,30 @@ function onDrop(x, y, draginfo)
 			nDamageDealt = 0
 			break
 		end
-		if string.find(draginfo.getDescription(), '%[CRITICAL%]') then
 			nDamageDealt = nDamageDealt / 2
 		end
 		if DataCommon.isPFRPG() then
 			for _, vv in pairs(tPFEnergyHalf) do
-				if v == vv then
+				if vv == v then
 					nDamageDealt = nDamageDealt / 2
 					break
 				end
 			end
 		else
 			for _, vv in pairs(t35eEnergyHalf) do
-				if v == vv then
+				if vv == v then
 					nDamageDealt = nDamageDealt / 2
 					break
 				end
 			end
 			for _, vv in pairs(t35eEnergyQuarter) do
-				if v == vv then
+				if vv == v then
 					nDamageDealt = nDamageDealt / 4
 					break
 				end
 			end
 		end
 	end
-
-	Debug.chat(tDmgType, nDamageDealt)
 
 	local nModifiedDamage = nDamageDealt - nHardness
 
