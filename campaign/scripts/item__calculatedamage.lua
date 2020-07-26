@@ -37,11 +37,15 @@ function onValueChanged()
 end
 
 ---	
-local function adjustDamage(sDmgTotal, tTypes)
+local function adjustDamage(sDmgTotal, tTypes, bIsRanged)
 	local tNone = {'nonlethal','critical'}
+
 	local tPFEnergyHalf = {'fire','cold','acid','lightning','sonic'}
+
 	local t35eEnergyHalf = {'electricity','fire'}
 	local t35eEnergyQuarter = {'cold'}
+
+	if bIsRanged then sDmgTotal = sDmgTotal / 2 end
 
 	for _,v in pairs(tTypes) do
 		for _, vv in pairs(tNone) do
@@ -77,7 +81,7 @@ local function adjustDamage(sDmgTotal, tTypes)
 end
 
 ---	
-local function findTypedDamage(s)
+local function findTypedDamage(s, bIsRanged)
 	local nFieldStart = 1
 
 	local nTypesEnd = string.find(s, ' ', nFieldStart)
@@ -95,7 +99,7 @@ local function findTypedDamage(s)
 		nFieldStart = nNextI + 1
 	until nFieldStart > string.len(sTypes)
 	
-	return adjustDamage(sDmgTotal, tTypes)
+	return adjustDamage(sDmgTotal, tTypes, bIsRanged)
 end
 
 ---	
@@ -110,16 +114,18 @@ end
 ---	
 local function findTypes(t)
 	local nDmgTotal = 0
-		
+	local bIsRanged = false
+	
 	for _,v in ipairs(t) do
 		local fieldstart = 1
 
 		local nTypePosition = string.find(v, '%[TYPE: ', fieldstart)
+		if string.find(v, '%[DAMAGE %(R%)%]', fieldstart) then bIsRanged = true end
 		
 		if nTypePosition then
 			local nStop = string.len(v)
-			local s = string.sub(v, nTypePosition + 7, nStop-1) -- trim everything but from 'TYPE: ' to the end
-			nDmgTotal = nDmgTotal + findTypedDamage(s)
+			local s = string.sub(v, nTypePosition + 7, nStop-1)
+			nDmgTotal = nDmgTotal + findTypedDamage(s, bIsRanged)
 		end
 	end
 
@@ -142,5 +148,7 @@ local function splitDamageDrop(s)
 end
 
 function onDrop(x, y, draginfo)
-	splitDamageDrop(draginfo.getDescription())
+	if string.find(draginfo.getDescription(), '%[', 1) then
+		splitDamageDrop(draginfo.getDescription())
+	end
 end
