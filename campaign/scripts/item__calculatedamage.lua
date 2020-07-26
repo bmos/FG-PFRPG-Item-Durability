@@ -86,7 +86,7 @@ local function adjustDamage(sDmgTotal, tTypes, bIsRanged)
 		end
 	end
 
-	return sDmgTotal
+	return math.floor(sDmgTotal)
 end
 
 ---	
