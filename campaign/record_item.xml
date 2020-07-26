@@ -111,6 +111,18 @@
 			<number_columnh name="ac">
 				<delaykeyupdate />
 				<displaysign />
+				<script>
+					function onValueChanged()
+						local nodeItem = window.getDatabaseNode()
+
+						local nItemBrokenState = DB.getValue(nodeItem, 'broken')
+						local nItemAc = DB.getValue(nodeItem, 'ac')
+
+						if nItemBrokenState == 0 then
+							DB.setValue(nodeItem, 'ac.backup', 'number', nItemAc)
+						end
+					end
+				</script>
 			</number_columnh>
 			
 			<label_column name="maxstatbonus_label">
@@ -127,6 +139,18 @@
 			<number_columnh name="checkpenalty">
 				<delaykeyupdate />
 				<displaysign />
+				<script>
+					function onValueChanged()
+						local nodeItem = window.getDatabaseNode()
+
+						local nItemBrokenState = DB.getValue(nodeItem, 'broken')
+						local nItemCheckPen = DB.getValue(nodeItem, 'checkpenalty')
+
+						if nItemBrokenState == 0 then
+							DB.setValue(nodeItem, 'checkpenalty.backup', 'number', nItemCheckPen)
+						end
+					end
+				</script>
 			</number_columnh>
 			
 			<label_column name="spellfailure_label">
