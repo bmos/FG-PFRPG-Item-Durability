@@ -12,13 +12,25 @@ function onValueChanged()
 		local nPercentDmg = nDmg / nItemHitpoints * 100
 		if nPercentDmg >= 100 then
 			window.item_damage.setColor('FFB22929')
+			if DB.getValue(window.getDatabaseNode(), 'carried') == 2 then
+				DB.setValue(window.getDatabaseNode(), 'carried', 'number', 1)
+			end
 			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 2)
+			if window.type.getValue() == 'Weapon' then
+				BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 2)
+			end
 		elseif nPercentDmg >= 50 then
 			window.item_damage.setColor('FFEB7B00')
 			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 1)
+			if window.type.getValue() == 'Weapon' then
+				BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 1)
+			end
 		else
 			window.item_damage.setColor('FF000000')
 			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
+			if window.type.getValue() == 'Weapon' then
+				BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 0)
+			end
 		end
 	end
 end
@@ -32,9 +44,9 @@ function fromCSV(s)
 	s = s .. '☹'
 	local nTypePosition = string.find(s, 'TYPE: ', fieldstart) + 6
 	local nStop = string.find(s, '☹', fieldstart)
-	s = string.sub(s, nTypePosition, nStop) -- trim off everything to "TYPE: "
+	s = string.sub(s, nTypePosition, nStop) -- trim everything but from 'TYPE: ' to "☹"
 	nStop = string.find(s, '%(', fieldstart) - 2
-	s = string.sub(s, fieldstart, nStop) -- trim off everything to " ("
+	s = string.sub(s, fieldstart, nStop) -- trim off everything after " ("
 
 	s = string.lower(s .. ',')        -- ending comma
 	local t = {}        -- table to collect fields
