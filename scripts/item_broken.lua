@@ -21,7 +21,7 @@ function brokenWeaponPenalties(nodeItem, nItemBrokenState)
 
 	local nItemCritMult = 2
 	local nItemCritRangeLower = 20
-	local nItemBonus = 0
+	local nItemMagicBonus = 0
 
 	if DB.getValue(nodeItem, 'critical') ~= '' then
 		local sItemCrit = DB.getValue(nodeItem, 'critical')
@@ -37,16 +37,21 @@ function brokenWeaponPenalties(nodeItem, nItemBrokenState)
 		end
 	end
 	
-	local nItemBonus = DB.getValue(nodeItem, 'bonus')
-
+	local nItemMagicBonus = DB.getValue(nodeItem, 'bonus.backup', 0)
+	local sProperties = DB.getValue(nodeItem, 'properties', '')
+	local bMwk = string.find(sProperties, 'masterwork', 1)
+	local bMwkBonus = 0
+	if bMwk and nItemMagicBonus == 0 then
+		bMwkBonus = 1
+	end
 
 	if nItemBrokenState == 1 or nItemBrokenState == 2 then
 		for _,v in pairs(tDamagedWeapons) do
-			DB.setValue(v, 'bonus', 'number', nItemBonus - 2)
+			DB.setValue(v, 'bonus', 'number', nItemMagicBonus - 2 + bMwkBonus)
 			DB.setValue(v, 'critatkrange', 'number', 20)
 			
 			for _,vv in pairs(DB.getChildren(v, 'damagelist')) do
-				DB.setValue(vv, 'bonus', 'number', nItemBonus - 2)
+				DB.setValue(vv, 'bonus', 'number', nItemMagicBonus - 2)
 				if DB.getValue(vv, 'critmult', 2) > 1 then
 					DB.setValue(vv, 'critmult', 'number', 2)
 				end
@@ -54,11 +59,11 @@ function brokenWeaponPenalties(nodeItem, nItemBrokenState)
 		end
 	else
 		for _,v in pairs(tDamagedWeapons) do
-			DB.setValue(v, 'bonus', 'number', nItemBonus)
+			DB.setValue(v, 'bonus', 'number', nItemMagicBonus + bMwkBonus)
 			DB.setValue(v, 'critatkrange', 'number', nItemCritRangeLower)
 			
 			for _,vv in pairs(DB.getChildren(v, 'damagelist')) do
-				DB.setValue(vv, 'bonus', 'number', nItemBonus)
+				DB.setValue(vv, 'bonus', 'number', nItemMagicBonus)
 				DB.setValue(vv, 'critmult', 'number', nItemCritMult)
 			end
 		end
@@ -72,8 +77,8 @@ function brokenArmorPenalties(nodeItem, nItemBrokenState)
 	local nItemAcBak = DB.getValue(nodeItem, 'ac.backup')
 	local nItemCheckPen = DB.getValue(nodeItem, 'checkpenalty')
 	local nItemCheckPenBak = DB.getValue(nodeItem, 'checkpenalty.backup')
-	local nItemBonus = DB.getValue(nodeItem, 'bonus')
-	local nItemBonusBak = DB.getValue(nodeItem, 'bonus.backup')
+	local nItemMagicBonus = DB.getValue(nodeItem, 'bonus', 0)
+	local nItemMagicBonusBak = DB.getValue(nodeItem, 'bonus.backup')
 	
 	if not nItemAcBak then
 		DB.setValue(nodeItem, 'ac.backup', 'number', nItemAc)
@@ -83,20 +88,20 @@ function brokenArmorPenalties(nodeItem, nItemBrokenState)
 		DB.setValue(nodeItem, 'checkpenalty.backup', 'number', nItemCheckPen)
 		nItemCheckPenBak = DB.getValue(nodeItem, 'checkpenalty.backup')
 	end
-	if not nItemBonusBak then
-		DB.setValue(nodeItem, 'bonus.backup', 'number', nItemBonus)
-		nItemBonusBak = DB.getValue(nodeItem, 'bonus.backup')
+	if not nItemMagicBonusBak then
+		DB.setValue(nodeItem, 'bonus.backup', 'number', nItemMagicBonus)
+		nItemMagicBonusBak = DB.getValue(nodeItem, 'bonus.backup')
 	end
 
 	if nItemBrokenState == 1 or nItemBrokenState == 2 then
 		DB.setValue(nodeItem, 'ac', 'number', math.floor(nItemAcBak / 2))
 		DB.setValue(nodeItem, 'checkpenalty', 'number', nItemCheckPenBak * 2)
-		DB.setValue(nodeItem, 'bonus', 'number', math.floor(nItemBonusBak / 2))
+		DB.setValue(nodeItem, 'bonus', 'number', math.floor(nItemMagicBonusBak / 2))
 		CharManager.calcItemArmorClass(DB.getChild(nodeItem, "..."))
 	else
 		DB.setValue(nodeItem, 'ac', 'number', nItemAcBak)
 		DB.setValue(nodeItem, 'checkpenalty', 'number', nItemCheckPenBak)
-		DB.setValue(nodeItem, 'bonus', 'number', nItemBonusBak)
+		DB.setValue(nodeItem, 'bonus', 'number', nItemMagicBonusBak)
 		CharManager.calcItemArmorClass(DB.getChild(nodeItem, "..."))
 	end
 end
