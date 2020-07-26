@@ -5,6 +5,7 @@
 function onInit()
 	onValueChanged()
 end
+
 function onValueChanged()
 	local nItemHitpoints = window.hitpoints.getValue()
 	if nItemHitpoints and nItemHitpoints >= 1 then
@@ -35,76 +36,111 @@ function onValueChanged()
 	end
 end
 
----	This function converts CSVs from a string to a table of values
---	@param s input, a string of CSVs
---	@return t output, an indexed table of values
-function fromCSV(s)
-	local fieldstart = 1
-
-	s = s .. '☹'
-	local nTypePosition = string.find(s, '%[TYPE: ', fieldstart) + 7
-	local nStop = string.find(s, '☹', fieldstart)
-	s = string.sub(s, nTypePosition, nStop) -- trim everything but from 'TYPE: ' to "☹"
-	nStop = string.find(s, '%(', fieldstart) - 2
-	s = string.sub(s, fieldstart, nStop) -- trim off everything after " ("
-
-	s = string.lower(s .. ',')        -- ending comma
-	local t = {}        -- table to collect fields
-	repeat
-		local nexti = string.find(s, ',', fieldstart)
-		table.insert(t, string.sub(s, fieldstart, nexti-1))
-		fieldstart = nexti + 1
-	until fieldstart > string.len(s)
-
-	return t
-end
-
-function onDrop(x, y, draginfo)
-	local nDmg = window.item_damage.getValue()
-	local nHardness = window.hardness.getValue()
-	local nDamageDealt = draginfo.getNumberData()
-	
+---	
+local function adjustDamage(sDmgTotal, tTypes)
+	local tNone = {'nonlethal','critical'}
 	local tPFEnergyHalf = {'fire','cold','acid','lightning','sonic'}
 	local t35eEnergyHalf = {'electricity','fire'}
 	local t35eEnergyQuarter = {'cold'}
-	local tDmgType = fromCSV(draginfo.getDescription())
 
-	for _,v in pairs(tDmgType) do
-		if v == 'nonlethal' then
-			nDamageDealt = 0
-			break
+	for _,v in pairs(tTypes) do
+		for _, vv in pairs(tNone) do
+			if vv == v then
+				sDmgTotal = 0
+				break
+			end
 		end
-		if string.find(draginfo.getDescription(), '%[CRITICAL%]') or string.find(draginfo.getDescription(), '%[DAMAGE (R)%]') then
-			nDamageDealt = nDamageDealt / 2
-		end
-		if DataCommon.isPFRPG() then
+		if DataCommon.isPFRPG() and sDmgTotal then
 			for _, vv in pairs(tPFEnergyHalf) do
 				if vv == v then
-					nDamageDealt = nDamageDealt / 2
+					sDmgTotal = sDmgTotal / 2
 					break
 				end
 			end
-		else
+		elseif sDmgTotal then
 			for _, vv in pairs(t35eEnergyHalf) do
 				if vv == v then
-					nDamageDealt = nDamageDealt / 2
+					sDmgTotal = sDmgTotal / 2
 					break
 				end
 			end
 			for _, vv in pairs(t35eEnergyQuarter) do
 				if vv == v then
-					nDamageDealt = nDamageDealt / 4
+					sDmgTotal = sDmgTotal / 4
 					break
 				end
 			end
 		end
 	end
 
-	local nModifiedDamage = nDamageDealt - nHardness
+	return sDmgTotal
+end
 
-	if nModifiedDamage < 1 then
-		window.item_damage.setValue(nDmg)
-	else
+---	
+local function findTypedDamage(s)
+	local nFieldStart = 1
+
+	local nTypesEnd = string.find(s, ' ', nFieldStart)
+	local sTypes = string.lower(string.sub(s, nFieldStart, nTypesEnd - 1) .. ',')
+	local tTypes = {}
+	
+	local sDmgStart = string.find(s, '%(', nFieldStart)
+	local sDmg = string.sub(s, sDmgStart + 1, string.len(s)-1)
+	local sDmgTotalStart = string.find(sDmg, '=', nFieldStart)
+	local sDmgTotal = string.sub(sDmg, sDmgTotalStart + 1, string.len(s))
+
+	repeat
+		local nNextI = string.find(sTypes, ',', nFieldStart)
+		table.insert(tTypes, string.sub(sTypes, nFieldStart, nNextI-1))
+		nFieldStart = nNextI + 1
+	until nFieldStart > string.len(sTypes)
+	
+	return adjustDamage(sDmgTotal, tTypes)
+end
+
+---	
+local function setItemDamage(nDmgTotal)
+	local nModifiedDamage = nDmgTotal - window.hardness.getValue()
+	if nModifiedDamage > 0 then
+		local nDmg = window.item_damage.getValue()
 		window.item_damage.setValue(nDmg + nModifiedDamage)
 	end
+end
+
+---	
+local function findTypes(t)
+	local nDmgTotal = 0
+		
+	for _,v in ipairs(t) do
+		local fieldstart = 1
+
+		local nTypePosition = string.find(v, '%[TYPE: ', fieldstart)
+		
+		if nTypePosition then
+			local nStop = string.len(v)
+			local s = string.sub(v, nTypePosition + 7, nStop-1) -- trim everything but from 'TYPE: ' to the end
+			nDmgTotal = nDmgTotal + findTypedDamage(s)
+		end
+	end
+
+	setItemDamage(nDmgTotal)
+end
+
+---	This function splits a dragged roll description into pieces in a table
+local function splitDamageDrop(s)
+	local fieldstart = 1
+	local fieldend = string.len(s)
+	local t = {}
+	repeat
+		local nexti_s = string.find(s, '%[', fieldstart)
+		local nexti_e = string.find(s, '%]', fieldstart)
+		table.insert(t, string.sub(s, nexti_s, nexti_e))
+		fieldstart = nexti_e + 1
+	until fieldstart > string.len(s)
+	
+	findTypes(t)
+end
+
+function onDrop(x, y, draginfo)
+	splitDamageDrop(draginfo.getDescription())
 end
