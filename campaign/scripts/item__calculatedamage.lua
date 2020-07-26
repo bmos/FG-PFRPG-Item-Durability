@@ -70,6 +70,10 @@ function onDrop(x, y, draginfo)
 	local tDmgType = fromCSV(draginfo.getDescription())
 
 	for _,v in pairs(tDmgType) do
+		if v == 'nonlethal' then
+			nDamageDealt = 0
+			break
+		end
 		if DataCommon.isPFRPG() then
 			for _, vv in pairs(tPFEnergyHalf) do
 				if v == vv then
