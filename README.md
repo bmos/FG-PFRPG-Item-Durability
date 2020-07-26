@@ -14,5 +14,5 @@ It's not compatible with rmilmine's [Advanced Character Inventory Manager](https
 * Provides visual indication of item damage by color coding the number proportionately to damage.
 * Automate penalties for damaged armor and/or weapons. 
 
-# Example Image
-<img src="https://i.imgur.com/QTdNW9j.png" alt="item durablity UI example image"/>
+# Video Demonstration (click for video)
+[<img src="https://i.ytimg.com/vi_webp/PoSVMoIkxQk/sddefault.webp" width="75%">](https://youtu.be/PoSVMoIkxQk)
