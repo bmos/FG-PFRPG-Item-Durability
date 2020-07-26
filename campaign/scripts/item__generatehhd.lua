@@ -22,6 +22,7 @@ local function provideValues(tSubstances, tSizeMult)
 	tSubstances['magic bridge basalt'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }	-- not sure about this hp per in figure
 	tSubstances['blight quartz'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }
 	tSubstances['bone'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }			-- I made up this nHpIn
+--	tSubstances['brass'] = { ['nHardness'] = 9, ['nHpIn'] = 0 }			-- This should exist, but doesn't
 	tSubstances['chitin'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }		-- I made this up based on bone
 	tSubstances['coral'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }		-- I made this up based on bone
 	tSubstances['cryptstone'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
@@ -47,6 +48,7 @@ local function provideValues(tSubstances, tSizeMult)
 	tSubstances['silversheen'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
 	tSubstances['glaucite'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
 	tSubstances['spiresteel'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['net'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }			-- I made this up based on leather
 	tSubstances['living steel'] = { ['nHardness'] = 15, ['nHpIn'] = 35 }
 	tSubstances['singing steel'] = { ['nHardness'] = 10, ['nHpIn'] = 20 }
 	tSubstances['sunsilver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
@@ -234,9 +236,38 @@ end
 --	@param tSubstances This is an empty table to fill with material info tables
 --	@param tSizeMult This is an empty table to fill with the various size categories paired with their item hitpoint multipliers
 local function parseSpecificItems(tItemParser)
+	-- aventuring supplies
 	tItemParser['vial'] = 'glass'
 	tItemParser['potion'] = 'glass'
 	tItemParser['scroll of'] = 'paper'
+	tItemParser['torch'] = 'wood'
+	tItemParser['bottle'] = 'glass'
+	tItemParser['outfit'] = 'cloth'
+	tItemParser['bag'] = 'cloth'
+	tItemParser['backpack'] = 'cloth'
+	tItemParser['tent'] = 'cloth'
+
+	-- weapons
+	tItemParser['sword'] = 'steel'
+	tItemParser['axe'] = 'steel'
+	tItemParser['dagger'] = 'steel'
+	tItemParser['quarterstaff'] = 'wood'
+	tItemParser['spear'] = 'wood'
+	tItemParser['club'] = 'wood'
+	tItemParser['mace'] = 'steel'
+	tItemParser['kukri'] = 'steel'
+	tItemParser['machete'] = 'steel'
+	tItemParser['knife'] = 'steel'
+	tItemParser['razor'] = 'steel'
+	tItemParser['sling'] = 'leather'
+
+	-- armor
+	tItemParser['tunic'] = 'rope'
+	tItemParser['chain'] = 'steel'
+	tItemParser['plate'] = 'steel'
+	tItemParser['mail'] = 'steel'
+	tItemParser['buckler'] = 'steel'
+	tItemParser['tower'] = 'steel'
 end
 
 ---	This function searches sItemName for any of the keys in tSubstances.
