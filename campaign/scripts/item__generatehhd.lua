@@ -7,6 +7,7 @@ function onInit()
 end
 
 local function provideValues(tSubstances, tSizeMult)
+	-- substances from Damaging Items list
 	tSubstances['glass'] = { ['nHardness'] = 1, ['nHpIn'] = 1 }
 	tSubstances['paper'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
 	tSubstances['cloth'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
@@ -21,6 +22,49 @@ local function provideValues(tSubstances, tSizeMult)
 	tSubstances['mithral'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
 	tSubstances['adamantine'] = { ['nHardness'] = 20, ['nHpIn'] = 40 }
 	
+	-- materials from Special Materials list
+	tSubstances['abysium'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['angelskin'] = { ['nHardness'] = 5, ['nHpIn'] = 5 }
+	tSubstances['aszite'] = { ['nHardness'] = 15, ['nHpIn'] = 20 }
+	tSubstances['magic bridge basalt'] = { ['nHardness'] = 10, ['nHpIn'] = 30 } -- not sure about this hp per in figure
+	tSubstances['blight quartz'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }
+	tSubstances['bone'] = { ['nHardness'] = 5, ['nHpIn'] = 12 } -- I made up this nHpIn
+--	tSubstances['bronze'] = { ['nHardness'] = 9, ['nHpIn'] = 10 } -- bronze armor has hardness 9 and bronze weapons use the same hardness as their base weapon
+	tSubstances['chitin'] = { ['nHardness'] = 5, ['nHpIn'] = 12 } -- I made these up based on bone
+	tSubstances['coral'] = { ['nHardness'] = 5, ['nHpIn'] = 12 } -- I made these up based on bone
+	tSubstances['cryptstone'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['blood crystal'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }
+	tSubstances['darkleaf cloth'] = { ['nHardness'] = 10, ['nHpIn'] = 20 }
+	tSubstances['darkwood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	tSubstances['dragonhide'] = { ['nHardness'] = 10, ['nHpIn'] = 10 } -- hide of a dragon is typically between 1/2 inch and 1 inch thick
+	tSubstances['druchite'] = { ['nHardness'] = 10, ['nHpIn'] = 40 }
+	tSubstances['eel hide'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
+	tSubstances['elysian bronze'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['gold'] = { ['nHardness'] = 5, ['nHpIn'] = 10 } -- I made up this nHpIn
+	tSubstances['greenwood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	tSubstances['griffon mane'] = { ['nHardness'] = 1, ['nHpIn'] = 2 }
+	tSubstances['horacalcum'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
+	tSubstances['inubrix'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	tSubstances['cold iron'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['mindglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['noqual'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+--	tSubstances['obsidian'] = { ['nHardness'] = 10, ['nHpIn'] = 30 } -- obsidian weapons have half the hardness of their base weapon 
+	tSubstances['siccatite'] = { ['nHardness'] = 10, ['nHpIn'] = 30 } -- I made these up based on iron/steel
+	tSubstances['alchemical silver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 } -- I made these up based on iron/steel
+	tSubstances['silver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 } -- This is a workaround because nobody says "alchemical silver" in their weapon names
+	tSubstances['silversheen'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
+	tSubstances['glaucite'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['spiresteel'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['living steel'] = { ['nHardness'] = 15, ['nHpIn'] = 35 }
+	tSubstances['singing steel'] = { ['nHardness'] = 10, ['nHpIn'] = 20 }
+	tSubstances['sunsilver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
+--	tSubstances['viridium'] = { ['nHardness'] = 8, ['nHpIn'] = 10 } -- viridium weapons have half the hardness of their base weapon 
+	tSubstances['voidglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['whipwood'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
+	tSubstances['voidglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	tSubstances['wyroot'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+
+	-- hitpoint multipliers for each size category
 	tSizeMult['colossal'] = 16
 	tSizeMult['gargantuan'] = 8
 	tSizeMult['huge'] = 4
