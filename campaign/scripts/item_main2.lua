@@ -31,9 +31,9 @@ function update()
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord)
 	local bID = LibraryData.getIDState('item', nodeRecord)
 	
-	local sType = type.getValue()
-	local bWeapon = (sType == 'Weapon')
-	local bArmor = (sType == 'Armor')
+	local sType = string.lower(type.getValue())
+	local bWeapon = (sType == 'weapon')
+	local bArmor = (sType == 'armor')
 	
 	local bSection1 = false
 	if User.isHost() then
