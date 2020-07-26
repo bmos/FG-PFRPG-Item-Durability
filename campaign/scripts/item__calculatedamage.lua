@@ -20,17 +20,26 @@ function onValueChanged()
 			if window.type.getValue() == 'Weapon' then
 				BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 2)
 			end
+			if window.type.getValue() == 'Armor' then
+				BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 2)
+			end
 		elseif nPercentDmg >= 50 then
 			window.item_damage.setColor('FFEB7B00')
 			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 1)
 			if window.type.getValue() == 'Weapon' then
 				BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 1)
 			end
+			if window.type.getValue() == 'Armor' then
+				BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 1)
+			end
 		else
 			window.item_damage.setColor('FF000000')
 			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
 			if window.type.getValue() == 'Weapon' then
 				BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 0)
+			end
+			if window.type.getValue() == 'Armor' then
+				BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 0)
 			end
 		end
 	end
