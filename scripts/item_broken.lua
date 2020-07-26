@@ -47,7 +47,9 @@ function brokenWeaponPenalties(nodeItem, nItemBrokenState)
 			
 			for _,vv in pairs(DB.getChildren(v, 'damagelist')) do
 				DB.setValue(vv, 'bonus', 'number', nItemBonus - 2)
-				DB.setValue(vv, 'critmult', 'number', 2)
+				if DB.getValue(vv, 'critmult', 2) > 1 then
+					DB.setValue(vv, 'critmult', 'number', 2)
+				end
 			end
 		end
 	else
