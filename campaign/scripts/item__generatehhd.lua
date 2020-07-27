@@ -120,7 +120,7 @@ local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	
 	local nItemHardness = 0
 	local nItemBonusHardness = window.bonus.getValue() * 2
-	local sItemSubstance = window.substance.getValue()
+	local sItemSubstance = string.lower(window.substance.getValue())
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
 		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
@@ -156,7 +156,7 @@ end
 local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
-	local sItemSubstance = window.substance.getValue()
+	local sItemSubstance = string.lower(window.substance.getValue())
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
 		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
@@ -210,7 +210,7 @@ end
 local function calcItemHHP(sSubstance, aSubstances)
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
-	local sItemSubstance = window.substance.getValue()
+	local sItemSubstance = string.lower(window.substance.getValue())
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
 		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
