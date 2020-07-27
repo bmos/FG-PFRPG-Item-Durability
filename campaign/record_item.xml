@@ -106,14 +106,14 @@
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
-			
+
 			<line_column name="divider3" />
 
 			<label_column name="damage_label">
 				<static textres="item_label_damage" />
 			</label_column>
 			<string_columnh name="damage" />
-			
+
 			<label_column name="damagetype_label">
 				<static textres="item_label_dmgtype" />
 			</label_column>
