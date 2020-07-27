@@ -2,6 +2,10 @@
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
+---	This function checks if the damaged weapon's name matches any in the actions tab and, if so, adds their locations to tDamagedWeapons.
+--	@param nodeItem A databasenode pointing to the damaged item.
+--	@param tDamagedWeapons An empty table to contain the actions tab locations of any matching weapons (so weapons with multiple listings like dagger or javelin are supported).
+--	@return sItemName A string containing the name of the damaged item.
 local function handleWeaponNodeArgs(nodeItem, tDamagedWeapons)
 	local nodeChar = nodeItem.getChild('...')
 	local sItemName = DB.getValue(nodeItem, 'name')
@@ -15,6 +19,10 @@ local function handleWeaponNodeArgs(nodeItem, tDamagedWeapons)
 	return sItemName
 end
 
+---	This function checks whether the weapon is broken or destroyed, and applies/removes the penalties.
+--	To restore the penalties from a weapon, it parses the crit field and damage fields on the item sheet.
+--	Weapon info entered in actions but not the item sheet will not be restored once the item is repaired.
+--	If you need to edit your weapon, do so from the item sheet and toggle it from broken/repaired.
 function brokenWeaponPenalties(nodeItem, nItemBrokenState)
 	local tDamagedWeapons = {}
 	local sItemName = handleWeaponNodeArgs(nodeItem, tDamagedWeapons)
@@ -70,6 +78,8 @@ function brokenWeaponPenalties(nodeItem, nItemBrokenState)
 	end
 end
 
+---	This function backs up the original armor stats, checks whether the armor is broken or destroyed, and applies/removes the penalties.
+--	Backed-up stats are ac, check penalty, and enhancement bonuses.
 function brokenArmorPenalties(nodeItem, nItemBrokenState)
 	local nodeChar = nodeItem.getChild('...')
 
