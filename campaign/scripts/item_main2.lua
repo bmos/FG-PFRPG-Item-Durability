@@ -155,6 +155,10 @@ function update()
 	description.setVisible(bID)
 	description.setReadOnly(bReadOnly)
 
+--	This is compatibility for "Customised Item Generator for 3.5E and Pathfinder" by rmilmine
+	if bArmor and StringManager.contains(Extension.getExtensions(), "Customised Item Generator for 3.5E and Pathfinder") then bSection6 = true; end
+--	End compatibility patch
+
 --	This is compatibility for "Enhanced Items" by Llisandur
 	if bPFRPGEILoaded then
 		local bSection7 = false
@@ -178,7 +182,7 @@ function update()
 	divider2a.setVisible((bSection3 and bSection4) and bSection3)
 --	This is compatibility for "Advanced Character Inventory Manager" by rmilmine
 	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
-		divider8.setVisible((bSection1 or bSection2 or bSection3) and bSection8 and bSection4)
+		divider8.setVisible((bSection1 or bSection2 or bSection3 or bSection4) and bSection8)
 	end
 --	End compatibility patch
 	divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection3) and bSection4)
