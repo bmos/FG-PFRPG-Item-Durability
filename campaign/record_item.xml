@@ -93,6 +93,7 @@
 			</label_column>
 			<string_columnh name="substance">
 				<script file="campaign/scripts/item__generatehhd.lua" />
+				<delaykeyupdate />
 			</string_columnh>
 			
 			<label_column name="thickness_label">
@@ -107,6 +108,7 @@
 			</label_column>
 			<string_columnh name="size">
 				<script file="campaign/scripts/item__generatehhd.lua" />
+				<delaykeyupdate />
 			</string_columnh>
 			
 			<line_column name="divider3" />
