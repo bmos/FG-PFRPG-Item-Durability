@@ -179,12 +179,14 @@ function update()
 
 	divider.setVisible(bSection1 and bSection2)
 	divider2.setVisible((bSection1 or bSection2) and bSection2a)
-	divider2a.setVisible((bSection3 or bSection4) and bSection3)
+	divider2a.setVisible((bSection2a or bSection4) and bSection3)
+
 --	This is compatibility for "Advanced Character Inventory Manager" by rmilmine
 	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
 		divider8.setVisible((bSection1 or bSection2 or bSection3 or bSection4) and bSection8)
 	end
 --	End compatibility patch
+
 	divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection3) and bSection4)
 	divider4.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4) and bSection5)
 	divider5.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4 or bSection5) and bSection6)
