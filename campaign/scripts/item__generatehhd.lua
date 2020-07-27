@@ -63,14 +63,17 @@ local function provideValues(aSubstances, tSizeMult)
 	aSubstances['glass'] = { ['nHardness'] = 1, ['nHpIn'] = 1 }
 	aSubstances['paper'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
 	aSubstances['cloth'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
+	aSubstances['fabric'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }		-- Just in case
 	aSubstances['rope'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
 	aSubstances['ice'] = { ['nHardness'] = 0, ['nHpIn'] = 3 }
 	aSubstances['leather'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
 	aSubstances['hide'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
 	aSubstances['wood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	aSubstances['wooden'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }		-- Just in case
 	aSubstances['stone'] = { ['nHardness'] = 8, ['nHpIn'] = 15 }
 	aSubstances['iron'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
 	aSubstances['steel'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['metal'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }		-- This is an oversimplification, but I think it's warranted
 	aSubstances['mithral'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
 	aSubstances['adamantine'] = { ['nHardness'] = 20, ['nHpIn'] = 40 }
 
