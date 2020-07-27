@@ -34,43 +34,39 @@ function update()
 
 	local sType = string.lower(type.getValue())
 	
---	This is compatibility for "Enhanced Items" by Llisandur
+	local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous
 
-	local bWeapon = (sType == 'weapon')
-	local bArmor = (sType == 'armor')
-	local bWand
-	local bStaff
-	local bWondrous
-
-	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), "PFRPG - Enhanced Items")
-	if bPFRPGEILoaded then
-		if sType:match("weapon") then
-			bWeapon = true
-		else
-			bWeapon = false
-		end
-		if sType:match("armor") then
-			bArmor = true
-		else
-			bArmor = false
-		end
-		if sType:match("wand") then
-			bWand = true
-		else
-			bWand = false
-		end
-		if sType:match("staff") then
-			bStaff = true
-		else
-			bStaff = false
-		end
-		if sType:match("wondrous item") then
-			bWondrous = true
-		else
-			bWondrous = false
-		end
+	if sType:match("weapon") then
+		bWeapon = true
+	else
+		bWeapon = false
 	end
-	
+	if sType:match("armor") then
+		bArmor = true
+	else
+		bArmor = false
+	end
+	if sType:match("wand") then
+		bWand = true
+	else
+		bWand = false
+	end
+	if sType:match("staff") then
+		bStaff = true
+	else
+		bStaff = false
+	end
+	if sType:match("wondrous item") then
+		bWondrous = true
+	else
+		bWondrous = false
+	end
+	if sType:match("shield") then
+		bShield = true
+	else
+		bShield = false
+	end
+
 	local bSection1 = false
 	if bOptionID and User.isHost() then
 		if updateControl('nonid_name', bReadOnly, true) then bSection1 = true; end
@@ -98,7 +94,7 @@ function update()
 	if updateControl('cost', bReadOnly, bID) then bSection3 = true; end
 	if updateControl('weight', bReadOnly, bID) then bSection3 = true; end
 	if updateControl('substance', bReadOnly, bID) then bSection3 = true; end
-	if bArmor then
+	if bArmor then -- Don't show thickness if item is armor
 		thickness.setVisible(false); thickness_label.setVisible(false)
 	elseif
 		updateControl('thickness', bReadOnly, bID) then thickness.setVisible(true); thickness_label.setVisible(true); bSection3 = true
@@ -129,6 +125,7 @@ function update()
 	if updateControl('speed20', bReadOnly, bID and bArmor) then bSection4 = true; end
 
 --	This is compatibility for "Enhanced Items" by Llisandur
+	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), "PFRPG - Enhanced Items")
 	if bPFRPGEILoaded then
 		current_label.setVisible(false)
 		maxcharges.setVisible(false)
