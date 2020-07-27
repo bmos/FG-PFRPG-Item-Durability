@@ -143,7 +143,7 @@ function update()
 	end
 --	End compatibility patch
 
-	if updateControl('properties', bReadOnly, bID) then bSection4 = true; end -- shows the divider between cost/size and hardness/damage
+	if updateControl('properties', bReadOnly, bID and (bArmor or bWeapon)) then bSection4 = true; end -- shows the divider between cost/size and hardness/damage
 	
 	local bSection5 = false
 	if updateControl('bonus', bReadOnly, bID and (bWeapon or bArmor)) then bSection5 = true; end
