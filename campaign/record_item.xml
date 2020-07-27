@@ -5,7 +5,7 @@
 -->
 
 <root>
-	<windowclass name="item_main">
+	<windowclass name="item_main" merge="join">
 		<margins control="0,0,0,2" />
 		<script file="campaign/scripts/item_main2.lua" />
 		<sheetdata>
@@ -102,10 +102,10 @@
 				<script file="campaign/scripts/item__generatehhd.lua" />
 			</number_columnh>
 			
-			<label_column name="size_label">
+			<label_column name="size_label" merge="replace">
 				<static textres="item_label_size" />
 			</label_column>
-			<string_columnh name="size">
+			<string_columnh name="size" merge="replace">
 				<script file="campaign/scripts/item__generatehhd.lua" />
 			</string_columnh>
 			
