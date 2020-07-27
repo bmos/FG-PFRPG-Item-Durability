@@ -86,6 +86,14 @@ local function provideValues(tSubstances, tSizeMult)
 	tSizeMult['fine'] = 0.0625
 end
 
+---	This function facilitates conversion to title case.
+--	@param first The first character of the string it's processing.
+--	@param rest The complete string, except for the first character.
+--	@return first:upper()..rest:lower() The re-combined string, converted to title case.
+local function formatTitleCase(first, rest)
+   return first:upper()..rest:lower()
+end
+
 ---	This function calculates the hardness and hitpoints of armor-type items.
 --	To do this, it collects some final information and performs armor-specific hardness and hitpoint calculation (such as ignoring thickness).
 --	Once the values have been processed, it writes them back to the fields on the item sheet if they have changed.
@@ -101,7 +109,8 @@ local function calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	local sItemSize = string.lower(window.size.getValue())
 	if sItemSize == '' then			-- if item has no size assigned, use character size
 		sItemSize = sCharSize
-		window.size.setValue(sItemSize)
+		local sItemSizeTC = sItemSize:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.size.setValue(sItemSizeTC)
 	end
 	for k,v in pairs(tSizeMult) do	-- check item size against size multipliers
 		if k == sItemSize then		-- if found, multiply item hitpoints by the size multipler
@@ -114,7 +123,8 @@ local function calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	local sItemSubstance = window.substance.getValue()
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
-		window.substance.setValue(sItemSubstance)
+		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.substance.setValue(sItemSubstanceTC)
 	end
 	
 	for k,v in pairs(tSubstances) do
@@ -149,7 +159,8 @@ local function calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	local sItemSubstance = window.substance.getValue()
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
-		window.substance.setValue(sItemSubstance)
+		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.substance.setValue(sItemSubstanceTC)
 	end
 	
 	for k,v in pairs(tSubstances) do
@@ -167,7 +178,8 @@ local function calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	local sItemSize = string.lower(window.size.getValue())
 	if sItemSize == '' then
 		sItemSize = sCharSize
-		window.size.setValue(sItemSize)
+		local sItemSizeTC = sItemSize:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.size.setValue(sItemSizeTC)
 	end
 	for k,v in pairs(tSizeMult) do
 		if k == sItemSize then
@@ -201,7 +213,8 @@ local function calcItemHHP(sSubstance, tSubstances)
 	local sItemSubstance = window.substance.getValue()
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
-		window.substance.setValue(sItemSubstance)
+		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.size.setValue(sItemSubstanceTC)
 	end
 	
 	for k,v in pairs(tSubstances) do
@@ -329,6 +342,7 @@ function onValueChanged()
 		calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 	else
 		calcItemHHP(sSubstance, tSubstances)
+		calcItemHHP(sSubstance, aSubstances)
 	end
 	
 	window.item_damage.onValueChanged()

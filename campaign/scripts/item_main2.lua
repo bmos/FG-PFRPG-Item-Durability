@@ -179,12 +179,11 @@ function update()
 	divider2.setVisible((bSection1 or bSection2) and bSection2a)
 	divider2a.setVisible((bSection2a) and bSection2b) -- hides divider for hhp if 2a and 2b are true
 	divider2b.setVisible((bSection2b) and bSection3) -- hides divider for substance,thickness,size if 2b and 3 are true
---	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
-		divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3) and bSection4);
-		divider8.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3 or bSection8) and bSection4);
---	else
---		divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3) and bSection4);
---	end
+	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
+		divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3) and bSection4)
+		divider8.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3 or bSection8) and bSection4) else
+		divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3) and bSection4)
+	end
 	divider4.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4) and bSection5)
 	divider5.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4 or bSection5) and bSection6)
 end
