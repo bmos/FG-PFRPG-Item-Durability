@@ -5,7 +5,7 @@
 -->
 
 <root>
-	<windowclass name="item_main">
+	<windowclass name="item_main" merge="join">
 		<margins control="0,0,0,2" />
 		<script file="campaign/scripts/item_main2.lua" />
 		<sheetdata>
@@ -57,67 +57,63 @@
 			</label_column>
 			<number_columnh name="weight" />
 
-			<line_column name="divider2a" />
+			<label_column name="substance_label" insertbefore="divider3" >
+				<static textres="item_label_substance" />
+			</label_column>
+			<string_columnh name="substance" insertbefore="divider3" >
+				<script file="campaign/scripts/item__generatehhd.lua" />
+			</string_columnh>
+			
+			<label_column name="thickness_label" insertbefore="divider3" >
+				<static textres="item_label_thickness" />
+			</label_column>
+			<number_columnh name="thickness" insertbefore="divider3" >
+				<script file="campaign/scripts/item__generatehhd.lua" />
+			</number_columnh>
+			
+			<label_column name="size_label" insertbefore="divider3" >
+				<static textres="item_label_size" />
+			</label_column>
+			<string_columnh name="size" insertbefore="divider3" >
+				<script file="campaign/scripts/item__generatehhd.lua" />
+			</string_columnh>
 
-			<label_column name="hardness_label">
+			<line_column name="divider2a" insertbefore="divider3" />
+
+			<label_column name="hardness_label" insertbefore="divider3" >
 				<static textres="item_label_hardness" />
 			</label_column>
-			<number_columnh name="hardness">
+			<number_columnh name="hardness" insertbefore="divider3" >
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
 			
-			<label_column name="hitpoints_label">
+			<label_column name="hitpoints_label" insertbefore="divider3" >
 				<static textres="item_label_hitpoints" />
 			</label_column>
-			<number_columnh name="hitpoints">
+			<number_columnh name="hitpoints" insertbefore="divider3" >
 				<script file="campaign/scripts/item__calculatedamage.lua" />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
 			
-			<label_column name="item_damage_label">
+			<label_column name="item_damage_label" insertbefore="divider3" >
 				<static textres="item_label_damage" />
 			</label_column>
-			<number_columnh name="item_damage">
+			<number_columnh name="item_damage" insertbefore="divider3" >
 				<script file="campaign/scripts/item__calculatedamage.lua" />
 				<nodrop />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
-			
-			<line_column name="divider2b" />
 
-			<label_column name="substance_label">
-				<static textres="item_label_substance" />
-			</label_column>
-			<string_columnh name="substance">
-				<script file="campaign/scripts/item__generatehhd.lua" />
-				<delaykeyupdate />
-			</string_columnh>
-			
-			<label_column name="thickness_label">
-				<static textres="item_label_thickness" />
-			</label_column>
-			<number_columnh name="thickness">
-				<script file="campaign/scripts/item__generatehhd.lua" />
-			</number_columnh>
-			
-			<label_column name="size_label">
-				<static textres="item_label_size" />
-			</label_column>
-			<string_columnh name="size">
-				<script file="campaign/scripts/item__generatehhd.lua" />
-				<delaykeyupdate />
-			</string_columnh>
-			
 			<line_column name="divider3" />
 
 			<label_column name="damage_label">
 				<static textres="item_label_damage" />
 			</label_column>
 			<string_columnh name="damage" />
-			
+
 			<label_column name="damagetype_label">
 				<static textres="item_label_dmgtype" />
 			</label_column>

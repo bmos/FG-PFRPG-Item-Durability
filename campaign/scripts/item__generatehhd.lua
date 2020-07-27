@@ -12,7 +12,7 @@ end
 --- This function adds stored information to the supplied tables.
 --	First, it creates a cascading array of tables in aSubstances containing the properties of supported material types keyed to their names.
 --	Then, it fills tSizeMult with the item hitpoint multipliers keyed to their size categories.
---	@param aSubstances This is an empty table to add material names and their info tables to.
+--	@param aSubstances This is an empty array to add material names and their info tables to.
 --	@param tSizeMult This is an empty table to add the size categories and their hitpoint multipliers to.
 local function provideValues(aSubstances, tSizeMult)	
 	-- materials from Special Materials list
@@ -63,14 +63,17 @@ local function provideValues(aSubstances, tSizeMult)
 	aSubstances['glass'] = { ['nHardness'] = 1, ['nHpIn'] = 1 }
 	aSubstances['paper'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
 	aSubstances['cloth'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
+	aSubstances['fabric'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }		-- Just in case
 	aSubstances['rope'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
 	aSubstances['ice'] = { ['nHardness'] = 0, ['nHpIn'] = 3 }
 	aSubstances['leather'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
 	aSubstances['hide'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
 	aSubstances['wood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	aSubstances['wooden'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }		-- Just in case
 	aSubstances['stone'] = { ['nHardness'] = 8, ['nHpIn'] = 15 }
 	aSubstances['iron'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
 	aSubstances['steel'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['metal'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }		-- This is an oversimplification, but I think it's warranted
 	aSubstances['mithral'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
 	aSubstances['adamantine'] = { ['nHardness'] = 20, ['nHpIn'] = 40 }
 
@@ -86,11 +89,19 @@ local function provideValues(aSubstances, tSizeMult)
 	tSizeMult['fine'] = 0.0625
 end
 
+---	This function facilitates conversion to title case.
+--	@param first The first character of the string it's processing.
+--	@param rest The complete string, except for the first character.
+--	@return first:upper()..rest:lower() The re-combined string, converted to title case.
+local function formatTitleCase(first, rest)
+   return first:upper()..rest:lower()
+end
+
 ---	This function calculates the hardness and hitpoints of armor-type items.
 --	To do this, it collects some final information and performs armor-specific hardness and hitpoint calculation (such as ignoring thickness).
 --	Once the values have been processed, it writes them back to the fields on the item sheet if they have changed.
 --	@param sSubstance This string contains the name of the most likely substance that the armor could be made of.
---	@param aSubstances This table contains material info tables keyed to the material names.
+--	@param aSubstances This array contains material info tables keyed to the material names.
 --	@param tSizeMult This table contains the hitpoint multipliers keyed to their size categories.
 --	@param sCharSize This string contains the character's size, for use if the armor size has not yet been set.
 local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
@@ -101,7 +112,8 @@ local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local sItemSize = string.lower(window.size.getValue())
 	if sItemSize == '' then			-- if item has no size assigned, use character size
 		sItemSize = sCharSize
-		window.size.setValue(sItemSize)
+		local sItemSizeTC = sItemSize:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.size.setValue(sItemSizeTC)
 	end
 	for k,v in pairs(tSizeMult) do	-- check item size against size multipliers
 		if k == sItemSize then		-- if found, multiply item hitpoints by the size multipler
@@ -111,10 +123,11 @@ local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	
 	local nItemHardness = 0
 	local nItemBonusHardness = window.bonus.getValue() * 2
-	local sItemSubstance = window.substance.getValue()
+	local sItemSubstance = string.lower(window.substance.getValue())
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
-		window.substance.setValue(sItemSubstance)
+		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.substance.setValue(sItemSubstanceTC)
 	end
 	
 	for k,v in pairs(aSubstances) do
@@ -140,16 +153,17 @@ end
 --	To do this, it collects some final information and performs weapon-specific hardness and hitpoint calculation (such as allowing for thickness).
 --	If the resulting numbers are different than what is listed on the item sheet, it writes them back to the fields on the item sheet.
 --	@param sSubstance This string contains the name of the most likely substance that the weapon could be made of.
---	@param aSubstances This table contains material info tables keyed to the material names.
+--	@param aSubstances This array contains material info tables keyed to the material names.
 --	@param tSizeMult This table contains the hitpoint multipliers keyed to their size categories.
 --	@param sCharSize This string contains the character's size, for use if the weapon's size has not yet been set.
 local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
-	local sItemSubstance = window.substance.getValue()
+	local sItemSubstance = string.lower(window.substance.getValue())
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
-		window.substance.setValue(sItemSubstance)
+		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.substance.setValue(sItemSubstanceTC)
 	end
 	
 	for k,v in pairs(aSubstances) do
@@ -167,7 +181,8 @@ local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local sItemSize = string.lower(window.size.getValue())
 	if sItemSize == '' then
 		sItemSize = sCharSize
-		window.size.setValue(sItemSize)
+		local sItemSizeTC = sItemSize:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.size.setValue(sItemSizeTC)
 	end
 	for k,v in pairs(tSizeMult) do
 		if k == sItemSize then
@@ -194,14 +209,15 @@ end
 --	To do this, it collects some final information and performs generic hardness and hitpoint calculation (allowing for thickness but not adjusting for size).
 --	If the resulting numbers are different than what is listed on the item sheet, it writes them back to the fields on the item sheet.
 --	@param sSubstance This string contains the name of the most likely substance that the item could be made of.
---	@param aSubstances This table contains material info tables keyed to the material names.
+--	@param aSubstances This array contains material info tables keyed to the material names.
 local function calcItemHHP(sSubstance, aSubstances)
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
-	local sItemSubstance = window.substance.getValue()
+	local sItemSubstance = string.lower(window.substance.getValue())
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
-		window.substance.setValue(sItemSubstance)
+		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
+		window.size.setValue(sItemSubstanceTC)
 	end
 	
 	for k,v in pairs(aSubstances) do
@@ -233,7 +249,7 @@ end
 
 --- This function creates a cascading array of tables pairing material names with their properties
 --	The top level of the table is a list of tables keyed to the name of the material whose properties they contain
---	@param aSubstances This is an empty table to fill with material info tables
+--	@param aSubstances This is an empty array to fill with material info tables
 --	@param tSizeMult This is an empty table to fill with the various size categories paired with their item hitpoint multipliers
 local function parseSpecificItems(tItemParser)
 	-- aventuring supplies
@@ -319,7 +335,6 @@ end
 function onValueChanged()
 	local sItemName = string.lower(DB.getValue(window.getDatabaseNode(), 'name', ''))
 	local sItemType = string.lower(window.type.getValue())
-
 	local sCharSize = string.lower(DB.getValue(window.getDatabaseNode().getChild('...'), 'size', 'medium'))
 	local sItemProps = string.lower(window.properties.getValue())
 	
