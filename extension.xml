@@ -3,7 +3,7 @@
 	<!-- Please see the LICENSE.md file included with this distribution for attribution and copyright information. -->
 	<properties>
 		<name>Item Durability</name>
-		<version>1.2.2</version>
+		<version>1.3.0</version>
 		<author>bmos (Wil Thieme)</author>
 		<description>This extension adds hardness, hitpoints, and damage fields to item sheets. Damage rolled can be dragged to the item damage field to have hardness subtracted and the damaged added to the previous field contents. Weapons and Armor that gain the damaged condition are penalised accordingly and destroyed items are automatically un-equipped (but not removed--yet).</description>
 		<ruleset>
