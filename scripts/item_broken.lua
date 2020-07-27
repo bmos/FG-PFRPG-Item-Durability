@@ -33,11 +33,16 @@ function brokenWeaponPenalties(nodeItem, nItemBrokenState)
 
 	if DB.getValue(nodeItem, 'critical') ~= '' then
 		local sItemCrit = DB.getValue(nodeItem, 'critical')
-		sItemCrit = sItemCrit .. '☹'
-		local nItemCritEndPos = string.find(sItemCrit, '☹', 2)
+		local nItemCritEndPos = string.len(sItemCrit)
 		local nItemCritMultPos = string.find(sItemCrit, '/', 2)
 		if not nItemCritMultPos then
-			ChatManager.SystemMessage('Error, "' .. sItemName .. '" has crit data entered incorrectly.')
+			local nItemCritMultPos = string.find(sItemCrit, 'x', 1)
+				if not nItemCritMultPos then
+					ChatManager.SystemMessage('Error, "' .. sItemName .. '" has crit data entered incorrectly.')
+				else
+					nItemCritMult = tonumber(string.sub(sItemCrit, nItemCritMultPos+1, nItemCritEndPos))
+					nItemCritRangeLower = 20
+				end
 		else
 			local sItemCritRange = string.sub(sItemCrit, 1, nItemCritMultPos-1)
 			nItemCritRangeLower = tonumber(string.sub(sItemCritRange, 1, 2))
