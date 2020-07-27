@@ -98,7 +98,9 @@ function update()
 	if updateControl('cost', bReadOnly, bID) then bSection3 = true; end
 	if updateControl('weight', bReadOnly, bID) then bSection3 = true; end
 	if updateControl('substance', bReadOnly, bID) then bSection3 = true; end
-	if bArmor then thickness.setVisible(false); thickness_label.setVisible(false) elseif
+	if bArmor then
+		thickness.setVisible(false); thickness_label.setVisible(false)
+	elseif
 		updateControl('thickness', bReadOnly, bID) then thickness.setVisible(true); thickness_label.setVisible(true); bSection3 = true
 	end
 	if updateControl("size", bReadOnly, bID) then bSection3 = true; end
@@ -176,10 +178,12 @@ function update()
 
 	divider.setVisible(bSection1 and bSection2)
 	divider2.setVisible((bSection1 or bSection2) and bSection2a)
-	divider2a.setVisible((bSection3) and bSection4) -- shows divider for hhp if 2a and 3 are true
+	divider2a.setVisible((bSection3 and bSection4) and bSection3)
+--	This is compatibility for "Advanced Character Inventory Manager" by rmilmine
 	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
 		divider8.setVisible((bSection1 or bSection2 or bSection3) and bSection8 and bSection4)
 	end
+--	End compatibility patch
 	divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection3) and bSection4)
 	divider4.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4) and bSection5)
 	divider5.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4 or bSection5) and bSection6)
