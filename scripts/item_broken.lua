@@ -2,6 +2,15 @@
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
+function onInit()
+	registerOptions()
+end
+
+function registerOptions()
+	OptionsManager.registerOption2('DESTROY_ITEM', false, 'option_header_game', 'opt_lab_item_destroyed', 'option_entry_cycler', 
+		{ labels = 'enc_opt_item_destroyed_gone', values = 'gone', baselabel = 'enc_opt_item_destroyed_unequipped', baseval = 'unequipped', default = 'unequipped' })
+end
+
 ---	This function checks if the damaged weapon's name matches any in the actions tab and, if so, adds their locations to tDamagedWeapons.
 --	@param nodeItem A databasenode pointing to the damaged item.
 --	@param tDamagedWeapons An empty table to contain the actions tab locations of any matching weapons (so weapons with multiple listings like dagger or javelin are supported).

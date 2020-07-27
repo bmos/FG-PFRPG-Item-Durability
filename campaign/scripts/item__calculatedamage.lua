@@ -13,9 +13,13 @@ function onValueChanged()
 		local nPercentDmg = nDmg / nItemHitpoints * 100
 		if nPercentDmg >= 100 then
 			window.item_damage.setColor('FFB22929')
-			if DB.getValue(window.getDatabaseNode(), 'carried') == 2 then
-				DB.setValue(window.getDatabaseNode(), 'carried', 'number', 1)
-			end
+				if (OptionsManager.isOption('DESTROY_ITEM', 'unequipped')) then
+					if DB.getValue(window.getDatabaseNode(), 'carried') == 2 then
+						DB.setValue(window.getDatabaseNode(), 'carried', 'number', 1)
+					end
+				elseif (OptionsManager.isOption('DESTROY_ITEM', 'gone')) then
+					window.getDatabaseNode().delete()
+				end
 			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 2)
 			if string.lower(window.type.getValue()) == 'weapon' then
 				BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 2)

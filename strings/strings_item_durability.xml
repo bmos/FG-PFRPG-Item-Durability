@@ -9,4 +9,7 @@
 	<string name="item_label_substance">Substance</string>
 	<string name="item_label_thickness">Thickness (In.)</string>
 	<string name="item_label_size">Size Category</string>
+	<string name="opt_lab_item_destroyed">Destroyed Items</string>
+	<string name="enc_opt_item_destroyed_gone">Remove</string>
+	<string name="enc_opt_item_destroyed_unequipped">Un-equip</string>
 </root>
