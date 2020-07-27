@@ -93,16 +93,15 @@ function update()
 	if updateControl('item_damage', bReadOnly, bID) then bSection2a = true; end
 	if updateControl('hitpoints', bReadOnly, bID) then item_damage.setVisible(true); item_damage_label.setVisible(true) end
 	item_damage.setReadOnly(false)
-	
-	local bSection2b = false
-	if updateControl('substance', bReadOnly, bID) then bSection2b = true; end
-	if bArmor then thickness.setVisible(false); thickness_label.setVisible(false) elseif
-		updateControl('thickness', bReadOnly, bID) then thickness.setVisible(true); thickness_label.setVisible(true); bSection2b = true; end
-	if updateControl('size', bReadOnly, bID) then bSection2b = true; end
-	
+		
 	local bSection3 = false
 	if updateControl('cost', bReadOnly, bID) then bSection3 = true; end
 	if updateControl('weight', bReadOnly, bID) then bSection3 = true; end
+	if updateControl('substance', bReadOnly, bID) then bSection3 = true; end
+	if bArmor then thickness.setVisible(false); thickness_label.setVisible(false) elseif
+		updateControl('thickness', bReadOnly, bID) then thickness.setVisible(true); thickness_label.setVisible(true); bSection3 = true
+	end
+	if updateControl("size", bReadOnly, bID) then bSection3 = true; end
 
 --	This is compatibility for "Advanced Character Inventory Manager" by rmilmine
 	local bSection8 = false
@@ -177,14 +176,11 @@ function update()
 
 	divider.setVisible(bSection1 and bSection2)
 	divider2.setVisible((bSection1 or bSection2) and bSection2a)
-	divider2a.setVisible((bSection2a) and bSection2b) -- hides divider for hhp if 2a and 2b are true
-	divider2b.setVisible((bSection2b) and bSection3) -- hides divider for substance,thickness,size if 2b and 3 are true
+	divider2a.setVisible((bSection3) and bSection4) -- shows divider for hhp if 2a and 3 are true
 	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
-		divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3) and bSection4)
-		divider8.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3 or bSection8) and bSection4)
-	else
-		divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3) and bSection4)
+		divider8.setVisible((bSection1 or bSection2 or bSection3) and bSection8 and bSection4)
 	end
+	divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection3) and bSection4)
 	divider4.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4) and bSection5)
 	divider5.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4 or bSection5) and bSection6)
 end
