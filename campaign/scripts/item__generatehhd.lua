@@ -10,69 +10,69 @@ function onInit()
 end
 
 --- This function adds stored information to the supplied tables.
---	First, it creates a cascading array of tables in tSubstances containing the properties of supported material types keyed to their names.
+--	First, it creates a cascading array of tables in aSubstances containing the properties of supported material types keyed to their names.
 --	Then, it fills tSizeMult with the item hitpoint multipliers keyed to their size categories.
---	@param tSubstances This is an empty table to add material names and their info tables to.
+--	@param aSubstances This is an empty array to add material names and their info tables to.
 --	@param tSizeMult This is an empty table to add the size categories and their hitpoint multipliers to.
-local function provideValues(tSubstances, tSizeMult)	
+local function provideValues(aSubstances, tSizeMult)	
 	-- materials from Special Materials list
-	tSubstances['abysium'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['angelskin'] = { ['nHardness'] = 5, ['nHpIn'] = 5 }
-	tSubstances['aszite'] = { ['nHardness'] = 15, ['nHpIn'] = 20 }
-	tSubstances['magic bridge basalt'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }	-- not sure about this hp per in figure
-	tSubstances['blight quartz'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }
-	tSubstances['bone'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }			-- I made up this nHpIn
---	tSubstances['brass'] = { ['nHardness'] = 9, ['nHpIn'] = 0 }			-- This should exist, but doesn't
-	tSubstances['chitin'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }		-- I made this up based on bone
-	tSubstances['coral'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }		-- I made this up based on bone
-	tSubstances['cryptstone'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['blood crystal'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }
-	tSubstances['darkleaf cloth'] = { ['nHardness'] = 10, ['nHpIn'] = 20 }
-	tSubstances['darkwood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
-	tSubstances['dragonhide'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }	-- hide of a dragon is typically between 1/2 inch and 1 inch thick
-	tSubstances['druchite'] = { ['nHardness'] = 10, ['nHpIn'] = 40 }
-	tSubstances['eel hide'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
-	tSubstances['elysian bronze'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
---	tSubstances['bronze'] = { ['nHardness'] = 9, ['nHpIn'] = 10 }		-- bronze armor has hardness 9 and bronze weapons use the same hardness as their base weapon
-	tSubstances['gold'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }			-- I made up this nHpIn
-	tSubstances['greenwood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
-	tSubstances['griffon mane'] = { ['nHardness'] = 1, ['nHpIn'] = 2 }
-	tSubstances['horacalcum'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
-	tSubstances['inubrix'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
-	tSubstances['cold iron'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['mindglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['noqual'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
---	tSubstances['obsidian'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }	-- obsidian weapons have half the hardness of their base weapon 
-	tSubstances['siccatite'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }	-- I made this up based on iron/steel
-	tSubstances['alchemical silver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }	-- I made this up based on iron/steel
-	tSubstances['silversheen'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
-	tSubstances['glaucite'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['spiresteel'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['net'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }			-- I made this up based on leather
-	tSubstances['living steel'] = { ['nHardness'] = 15, ['nHpIn'] = 35 }
-	tSubstances['singing steel'] = { ['nHardness'] = 10, ['nHpIn'] = 20 }
-	tSubstances['sunsilver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
-	tSubstances['silver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }		-- This is a workaround because nobody says "alchemical silver" in their weapon names
---	tSubstances['viridium'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }		-- viridium weapons have half the hardness of their base weapon 
-	tSubstances['voidglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['whipwood'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
-	tSubstances['voidglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['wyroot'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	aSubstances['abysium'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['angelskin'] = { ['nHardness'] = 5, ['nHpIn'] = 5 }
+	aSubstances['aszite'] = { ['nHardness'] = 15, ['nHpIn'] = 20 }
+	aSubstances['magic bridge basalt'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }	-- not sure about this hp per in figure
+	aSubstances['blight quartz'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }
+	aSubstances['bone'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }			-- I made up this nHpIn
+--	aSubstances['brass'] = { ['nHardness'] = 9, ['nHpIn'] = 0 }			-- This should exist, but doesn't
+	aSubstances['chitin'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }		-- I made this up based on bone
+	aSubstances['coral'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }		-- I made this up based on bone
+	aSubstances['cryptstone'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['blood crystal'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }
+	aSubstances['darkleaf cloth'] = { ['nHardness'] = 10, ['nHpIn'] = 20 }
+	aSubstances['darkwood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	aSubstances['dragonhide'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }	-- hide of a dragon is typically between 1/2 inch and 1 inch thick
+	aSubstances['druchite'] = { ['nHardness'] = 10, ['nHpIn'] = 40 }
+	aSubstances['eel hide'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
+	aSubstances['elysian bronze'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+--	aSubstances['bronze'] = { ['nHardness'] = 9, ['nHpIn'] = 10 }		-- bronze armor has hardness 9 and bronze weapons use the same hardness as their base weapon
+	aSubstances['gold'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }			-- I made up this nHpIn
+	aSubstances['greenwood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	aSubstances['griffon mane'] = { ['nHardness'] = 1, ['nHpIn'] = 2 }
+	aSubstances['horacalcum'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
+	aSubstances['inubrix'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	aSubstances['cold iron'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['mindglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['noqual'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+--	aSubstances['obsidian'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }	-- obsidian weapons have half the hardness of their base weapon 
+	aSubstances['siccatite'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }	-- I made this up based on iron/steel
+	aSubstances['alchemical silver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }	-- I made this up based on iron/steel
+	aSubstances['silversheen'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
+	aSubstances['glaucite'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['spiresteel'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['net'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }			-- I made this up based on leather
+	aSubstances['living steel'] = { ['nHardness'] = 15, ['nHpIn'] = 35 }
+	aSubstances['singing steel'] = { ['nHardness'] = 10, ['nHpIn'] = 20 }
+	aSubstances['sunsilver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
+	aSubstances['silver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }		-- This is a workaround because nobody says "alchemical silver" in their weapon names
+--	aSubstances['viridium'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }		-- viridium weapons have half the hardness of their base weapon 
+	aSubstances['voidglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['whipwood'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
+	aSubstances['voidglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['wyroot'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
 	
 	-- substances from Damaging Items list
-	tSubstances['glass'] = { ['nHardness'] = 1, ['nHpIn'] = 1 }
-	tSubstances['paper'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
-	tSubstances['cloth'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
-	tSubstances['rope'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
-	tSubstances['ice'] = { ['nHardness'] = 0, ['nHpIn'] = 3 }
-	tSubstances['leather'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
-	tSubstances['hide'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
-	tSubstances['wood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
-	tSubstances['stone'] = { ['nHardness'] = 8, ['nHpIn'] = 15 }
-	tSubstances['iron'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['steel'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	tSubstances['mithral'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
-	tSubstances['adamantine'] = { ['nHardness'] = 20, ['nHpIn'] = 40 }
+	aSubstances['glass'] = { ['nHardness'] = 1, ['nHpIn'] = 1 }
+	aSubstances['paper'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
+	aSubstances['cloth'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
+	aSubstances['rope'] = { ['nHardness'] = 0, ['nHpIn'] = 2 }
+	aSubstances['ice'] = { ['nHardness'] = 0, ['nHpIn'] = 3 }
+	aSubstances['leather'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
+	aSubstances['hide'] = { ['nHardness'] = 2, ['nHpIn'] = 5 }
+	aSubstances['wood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
+	aSubstances['stone'] = { ['nHardness'] = 8, ['nHpIn'] = 15 }
+	aSubstances['iron'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['steel'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
+	aSubstances['mithral'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
+	aSubstances['adamantine'] = { ['nHardness'] = 20, ['nHpIn'] = 40 }
 
 	-- hitpoint multipliers for each size category
 	tSizeMult['colossal'] = 16
@@ -98,10 +98,10 @@ end
 --	To do this, it collects some final information and performs armor-specific hardness and hitpoint calculation (such as ignoring thickness).
 --	Once the values have been processed, it writes them back to the fields on the item sheet if they have changed.
 --	@param sSubstance This string contains the name of the most likely substance that the armor could be made of.
---	@param tSubstances This table contains material info tables keyed to the material names.
+--	@param aSubstances This array contains material info tables keyed to the material names.
 --	@param tSizeMult This table contains the hitpoint multipliers keyed to their size categories.
 --	@param sCharSize This string contains the character's size, for use if the armor size has not yet been set.
-local function calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
+local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local nItemHpAc = window.ac.getValue() * 5
 	local nItemHpBonus = window.bonus.getValue() * 10
 	local nItemHp = nItemHpAc + nItemHpBonus
@@ -127,7 +127,7 @@ local function calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 		window.substance.setValue(sItemSubstanceTC)
 	end
 	
-	for k,v in pairs(tSubstances) do
+	for k,v in pairs(aSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
 				if kk == 'nHardness' then
@@ -150,10 +150,10 @@ end
 --	To do this, it collects some final information and performs weapon-specific hardness and hitpoint calculation (such as allowing for thickness).
 --	If the resulting numbers are different than what is listed on the item sheet, it writes them back to the fields on the item sheet.
 --	@param sSubstance This string contains the name of the most likely substance that the weapon could be made of.
---	@param tSubstances This table contains material info tables keyed to the material names.
+--	@param aSubstances This array contains material info tables keyed to the material names.
 --	@param tSizeMult This table contains the hitpoint multipliers keyed to their size categories.
 --	@param sCharSize This string contains the character's size, for use if the weapon's size has not yet been set.
-local function calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
+local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
 	local sItemSubstance = window.substance.getValue()
@@ -163,7 +163,7 @@ local function calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
 		window.substance.setValue(sItemSubstanceTC)
 	end
 	
-	for k,v in pairs(tSubstances) do
+	for k,v in pairs(aSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
 				if kk == 'nHardness' then
@@ -206,8 +206,8 @@ end
 --	To do this, it collects some final information and performs generic hardness and hitpoint calculation (allowing for thickness but not adjusting for size).
 --	If the resulting numbers are different than what is listed on the item sheet, it writes them back to the fields on the item sheet.
 --	@param sSubstance This string contains the name of the most likely substance that the item could be made of.
---	@param tSubstances This table contains material info tables keyed to the material names.
-local function calcItemHHP(sSubstance, tSubstances)
+--	@param aSubstances This array contains material info tables keyed to the material names.
+local function calcItemHHP(sSubstance, aSubstances)
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
 	local sItemSubstance = window.substance.getValue()
@@ -217,7 +217,7 @@ local function calcItemHHP(sSubstance, tSubstances)
 		window.size.setValue(sItemSubstanceTC)
 	end
 	
-	for k,v in pairs(tSubstances) do
+	for k,v in pairs(aSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
 				if kk == 'nHardness' then
@@ -246,7 +246,7 @@ end
 
 --- This function creates a cascading array of tables pairing material names with their properties
 --	The top level of the table is a list of tables keyed to the name of the material whose properties they contain
---	@param tSubstances This is an empty table to fill with material info tables
+--	@param aSubstances This is an empty array to fill with material info tables
 --	@param tSizeMult This is an empty table to fill with the various size categories paired with their item hitpoint multipliers
 local function parseSpecificItems(tItemParser)
 	-- aventuring supplies
@@ -283,21 +283,21 @@ local function parseSpecificItems(tItemParser)
 	tItemParser['tower'] = 'steel'
 end
 
----	This function searches sItemName for any of the keys in tSubstances.
+---	This function searches sItemName for any of the keys in aSubstances.
 --	If it finds one, it stops searching and returns the key.
---	If none of the materials in tSubstances are a match, it checks against the keys that parseSpecificItems() puts in tItemParser.
+--	If none of the materials in aSubstances are a match, it checks against the keys that parseSpecificItems() puts in tItemParser.
 --	If it finds one, it stops searching and returns the key.
 --	If none of the materials in tItemParser are a match, it returns an empty string.
 --	@param sItemName A string contining the full name of the item being checked.
---	@param tSubstances A table contining tables of properties keyed to the name of the materials they describe.
+--	@param aSubstances An array contining tables of properties keyed to the name of the materials they describe.
 --	@see parseSpecificItems(tItemParser)
 --	@return sSubstance A string containing the first material name found in sItemName.
-local function checkItemName(sItemName, tSubstances)
+local function checkItemName(sItemName, aSubstances)
 	local sSubstance = ''
 	
 	local tItemParser = {}
 	parseSpecificItems(tItemParser)
-	for k,v in pairs(tSubstances) do
+	for k,v in pairs(aSubstances) do
 		if string.match(sItemName, k, 1) then
 			sSubstance = k
 			break
@@ -315,33 +315,31 @@ end
 
 --- This function assembles common data needed for processing and passes it to the relevant functions.
 --	First, it finds the name and type of the item.
---	Next, it requests the size multiplier (tSizeMult) and substance data (tSubstances) tables from provideValues()
+--	Next, it requests the size multiplier (tSizeMult) and substance data (aSubstances) tables from provideValues()
 --	Thirdly, it calls checkItemName() to look for substance clues in sItemName
 --	After that, it uses the data in sItemType to pas the relevant information to the applicable calculation formula (calcArmorHHP, calcWeaponHHP, or calcItemHHP).
 --	Finally, triggers a recalculation of item damage color via its onValueChanged() function in case the ratio has changed.
---	@see provideValues(tSubstances, tSizeMult)
---	@see checkItemName(sItemName, tSubstances)
---	@see calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
---	@see calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
---	@see calcItemHHP(sSubstance, tSubstances)
+--	@see provideValues(aSubstances, tSizeMult)
+--	@see checkItemName(sItemName, aSubstances)
+--	@see calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
+--	@see calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
+--	@see calcItemHHP(sSubstance, aSubstances)
 function onValueChanged()
 	local sItemName = string.lower(DB.getValue(window.getDatabaseNode(), 'name', ''))
 	local sItemType = string.lower(window.type.getValue())
-
 	local sCharSize = string.lower(DB.getValue(window.getDatabaseNode().getChild('...'), 'size', 'medium'))
 	
 	local tSizeMult = {}
-	local tSubstances = {}
-	provideValues(tSubstances, tSizeMult)
+	local aSubstances = {}
+	provideValues(aSubstances, tSizeMult)
 
-	local sSubstance = checkItemName(sItemName, tSubstances)
+	local sSubstance = checkItemName(sItemName, aSubstances)
 
 	if sItemType == 'armor' then
-		calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
+		calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	elseif sItemType == 'weapon' then
-		calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
+		calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	else
-		calcItemHHP(sSubstance, tSubstances)
 		calcItemHHP(sSubstance, aSubstances)
 	end
 	
