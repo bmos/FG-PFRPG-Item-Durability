@@ -181,7 +181,8 @@ function update()
 	divider2b.setVisible((bSection2b) and bSection3) -- hides divider for substance,thickness,size if 2b and 3 are true
 	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
 		divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3) and bSection4)
-		divider8.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3 or bSection8) and bSection4) else
+		divider8.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3 or bSection8) and bSection4)
+	else
 		divider3.setVisible((bSection1 or bSection2 or bSection2a or bSection2b or bSection3) and bSection4)
 	end
 	divider4.setVisible((bSection1 or bSection2 or bSection2a or bSection3 or bSection4) and bSection5)
