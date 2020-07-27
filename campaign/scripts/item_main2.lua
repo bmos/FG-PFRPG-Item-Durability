@@ -143,12 +143,7 @@ function update()
 	end
 --	End compatibility patch
 
---	This is compatibility for "Advanced Character Inventory Manager" by rmilmine
-	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
-		if updateControl('properties', bReadOnly, bID) then	bSection4 = true; end -- shows the divider between cost/size and hardness/damage
-	else
-		if updateControl('properties', bReadOnly, bID and (bArmor or bWeapon)) then bSection4 = true; end -- shows the divider between cost/size and hardness/damage
-	end
+	if updateControl('properties', bReadOnly, bID and (bArmor or bWeapon)) then bSection4 = true; end -- shows the divider between cost/size and hardness/damage
 	
 	local bSection5 = false
 	if updateControl('bonus', bReadOnly, bID and (bWeapon or bArmor)) then bSection5 = true; end
@@ -184,7 +179,7 @@ function update()
 
 	divider.setVisible(bSection1 and bSection2)
 	divider2.setVisible((bSection1 or bSection2) and bSection2a)
-	divider2a.setVisible((bSection3 and bSection4) and bSection3)
+	divider2a.setVisible((bSection3 or bSection4) and bSection3)
 --	This is compatibility for "Advanced Character Inventory Manager" by rmilmine
 	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
 		divider8.setVisible((bSection1 or bSection2 or bSection3 or bSection4) and bSection8)
