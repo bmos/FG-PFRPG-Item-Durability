@@ -270,21 +270,26 @@ local function parseSpecificItems(tItemParser)
 	tItemParser['tower'] = 'steel'
 end
 
----	This function searches sItemName for any of the keys in tSubstances.
---	If it finds one, it stops searching and returns the key.
---	If none of the materials in tSubstances are a match, it checks against the keys that parseSpecificItems() puts in tItemParser.
---	If it finds one, it stops searching and returns the key.
+---	This function searches sItemName and sItemProps for any of the keys in aSubstances.
+--	If it ever finds one, it stops searching and returns the key.
+--	First, it searches sItemProps for any of the material-name keys in aSubstances.
+--	If none of the materials are found in sItemProps, it checks sItemName for the same list of materials, along with the item-name keys in tItemParser.
 --	If none of the materials in tItemParser are a match, it returns an empty string.
 --	@param sItemName A string contining the full name of the item being checked.
---	@param tSubstances A table contining tables of properties keyed to the name of the materials they describe.
+--	@param sItemProps A string contining the full properties string of the item being checked.
+--	@param aSubstances An array contining tables of properties keyed to the name of the materials they describe.
 --	@see parseSpecificItems(tItemParser)
 --	@return sSubstance A string containing the first material name found in sItemName.
-local function checkItemName(sItemName, tSubstances)
+local function checkItemMaterial(sItemName, sItemProps, aSubstances)
 	local sSubstance = ''
 	
 	local tItemParser = {}
 	parseSpecificItems(tItemParser)
-	for k,v in pairs(tSubstances) do
+	for k,v in pairs(aSubstances) do
+		if string.match(sItemProps, k, 1) then
+			sSubstance = k
+			break
+		end
 		if string.match(sItemName, k, 1) then
 			sSubstance = k
 			break
@@ -302,26 +307,27 @@ end
 
 --- This function assembles common data needed for processing and passes it to the relevant functions.
 --	First, it finds the name and type of the item.
---	Next, it requests the size multiplier (tSizeMult) and substance data (tSubstances) tables from provideValues()
---	Thirdly, it calls checkItemName() to look for substance clues in sItemName
+--	Next, it requests the size multiplier (tSizeMult) and substance data (aSubstances) tables from provideValues()
+--	Thirdly, it calls checkItemMaterial() to look for substance clues in sItemName
 --	After that, it uses the data in sItemType to pas the relevant information to the applicable calculation formula (calcArmorHHP, calcWeaponHHP, or calcItemHHP).
 --	Finally, triggers a recalculation of item damage color via its onValueChanged() function in case the ratio has changed.
---	@see provideValues(tSubstances, tSizeMult)
---	@see checkItemName(sItemName, tSubstances)
---	@see calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
---	@see calcWeaponHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
---	@see calcItemHHP(sSubstance, tSubstances)
+--	@see provideValues(aSubstances, tSizeMult)
+--	@see checkItemMaterial(sItemName, sItemProps, aSubstances)
+--	@see calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
+--	@see calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
+--	@see calcItemHHP(sSubstance, aSubstances)
 function onValueChanged()
 	local sItemName = string.lower(DB.getValue(window.getDatabaseNode(), 'name', ''))
 	local sItemType = string.lower(window.type.getValue())
 
 	local sCharSize = string.lower(DB.getValue(window.getDatabaseNode().getChild('...'), 'size', 'medium'))
+	local sItemProps = string.lower(window.properties.getValue())
 	
 	local tSizeMult = {}
 	local tSubstances = {}
 	provideValues(tSubstances, tSizeMult)
 
-	local sSubstance = checkItemName(sItemName, tSubstances)
+	local sSubstance = checkItemMaterial(sItemName, sItemProps, aSubstances)
 
 	if sItemType == 'armor' then
 		calcArmorHHP(sSubstance, tSubstances, tSizeMult, sCharSize)
