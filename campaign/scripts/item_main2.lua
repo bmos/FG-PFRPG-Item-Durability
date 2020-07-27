@@ -156,8 +156,8 @@ function update()
 	description.setReadOnly(bReadOnly)
 
 --	This is compatibility for "Enhanced Items" by Llisandur
-	local bSection7 = false
 	if bPFRPGEILoaded then
+		local bSection7 = false
 		updateControl("sourcebook", bReadOnly, bID)
 		divider6.setVisible(false)
 		gmonly_label.setVisible(false)
