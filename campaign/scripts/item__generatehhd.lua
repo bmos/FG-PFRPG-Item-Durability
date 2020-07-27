@@ -106,8 +106,6 @@ end
 --	@param sCharSize This string contains the character's size, for use if the armor size has not yet been set.
 local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local nItemHpAc = window.ac.getValue() * 5
-	local nItemHpBonus = window.bonus.getValue() * 10
-	local nItemHp = nItemHpAc + nItemHpBonus
 
 	local sItemSize = string.lower(window.size.getValue())
 	if sItemSize == '' then			-- if item has no size assigned, use character size
@@ -117,7 +115,7 @@ local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	end
 	for k,v in pairs(tSizeMult) do	-- check item size against size multipliers
 		if k == sItemSize then		-- if found, multiply item hitpoints by the size multipler
-			nItemHp = nItemHp * tSizeMult[k]
+			nItemHpAc = nItemHpAc * tSizeMult[k]
 		end
 	end
 	
@@ -139,6 +137,9 @@ local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 			end
 		end
 	end
+
+	local nItemHpBonus = window.bonus.getValue() * 10
+	local nItemHp = nItemHpAc + nItemHpBonus
 	
 	if window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
 		window.hitpoints.setValue(math.floor(nItemHp))
@@ -166,11 +167,12 @@ local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 		window.substance.setValue(sItemSubstanceTC)
 	end
 	
+	local nItemBonusHardness = window.bonus.getValue() * 2
 	for k,v in pairs(aSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
 				if kk == 'nHardness' then
-					nItemHardness = vv
+					nItemHardness = vv + nItemBonusHardness
 				elseif kk == 'nHpIn' then
 					nItemHpPerIn = vv
 				end
@@ -194,7 +196,9 @@ local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	if window.thickness.getValue() then
 		nThickness = window.thickness.getValue()
 	end
-	local nItemHp = nItemHpPerIn * nThickness 
+
+	local nItemHpBonus = window.bonus.getValue() * 10
+	local nItemHp = nItemHpPerIn * nThickness + nItemHpBonus
 	
 	if window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
 		window.hitpoints.setValue(math.floor(nItemHp))
