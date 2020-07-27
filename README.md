@@ -7,7 +7,6 @@ If the item is a suit of armor or a shield, the bonus it grants to AC is halved,
 
 # Compatibility
 This extension has been tested with [FantasyGrounds Classic](https://www.fantasygrounds.com/home/FantasyGroundsClassic.php) 3.3.11 and [FantasyGrounds Unity](https://www.fantasygrounds.com/home/FantasyGroundsUnity.php) 4.0.0 (2020-07-16).
-It's not compatible with rmilmine's [Advanced Character Inventory Manager](https://www.fantasygrounds.com/forums/showthread.php?57819-Advanced-Character-Iventory-Manager-for-3-5E-and-Pathfinder) or [Customised Item Generator](https://www.fantasygrounds.com/forums/showthread.php?57818-Customized-Item-Generator-for-3-5E-and-Pathfinder). It's not compatible with any other extension that replaced item_main.lua. This may change in the future, but for now I wouldn't recommend mixing and matching these.
 
 # Features
 * Simplifies tracking hitpoints of weapons, armor, and equipment.
