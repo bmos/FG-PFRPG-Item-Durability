@@ -221,7 +221,7 @@ local function calcItemHHP(sSubstance, aSubstances)
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
 		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
-		window.size.setValue(sItemSubstanceTC)
+		window.substance.setValue(sItemSubstanceTC)
 	end
 	
 	for k,v in pairs(aSubstances) do
