@@ -220,6 +220,7 @@
 						window.substance.onValueChanged()
 					end
 				</script>
+				<displaysign />
 			</number_columnh>
 
 			<label_column name="aura_label">
