@@ -7,40 +7,54 @@ function onInit()
 end
 
 function onValueChanged()
-	local nItemHitpoints = window.hitpoints.getValue()
-	if nItemHitpoints and nItemHitpoints >= 1 then
-		local nDmg = window.item_damage.getValue()
-		local nPercentDmg = nDmg / nItemHitpoints * 100
-		if nPercentDmg >= 100 then
-			window.item_damage.setColor('FFB22929')
-				if (OptionsManager.isOption('DESTROY_ITEM', 'unequipped')) then
-					if DB.getValue(window.getDatabaseNode(), 'carried') == 2 then
-						DB.setValue(window.getDatabaseNode(), 'carried', 'number', 1)
+	if getDatabaseNode().getChild('...') ~= 'treasureparcelitemlist' then
+		local nItemHitpoints = window.hitpoints.getValue()
+		if nItemHitpoints and nItemHitpoints >= 1 then
+			local nDmg = window.item_damage.getValue()
+			local nPercentDmg = nDmg / nItemHitpoints * 100
+			if nPercentDmg >= 100 then
+				window.item_damage.setColor('FFB22929')
+					if (OptionsManager.isOption('DESTROY_ITEM', 'unequipped')) then
+						if DB.getValue(window.getDatabaseNode(), 'carried') == 2 then
+							DB.setValue(window.getDatabaseNode(), 'carried', 'number', 1)
+						end
+					elseif (OptionsManager.isOption('DESTROY_ITEM', 'gone')) then
+						window.getDatabaseNode().delete()
 					end
-				elseif (OptionsManager.isOption('DESTROY_ITEM', 'gone')) then
-					window.getDatabaseNode().delete()
+				DB.setValue(window.getDatabaseNode(), 'broken', 'number', 2)
+				if string.lower(window.type.getValue()) == 'weapon' then
+					BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 2)
 				end
-			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 2)
-			if string.lower(window.type.getValue()) == 'weapon' then
-				BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 2)
-			end
-			if string.lower(window.type.getValue()) == 'armor' then
-				BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 2)
-				window.ac.setReadOnly(true)
-				window.checkpenalty.setReadOnly(true)
-				window.bonus.setReadOnly(true)
-			end
-		elseif nPercentDmg >= 50 then
-			window.item_damage.setColor('FFEB7B00')
-			DB.setValue(window.getDatabaseNode(), 'broken', 'number', 1)
-			if string.lower(window.type.getValue()) == 'weapon' then
-				BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 1)
-			end
-			if string.lower(window.type.getValue()) == 'armor' then
-				BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 1)
-				window.ac.setReadOnly(true)
-				window.checkpenalty.setReadOnly(true)
-				window.bonus.setReadOnly(true)
+				if string.lower(window.type.getValue()) == 'armor' then
+					BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 2)
+					window.ac.setReadOnly(true)
+					window.checkpenalty.setReadOnly(true)
+					window.bonus.setReadOnly(true)
+				end
+			elseif nPercentDmg >= 50 then
+				window.item_damage.setColor('FFEB7B00')
+				DB.setValue(window.getDatabaseNode(), 'broken', 'number', 1)
+				if string.lower(window.type.getValue()) == 'weapon' then
+					BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 1)
+				end
+				if string.lower(window.type.getValue()) == 'armor' then
+					BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 1)
+					window.ac.setReadOnly(true)
+					window.checkpenalty.setReadOnly(true)
+					window.bonus.setReadOnly(true)
+				end
+			else
+				window.item_damage.setColor('FF000000')
+				DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
+				if string.lower(window.type.getValue()) == 'weapon' then
+					BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 0)
+				end
+				if string.lower(window.type.getValue()) == 'armor' then
+					BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 0)
+					window.ac.setReadOnly(false)
+					window.checkpenalty.setReadOnly(false)
+					window.bonus.setReadOnly(false)
+				end
 			end
 		else
 			window.item_damage.setColor('FF000000')
@@ -54,18 +68,6 @@ function onValueChanged()
 				window.checkpenalty.setReadOnly(false)
 				window.bonus.setReadOnly(false)
 			end
-		end
-	else
-		window.item_damage.setColor('FF000000')
-		DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
-		if string.lower(window.type.getValue()) == 'weapon' then
-			BrokenPenalties.brokenWeaponPenalties(window.getDatabaseNode(), 0)
-		end
-		if string.lower(window.type.getValue()) == 'armor' then
-			BrokenPenalties.brokenArmorPenalties(window.getDatabaseNode(), 0)
-			window.ac.setReadOnly(false)
-			window.checkpenalty.setReadOnly(false)
-			window.bonus.setReadOnly(false)
 		end
 	end
 end
