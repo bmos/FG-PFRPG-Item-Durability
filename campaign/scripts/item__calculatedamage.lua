@@ -8,7 +8,7 @@ end
 
 function onValueChanged()
 	local nItemHitpoints = window.hitpoints.getValue()
-	if nItemHitpoints and nItemHitpoints >= 1 then
+	if getDatabaseNode().getChild('...').getName() == 'inventorylist' and nItemHitpoints and nItemHitpoints >= 1 then
 		local nDmg = window.item_damage.getValue()
 		local nPercentDmg = nDmg / nItemHitpoints * 100
 		if nPercentDmg >= 100 then
@@ -55,7 +55,7 @@ function onValueChanged()
 				window.bonus.setReadOnly(false)
 			end
 		end
-	else
+	elseif getDatabaseNode().getChild('...').getName() == 'inventorylist' then
 		window.item_damage.setColor('FF000000')
 		DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
 		if string.lower(window.type.getValue()) == 'weapon' then
