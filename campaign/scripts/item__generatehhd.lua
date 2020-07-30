@@ -260,6 +260,7 @@ local function parseSpecificItems(tItemParser)
 	tItemParser['vial'] = 'glass'
 	tItemParser['potion'] = 'glass'
 	tItemParser['scroll of'] = 'paper'
+	tItemParser['wand'] = 'wood'
 	tItemParser['torch'] = 'wood'
 	tItemParser['bottle'] = 'glass'
 	tItemParser['outfit'] = 'cloth'
