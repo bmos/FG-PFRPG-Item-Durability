@@ -127,19 +127,21 @@ local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 		local sItemSubstanceTC = sItemSubstance:gsub("(%a)([%w_']*)", formatTitleCase)
 		window.substance.setValue(sItemSubstanceTC)
 	end
+
+	local nHpMult = 1
 	
 	for k,v in pairs(aSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
-				if kk == 'nHardness' then
-					nItemHardness = vv + nItemBonusHardness
+				if kk == 'nHardness' then nItemHardness = vv + nItemBonusHardness
+				elseif kk == 'nArmorHpMult' then nHpMult = vv
 				end
 			end
 		end
 	end
 
 	local nItemHpBonus = window.bonus.getValue() * 10
-	local nItemHp = nItemHpAc + nItemHpBonus
+	local nItemHp = (nItemHpAc * nHpMult) + nItemHpBonus
 	
 	if window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
 		window.hitpoints.setValue(math.floor(nItemHp))
@@ -167,14 +169,17 @@ local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 		window.substance.setValue(sItemSubstanceTC)
 	end
 	
+	local nHpMult = 1
+	local nSubstanceHpBonus = 0
+
 	local nItemBonusHardness = window.bonus.getValue() * 2
 	for k,v in pairs(aSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
-				if kk == 'nHardness' then
-					nItemHardness = vv + nItemBonusHardness
-				elseif kk == 'nHpIn' then
-					nItemHpPerIn = vv
+				if kk == 'nHardness' then nItemHardness = vv + nItemBonusHardness
+				elseif kk == 'nHpIn' then nItemHpPerIn = vv
+				elseif kk == 'nWeaponHpMult' then nHpMult = vv
+				elseif kk == 'nWeaponHpBonus' then nSubstanceHpBonus = vv
 				end
 			end
 		end
@@ -198,7 +203,7 @@ local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	end
 
 	local nItemHpBonus = window.bonus.getValue() * 10
-	local nItemHp = nItemHpPerIn * nThickness + nItemHpBonus
+	local nItemHp = (nItemHpPerIn * nThickness * nHpMult) + nItemHpBonus + nSubstanceHpBonus
 	
 	if window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
 		window.hitpoints.setValue(math.floor(nItemHp))
@@ -227,11 +232,7 @@ local function calcItemHHP(sSubstance, aSubstances)
 	for k,v in pairs(aSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
-				if kk == 'nHardness' then
-					nItemHardness = vv
-				elseif kk == 'nHpIn' then
-					nItemHpPerIn = vv
-				end
+				if kk == 'nHardness' then nItemHardness = vv elseif kk == 'nHpIn' then nItemHpPerIn = vv end
 			end
 		end
 	end
