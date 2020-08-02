@@ -26,7 +26,7 @@ local function provideValues(aSubstances, tSizeMult)
 	aSubstances['chitin'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }		-- I made this up based on bone
 	aSubstances['coral'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }		-- I made this up based on bone
 	aSubstances['cryptstone'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	aSubstances['blood crystal'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }
+	aSubstances['blood crystal'] = { ['nHardness'] = 10, ['nHpIn'] = 10, ['nWeaponHpMult'] = 0.5 }
 	aSubstances['darkleaf cloth'] = { ['nHardness'] = 10, ['nHpIn'] = 20 }
 	aSubstances['darkwood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
 	aSubstances['dragonhide'] = { ['nHardness'] = 10, ['nHpIn'] = 10 }	-- hide of a dragon is typically between 1/2 inch and 1 inch thick
@@ -37,7 +37,7 @@ local function provideValues(aSubstances, tSizeMult)
 	aSubstances['gold'] = { ['nHardness'] = 5, ['nHpIn'] = 12 }			-- I made up this nHpIn
 	aSubstances['greenwood'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
 	aSubstances['griffon mane'] = { ['nHardness'] = 1, ['nHpIn'] = 2 }
-	aSubstances['horacalcum'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
+	aSubstances['horacalcum'] = { ['nHardness'] = 15, ['nHpIn'] = 30, ['nArmorHpMult'] = 1.25, ['nWeaponHpMult'] = 1.25 }
 	aSubstances['inubrix'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
 	aSubstances['cold iron'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
 	aSubstances['mindglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
@@ -55,7 +55,7 @@ local function provideValues(aSubstances, tSizeMult)
 	aSubstances['silver'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }		-- This is a workaround because nobody says "alchemical silver" in their weapon names
 --	aSubstances['viridium'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }		-- viridium weapons have half the hardness of their base weapon 
 	aSubstances['voidglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
-	aSubstances['whipwood'] = { ['nHardness'] = 8, ['nHpIn'] = 10 }
+	aSubstances['whipwood'] = { ['nHardness'] = 8, ['nHpIn'] = 10, ['nWeaponHpBonus'] = 5 }
 	aSubstances['voidglass'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
 	aSubstances['wyroot'] = { ['nHardness'] = 5, ['nHpIn'] = 10 }
 	
@@ -75,7 +75,7 @@ local function provideValues(aSubstances, tSizeMult)
 	aSubstances['steel'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
 	aSubstances['metal'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }		-- This is an oversimplification, but I think it's warranted
 	aSubstances['mithral'] = { ['nHardness'] = 15, ['nHpIn'] = 30 }
-	aSubstances['adamantine'] = { ['nHardness'] = 20, ['nHpIn'] = 40 }
+	aSubstances['adamantine'] = { ['nHardness'] = 20, ['nHpIn'] = 40, ['nArmorHpMult'] = 1.33 }
 
 	-- hitpoint multipliers for each size category
 	tSizeMult['colossal'] = 16
