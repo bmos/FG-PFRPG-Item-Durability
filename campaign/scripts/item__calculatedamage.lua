@@ -137,8 +137,13 @@ local function findTypedDamage(s, bIsRanged)
 end
 
 ---	
-local function setItemDamage(nDmgTotal)
-	local nModifiedDamage = nDmgTotal - window.hardness.getValue()
+local function setItemDamage(nDmgTotal, bBypassHardness, nBypassThresh)
+	local nHardness = window.hardness.getValue()
+	if bBypassHardness then
+		if nBypassThresh > nHardness then nHardness = 0 end
+	end
+
+	local nModifiedDamage = nDmgTotal - nHardness
 	if nModifiedDamage > 0 then
 		local nDmg = window.item_damage.getValue()
 		window.item_damage.setValue(nDmg + nModifiedDamage)
@@ -146,7 +151,7 @@ local function setItemDamage(nDmgTotal)
 end
 
 ---	
-local function findTypes(t)
+local function findTypes(t, bBypassHardness, nBypassThresh)
 	local nDmgTotal = 0
 	local bIsRanged = false
 	
@@ -163,7 +168,7 @@ local function findTypes(t)
 		end
 	end
 
-	setItemDamage(nDmgTotal)
+	setItemDamage(nDmgTotal, bBypassHardness, nBypassThresh)
 end
 
 ---	This function splits a dragged roll description into pieces in a table
@@ -178,7 +183,10 @@ local function splitDamageDrop(s)
 		fieldstart = nexti_e + 1
 	until fieldstart > string.len(s)
 	
-	findTypes(t)
+	local bBypassHardness = false
+	local nBypassThresh = nil
+	if string.find(string.lower(s), 'adamantine', 1) then bBypassHardness = true; nBypassThresh = 20 end
+	findTypes(t, bBypassHardness, nBypassThresh)
 end
 
 function onDrop(x, y, draginfo)
