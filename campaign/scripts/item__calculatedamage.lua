@@ -123,7 +123,7 @@ local function findTypedDamage(s, bIsRanged)
 	local tTypes = {}
 	
 	local sDmgStart = string.find(s, '%(', nFieldStart)
-	local sDmg = string.sub(s, sDmgStart + 1, string.len(s)-1)
+	local sDmg = string.sub(s, sDmgStart + 1, string.len(s) - 1)
 	local sDmgTotalStart = string.find(sDmg, '=', nFieldStart)
 	if sDmgTotalStart then sDmg = string.sub(sDmg, sDmgTotalStart + 1, string.len(s)) end
 
@@ -155,7 +155,7 @@ local function findTypes(t, bBypassHardness, nBypassThresh)
 	local nDmgTotal = 0
 	local bIsRanged = false
 	
-	for _,v in ipairs(t) do
+	for _,v in pairs(t) do
 		local fieldstart = 1
 
 		local nTypePosition = string.find(v, '%[TYPE: ', fieldstart)
@@ -163,7 +163,7 @@ local function findTypes(t, bBypassHardness, nBypassThresh)
 		
 		if nTypePosition then
 			local nStop = string.len(v)
-			local s = string.sub(v, nTypePosition + 7, nStop-1)
+			local s = string.sub(v, nTypePosition + 7, nStop - 1)
 			nDmgTotal = nDmgTotal + findTypedDamage(s, bIsRanged)
 		end
 	end
