@@ -118,15 +118,14 @@ end
 ---	
 local function findTypedDamage(s, bIsRanged)
 	local nFieldStart = 1
-
-	local nTypesEnd = string.find(s, ' ', nFieldStart)
-	local sTypes = string.lower(string.sub(s, nFieldStart, nTypesEnd - 1) .. ',')
-	local tTypes = {}
 	
 	local sDmgStart = string.find(s, '%(', nFieldStart)
 	local sDmg = string.sub(s, sDmgStart + 1, string.len(s) - 1)
 	local sDmgTotalStart = string.find(sDmg, '=', nFieldStart)
 	if sDmgTotalStart then sDmg = string.sub(sDmg, sDmgTotalStart + 1, string.len(s)) end
+
+	local sTypes = string.lower(string.sub(s, nFieldStart, sDmgStart - 2) .. ',')
+	local tTypes = {}
 
 	repeat
 		local nNextI = string.find(sTypes, ',', nFieldStart)
