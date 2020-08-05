@@ -82,6 +82,7 @@ local function adjustDamage(sDmgTotal, tTypes, bIsRanged)
 	if bIsRanged then sDmgTotal = sDmgTotal / 2 end
 
 	for _,v in pairs(tTypes) do
+		v = string.gsub(v, "%s+", "")
 		for _, vv in pairs(tNone) do
 			if vv == v then
 				sDmgTotal = 0
