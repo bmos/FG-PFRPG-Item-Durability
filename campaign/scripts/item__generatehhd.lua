@@ -124,6 +124,7 @@ local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	
 	local nItemHardness = 0
 	local nItemBonusHardness = window.bonus.getValue() * 2
+	if nItemBrokenState ~= 0 then nItemBonusHardness = DB.getValue(window.getDatabaseNode(), 'bonus.backup', nItemHpBonus) * 2 end
 	local sItemSubstance = string.lower(window.substance.getValue())
 	if sItemSubstance == '' then
 		sItemSubstance = sSubstance
@@ -164,6 +165,8 @@ end
 --	@param tSizeMult This table contains the hitpoint multipliers keyed to their size categories.
 --	@param sCharSize This string contains the character's size, for use if the weapon's size has not yet been set.
 local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
+	local nItemBrokenState = DB.getValue(window.getDatabaseNode(), 'broken', 0)
+
 	local nItemHpPerIn = 0
 	local nItemHardness = 0
 	local sItemSubstance = string.lower(window.substance.getValue())
@@ -177,6 +180,8 @@ local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local nSubstanceHpBonus = 0
 
 	local nItemBonusHardness = window.bonus.getValue() * 2
+	if nItemBrokenState ~= 0 then nItemBonusHardness = DB.getValue(window.getDatabaseNode(), 'bonus.backup', nItemHpBonus) * 2 end
+
 	for k,v in pairs(aSubstances) do
 		if k == sItemSubstance then
 			for kk,vv in pairs(v) do
@@ -207,6 +212,7 @@ local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	end
 
 	local nItemHpBonus = window.bonus.getValue() * 10
+	if nItemBrokenState ~= 0 then nItemHpBonus = DB.getValue(window.getDatabaseNode(), 'bonus.backup', nItemHpBonus) * 10 end
 	local nItemHp = (nItemHpPerIn * nThickness * nHpMult) + nItemHpBonus + nSubstanceHpBonus
 	
 	if nItemHp and window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
