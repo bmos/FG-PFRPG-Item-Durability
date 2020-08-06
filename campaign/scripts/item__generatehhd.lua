@@ -105,8 +105,11 @@ end
 --	@param tSizeMult This table contains the hitpoint multipliers keyed to their size categories.
 --	@param sCharSize This string contains the character's size, for use if the armor size has not yet been set.
 local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
-	local nItemHpAc = window.ac.getValue() * 5
+	local nItemBrokenState = DB.getValue(window.getDatabaseNode(), 'broken', 0)
 
+	local nItemHpAc = window.ac.getValue() * 5
+	if nItemBrokenState ~= 0 then nItemHpAc = DB.getValue(window.getDatabaseNode(), 'ac.backup', nItemHpAc) * 5 end
+	
 	local sItemSize = string.lower(window.size.getValue())
 	if sItemSize == '' then			-- if item has no size assigned, use character size
 		sItemSize = sCharSize
@@ -141,6 +144,7 @@ local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	end
 
 	local nItemHpBonus = window.bonus.getValue() * 10
+	if nItemBrokenState ~= 0 then nItemHpBonus = DB.getValue(window.getDatabaseNode(), 'bonus.backup', nItemHpBonus) * 10 end
 	local nItemHp = (nItemHpAc * nHpMult) + nItemHpBonus
 	
 	if nItemHp and window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
