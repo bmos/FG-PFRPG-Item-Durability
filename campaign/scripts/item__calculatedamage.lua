@@ -29,6 +29,7 @@ function onValueChanged()
 				window.ac.setReadOnly(true)
 				window.checkpenalty.setReadOnly(true)
 				window.bonus.setReadOnly(true)
+				if CharManagerTE then CharManagerTE.calcItemArmorClass(window.getDatabaseNode().getChild('...')) end
 			end
 		elseif nPercentDmg >= 50 then
 			window.item_damage.setColor('FFEB7B00')
@@ -41,6 +42,7 @@ function onValueChanged()
 				window.ac.setReadOnly(true)
 				window.checkpenalty.setReadOnly(true)
 				window.bonus.setReadOnly(true)
+				if CharManagerTE then CharManagerTE.calcItemArmorClass(window.getDatabaseNode().getChild('...')) end
 			end
 		else
 			window.item_damage.setColor('FF000000')
@@ -53,6 +55,7 @@ function onValueChanged()
 				window.ac.setReadOnly(false)
 				window.checkpenalty.setReadOnly(false)
 				window.bonus.setReadOnly(false)
+				if CharManagerTE then CharManagerTE.calcItemArmorClass(window.getDatabaseNode().getChild('...')) end
 			end
 		end
 	elseif getDatabaseNode().getChild('...').getName() == 'inventorylist' then
@@ -66,6 +69,7 @@ function onValueChanged()
 			window.ac.setReadOnly(false)
 			window.checkpenalty.setReadOnly(false)
 			window.bonus.setReadOnly(false)
+			if CharManagerTE then CharManagerTE.calcItemArmorClass(window.getDatabaseNode().getChild('...')) end
 		end
 	end
 end
