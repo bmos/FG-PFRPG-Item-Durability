@@ -143,11 +143,11 @@ local function calcArmorHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local nItemHpBonus = window.bonus.getValue() * 10
 	local nItemHp = (nItemHpAc * nHpMult) + nItemHpBonus
 	
-	if window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
+	if nItemHp and window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
 		window.hitpoints.setValue(math.floor(nItemHp))
 	end
 	
-	if window.substance.getValue() and window.hardness.getValue() ~= nItemHardness then
+	if nItemHardness and window.substance.getValue() and window.hardness.getValue() ~= nItemHardness then
 		window.hardness.setValue(math.floor(nItemHardness))
 	end
 end
@@ -205,11 +205,11 @@ local function calcWeaponHHP(sSubstance, aSubstances, tSizeMult, sCharSize)
 	local nItemHpBonus = window.bonus.getValue() * 10
 	local nItemHp = (nItemHpPerIn * nThickness * nHpMult) + nItemHpBonus + nSubstanceHpBonus
 	
-	if window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
+	if nItemHp and window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
 		window.hitpoints.setValue(math.floor(nItemHp))
 	end
 	
-	if window.substance.getValue() and window.hardness.getValue() ~= nItemHardness then
+	if nItemHardness and window.substance.getValue() and window.hardness.getValue() ~= nItemHardness then
 		window.hardness.setValue(math.floor(nItemHardness))
 	end
 end
@@ -243,11 +243,11 @@ local function calcItemHHP(sSubstance, aSubstances)
 	end
 	local nItemHp = nItemHpPerIn * nThickness 
 	
-	if window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
+	if nItemHp and window.substance.getValue() and window.hitpoints.getValue() ~= nItemHp then
 		window.hitpoints.setValue(math.floor(nItemHp))
 	end
 	
-	if window.substance.getValue() and window.hardness.getValue() ~= nItemHardness then
+	if nItemHardness and window.substance.getValue() and window.hardness.getValue() ~= nItemHardness then
 		window.hardness.setValue(math.floor(nItemHardness))
 	end
 end
