@@ -173,4 +173,6 @@ function fillAttributes(nodeItem)
 	if sItemSubstance == '' then
 		DB.setValue(nodeItem, 'substance', 'string', findSubstance(nodeItem))
 	end
+	
+	if DB.getValue(nodeItem, 'hardness', 0) == 0 and DB.getValue(nodeItem, 'hitpoints', 0) == 0 then ItemDurabilityHHP.calculateHHP(nodeItem) end
 end
