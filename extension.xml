@@ -23,6 +23,6 @@
 		<!-- Strings -->
 		<includefile source="strings/strings_item_durability.xml" />
 		<!-- Scripts -->
-		<!-- <script name="" file="scripts/.lua" /> -->
+		<script name="ItemDurabilityLib" file="scripts/lib_itemdurability.lua" />
 	</base>
 </root>
