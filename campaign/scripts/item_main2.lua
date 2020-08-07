@@ -86,9 +86,9 @@ function update()
 	local bSection2a = false
 	if updateControl('hardness', bReadOnly, bID) then bSection2a = true; end
 	if updateControl('hitpoints', bReadOnly, bID) then bSection2a = true; end
-	if updateControl('item_damage', bReadOnly, bID) then bSection2a = true; end
-	if updateControl('hitpoints', bReadOnly, bID) then item_damage.setVisible(true); item_damage_label.setVisible(true) end
-	item_damage.setReadOnly(false)
+	if updateControl('itemdamage', bReadOnly, bID) then bSection2a = true; end
+	if updateControl('hitpoints', bReadOnly, bID) then itemdamage.setVisible(true); itemdamage_label.setVisible(true) end
+	itemdamage.setReadOnly(false)
 		
 	local bSection3 = false
 	if updateControl('cost', bReadOnly, bID) then bSection3 = true; end

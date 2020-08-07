@@ -91,10 +91,10 @@
 				<min>0</min>
 			</number_columnh>
 			
-			<label_column name="item_damage_label" insertbefore="divider3" >
+			<label_column name="itemdamage_label" insertbefore="divider3" >
 				<static textres="item_label_damage" />
 			</label_column>
-			<number_columnh name="item_damage" insertbefore="divider3" >
+			<number_columnh name="itemdamage" insertbefore="divider3" >
 				<nodrop />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
