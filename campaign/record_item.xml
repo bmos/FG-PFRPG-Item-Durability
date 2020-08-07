@@ -71,7 +71,7 @@
 				<gmvisibleonly />
 				<script>
 					function onButtonPress()
-						
+						ItemDurabilityInfo.fillAttributes(window.getDatabaseNode())
 					end
 				</script>
 			</buttoncontrol>

@@ -23,9 +23,9 @@
 		<!-- Strings -->
 		<includefile source="strings/strings_item_durability.xml" />
 		<!-- Scripts -->
-		<script name="ItemDurabilityInfo" file="scripts/info_itemdurability.lua" />
 		<script name="ItemDurabilityLib" file="scripts/lib_itemdurability.lua" />
 		<script name="ItemDurabilityBroken" file="scripts/broken_itemdurability.lua" />
+		<script name="ItemDurabilityInfo" file="scripts/info_itemdurability.lua" />
 		<script name="ItemDurabilityDamage" file="scripts/damage_itemdurability.lua" />
 	</base>
 </root>

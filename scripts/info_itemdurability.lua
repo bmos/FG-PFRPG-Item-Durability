@@ -6,9 +6,9 @@
 --	@param aSubstances This is an empty array to add material names and their info tables to.
 --	@param tSizeMult This is an empty table to add the size categories and their hitpoint multipliers to.
 --	@param tItemParser This is an empty table to add the item names and their associated materials to.
-function provideValues(aSubstances, tSizeMult, tItemParser)	
+function provideValues(nR, aSubstances, tItemParser, tSizeMult)
+	if nR == 1 then
 		-- materials from Special Materials list
-	if aSubstances == {} then
 		aSubstances['abysium'] = { ['nHardness'] = 10, ['nHpIn'] = 30 }
 		aSubstances['angelskin'] = { ['nHardness'] = 5, ['nHpIn'] = 5 }
 		aSubstances['aszite'] = { ['nHardness'] = 15, ['nHpIn'] = 20 }
@@ -71,20 +71,7 @@ function provideValues(aSubstances, tSizeMult, tItemParser)
 		aSubstances['adamantine'] = { ['nHardness'] = 20, ['nHpIn'] = 40, ['nArmorHpMult'] = 1.33 }
 	end
 
-	if tSizeMult == {} then
-		-- hitpoint multipliers for each size category
-		tSizeMult['colossal'] = 16
-		tSizeMult['gargantuan'] = 8
-		tSizeMult['huge'] = 4
-		tSizeMult['large'] = 2
-		tSizeMult['medium'] = 1
-		tSizeMult['small'] = 0.5
-		tSizeMult['tiny'] = 0.25
-		tSizeMult['diminutive'] = 0.125
-		tSizeMult['fine'] = 0.0625
-	end
-	
-	if tItemParser == {} then
+	if nR == 2 then
 		-- aventuring supplies
 		tItemParser['vial'] = 'glass'
 		tItemParser['potion'] = 'glass'
@@ -118,5 +105,70 @@ function provideValues(aSubstances, tSizeMult, tItemParser)
 		tItemParser['mail'] = 'steel'
 		tItemParser['buckler'] = 'steel'
 		tItemParser['tower'] = 'steel'
+	end
+
+	if nR == 3 then
+		-- hitpoint multipliers for each size category
+		tSizeMult['colossal'] = 16
+		tSizeMult['gargantuan'] = 8
+		tSizeMult['huge'] = 4
+		tSizeMult['large'] = 2
+		tSizeMult['medium'] = 1
+		tSizeMult['small'] = 0.5
+		tSizeMult['tiny'] = 0.25
+		tSizeMult['diminutive'] = 0.125
+		tSizeMult['fine'] = 0.0625
+	end
+end
+
+---	This function searches sItemProps, sItemName, and tItemParser for any of the keys in aSubstances.
+--	If it ever finds one, it stops searching and returns the key.
+--	If none of the materials in tItemParser are a match, it returns an empty string.
+--	@param nodeItem The item to be examined.
+--	@see provideValues(aSubstances, tSizeMult, tItemParser)
+--	@return sSubstance A string containing the material the item is most likely constructed of.
+local function findSubstance(nodeItem)
+	local sSubstance = ''
+	
+	local sItemName = string.lower(DB.getValue(nodeItem, 'name', ''))
+	local sItemProps = string.lower(DB.getValue(nodeItem, 'properties', ''))
+	local aSubstances = {}
+	local tItemParser = {}
+	provideValues(1, aSubstances, nil, nil)
+	provideValues(2, nil, tItemParser, nil)
+		
+	for k,_ in pairs(aSubstances) do
+		if sItemProps:match(k) then
+			sSubstance = k
+			break
+		end
+		if sItemName:match(k) then
+			sSubstance = k
+			break
+		end
+	end
+	for k,v in pairs(tItemParser) do
+		if sItemName:match(k) then
+			sSubstance = v
+			break
+		end
+	end
+
+	return sSubstance
+end
+
+---	This function fills the size and substance fields, if empty.
+--	If the size field is empty and the item is held by a PC, its size is assumed to match the PC (otherwise medium).
+--	If the substance field is empty, findSubstance() is called.
+--	Once these pieces of information are known, they are written back to the item sheet.
+function fillAttributes(nodeItem)
+	local sCharSize = string.lower(DB.getValue(nodeItem.getChild('...'), 'size', 'medium'))
+	local sItemSize = string.lower(DB.getValue(nodeItem, 'size', ''))
+	if sItemSize == '' then sItemSize = sCharSize end
+	DB.setValue(nodeItem, 'size', 'string', sItemSize)
+
+	local sItemSubstance = string.lower(DB.getValue(nodeItem, 'substance', ''))
+	if sItemSubstance == '' then
+		DB.setValue(nodeItem, 'substance', 'string', findSubstance(nodeItem))
 	end
 end
