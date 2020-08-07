@@ -10,6 +10,12 @@ function formatTitleCase(first, rest)
    return first:upper() .. rest:lower()
 end
 
+---	This function rounds nNum to nDecimalPlaces (or to a whole number)
+function round(nNum, nDecimalPlaces)
+  local nMult = 10^(nDecimalPlaces or 0)
+  return math.floor(nNum * nMult + 0.5) / nMult
+end
+
 ---	This function searches sItemProps, sItemName, and tItemParser for any of the keys in aSubstances.
 --	If it ever finds one, it stops searching and returns the key.
 --	If none of the materials in tItemParser are a match, it returns an empty string.
