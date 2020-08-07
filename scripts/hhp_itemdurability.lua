@@ -38,7 +38,6 @@ function calculateHHP(nodeItem)
 
 	local tSubstanceStats = getSubstanceStats(string.lower(DB.getValue(nodeItem, 'substance', '')))
 	for k,v in pairs(tSubstanceStats) do
-		Debug.chat(k, v)
 		if k == 'nHardness' then nHardness = v
 		elseif k == 'nItemHpPerIn' then nItemHpPerIn = v
 		elseif k == 'nWeaponHpBonus' then nWeaponHpBonus = nWeaponHpBonus + v
