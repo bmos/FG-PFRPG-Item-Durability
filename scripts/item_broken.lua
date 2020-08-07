@@ -19,9 +19,9 @@ local function handleWeaponNodeArgs(nodeItem, tDamagedWeapons)
 	local nodeChar = nodeItem.getChild('...')
 	local sItemName = DB.getValue(nodeItem, 'name')
 	
-	for k,v in pairs(DB.getChildren(nodeChar, 'weaponlist')) do
-		if sItemName == v.getChild('name').getValue() then
-			table.insert(tDamagedWeapons, v)
+	for _,vNode in pairs(DB.getChildren(nodeChar, 'weaponlist')) do
+		if sItemName == vNode.getChild('name').getValue() then
+			table.insert(tDamagedWeapons, vNode)
 		end
 	end
 	
