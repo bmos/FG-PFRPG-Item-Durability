@@ -23,6 +23,6 @@
 		<!-- Strings -->
 		<includefile source="strings/strings_item_durability.xml" />
 		<!-- Scripts -->
-		<script name="BrokenPenalties" file="scripts/item_broken.lua" />
+		<!-- <script name="" file="scripts/.lua" /> -->
 	</base>
 </root>
