@@ -98,6 +98,13 @@
 				<nodrop />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
+				<script>
+					function onDrop(x, y, draginfo)
+						if string.find(draginfo.getDescription(), '%[DAMAGE', 1) then
+							ItemDurabilityDamage.splitDamageTypes(window.getDatabaseNode(), draginfo.getDescription())
+						end
+					end
+				</script>
 			</number_columnh>
 
 			<line_column name="divider3" />

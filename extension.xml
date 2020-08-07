@@ -25,5 +25,6 @@
 		<!-- Scripts -->
 		<script name="ItemDurabilityInfo" file="scripts/info_itemdurability.lua" />
 		<script name="ItemDurabilityLib" file="scripts/lib_itemdurability.lua" />
+		<script name="ItemDurabilityDamage" file="scripts/damage_itemdurability.lua" />
 	</base>
 </root>
