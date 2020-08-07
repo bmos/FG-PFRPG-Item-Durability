@@ -89,6 +89,11 @@
 			<number_columnh name="hitpoints" insertbefore="divider3" >
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
+				<script>
+					function onValueChanged()
+						window.itemdamage.onValueChanged()
+					end
+				</script>
 			</number_columnh>
 			
 			<label_column name="itemdamage_label" insertbefore="divider3" >
@@ -99,9 +104,28 @@
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 				<script>
+					function onInit()
+						onValueChanged()
+					end
 					function onDrop(x, y, draginfo)
 						if string.find(draginfo.getDescription(), '%[DAMAGE', 1) then
 							ItemDurabilityDamage.splitDamageTypes(window.getDatabaseNode(), draginfo.getDescription())
+						end
+					end
+					function onValueChanged()
+						local nItemHitpoints = window.hitpoints.getValue()
+						if nItemHitpoints and getDatabaseNode().getChild('...').getName() == 'inventorylist' and nItemHitpoints >= 1 then
+							local nPercentDmg = window.itemdamage.getValue() / nItemHitpoints * 100
+							if nPercentDmg >= 100 then
+								window.itemdamage.setColor('FFB22929')
+							elseif nPercentDmg >= 50 then
+								window.itemdamage.setColor('FFEB7B00')
+							else
+								window.itemdamage.setColor('FF000000')
+							end
+						elseif getDatabaseNode().getChild('...').getName() == 'inventorylist' then
+							window.itemdamage.setColor('FF000000')
+							DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
 						end
 					end
 				</script>
