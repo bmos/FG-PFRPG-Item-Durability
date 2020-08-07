@@ -80,6 +80,8 @@
 				<static textres="item_label_thickness" />
 			</label_column>
 			<number_columnh name="thickness" insertbefore="divider3" >
+				<hideonvalue>0</hideonvalue>
+				<min>0</min>
 			</number_columnh>
 			
 			<label_column name="size_label" insertbefore="divider3" >
