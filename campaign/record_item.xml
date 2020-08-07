@@ -110,7 +110,7 @@
 				<gmvisibleonly />
 				<script>
 					function onButtonPress()
-						
+						ItemDurabilityHHP.calculateHHP(window.getDatabaseNode())
 					end
 				</script>
 			</buttoncontrol>

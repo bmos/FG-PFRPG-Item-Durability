@@ -84,6 +84,7 @@ function update()
 	
 	local bSection2a = false
 	if updateControl('hardness', bReadOnly, bID) then bSection2a = true; end
+	button_rebuildhhp.setVisible(updateControl('hardness', bReadOnly, bID))
 	if updateControl('hitpoints', bReadOnly, bID) then bSection2a = true; end
 	if updateControl('itemdamage', bReadOnly, bID) then bSection2a = true; end
 	if updateControl('hitpoints', bReadOnly, bID) then itemdamage.setVisible(true); itemdamage_label.setVisible(true) end
