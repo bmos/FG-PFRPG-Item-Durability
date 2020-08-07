@@ -84,6 +84,7 @@ function update()
 	
 	local bSection2a = false
 	if updateControl('hardness', bReadOnly, bID) then bSection2a = true; end
+	button_rebuildattributes.setVisible(updateControl('hardness', bReadOnly, bID))
 	if updateControl('hitpoints', bReadOnly, bID) then bSection2a = true; end
 	if updateControl('itemdamage', bReadOnly, bID) then bSection2a = true; end
 	if updateControl('hitpoints', bReadOnly, bID) then itemdamage.setVisible(true); itemdamage_label.setVisible(true) end
@@ -93,6 +94,7 @@ function update()
 	if updateControl('cost', bReadOnly, bID) then bSection3 = true; end
 	if updateControl('weight', bReadOnly, bID) then bSection3 = true; end
 	if updateControl('substance', bReadOnly, bID) then bSection3 = true; end
+	button_rebuildattributes.setVisible(updateControl('substance', bReadOnly, bID))
 	if bArmor then -- Don't show thickness if item is armor
 		thickness.setVisible(false); thickness_label.setVisible(false)
 	elseif

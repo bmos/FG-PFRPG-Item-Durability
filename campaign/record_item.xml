@@ -61,6 +61,21 @@
 			<string_columnh name="substance" insertbefore="divider3" >
 			</string_columnh>
 			
+			<buttoncontrol name="button_rebuildattributes">
+				<anchored to="substance" width="20" height="20">
+					<right anchor="left" offset="-8" />
+					<top anchor="top" offset="0" />
+				</anchored>
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<tooltip textres="ps_tooltip_itemattributes" />
+				<gmvisibleonly />
+				<script>
+					function onButtonPress()
+						
+					end
+				</script>
+			</buttoncontrol>
+			
 			<label_column name="thickness_label" insertbefore="divider3" >
 				<static textres="item_label_thickness" />
 			</label_column>
@@ -82,6 +97,21 @@
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
+			
+			<buttoncontrol name="button_rebuildhhp">
+				<anchored to="hardness" width="20" height="20">
+					<right anchor="left" offset="-8" />
+					<top anchor="top" offset="0" />
+				</anchored>
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<tooltip textres="ps_tooltip_itemhhp" />
+				<gmvisibleonly />
+				<script>
+					function onButtonPress()
+						
+					end
+				</script>
+			</buttoncontrol>
 			
 			<label_column name="hitpoints_label" insertbefore="divider3" >
 				<static textres="item_label_hitpoints" />
