@@ -161,6 +161,7 @@ end
 --	If the size field is empty and the item is held by a PC, its size is assumed to match the PC (otherwise medium).
 --	If the substance field is empty, findSubstance() is called.
 --	Once these pieces of information are known, they are written back to the item sheet.
+--	@see findSubstance(nodeItem)
 function fillAttributes(nodeItem)
 	local sCharSize = string.lower(DB.getValue(nodeItem.getChild('...'), 'size', 'medium'))
 	local sItemSize = string.lower(DB.getValue(nodeItem, 'size', ''))
