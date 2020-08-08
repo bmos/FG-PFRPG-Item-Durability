@@ -131,7 +131,6 @@ end
 --	@return sSubstance A string containing the material the item is most likely constructed of.
 local function findSubstance(nodeItem)
 	local sSubstance = ''
-	
 	local sItemName = string.lower(DB.getValue(nodeItem, 'name', ''))
 	local sItemProps = string.lower(DB.getValue(nodeItem, 'properties', ''))
 
@@ -148,10 +147,12 @@ local function findSubstance(nodeItem)
 			break
 		end
 	end
-	for k,v in pairs(tItemParser) do
-		if sItemName:match(k) then
-			sSubstance = v
-			break
+	if sSubstance == '' then
+		for k,v in pairs(tItemParser) do
+			if sItemName:match(k) then
+				sSubstance = v
+				break
+			end
 		end
 	end
 
