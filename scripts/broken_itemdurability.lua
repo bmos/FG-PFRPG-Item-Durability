@@ -62,8 +62,15 @@ function brokenWeapon(nodeItem, bIsBroken)
 end
 
 local function brokenArmor(nodeItem, bIsBroken)
-	local sProps = string.lower(DB.getValue(nodeItem, 'properties', ''))
-	if sProps:match('masterwork') then local bMstwk = true end
+	if bIsBroken then
+		DB.setValue(nodeItem, 'ac', 'number', DB.getValue(nodeItem, 'acbak', 0) / 2)
+		DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0) / 2)
+		DB.setValue(nodeItem, 'checkpenalty', 'number', DB.getValue(nodeItem, 'checkpenaltybak', 0) * 2)
+	else
+		DB.setValue(nodeItem, 'ac', 'number', DB.getValue(nodeItem, 'acbak', 0))
+		DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0))
+		DB.setValue(nodeItem, 'checkpenalty', 'number', DB.getValue(nodeItem, 'checkpenaltybak', 0))
+	end
 end
 
 local function brokenPenalties(nodeItem, bIsBroken)
@@ -76,6 +83,7 @@ local function removeBackup(nodeItem)
 	if DB.getValue(nodeItem, 'costbak') then nodeItem.getChild('costbak').delete() end
 	if DB.getValue(nodeItem, 'bonusbak') then nodeItem.getChild('bonusbak').delete() end
 	if DB.getValue(nodeItem, 'acbak') then nodeItem.getChild('acbak').delete() end
+	if DB.getValue(nodeItem, 'checkpenaltybak') then nodeItem.getChild('checkpenaltybak').delete() end
 	
 	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
 	for _,vNode in pairs(tDamagedWeapons) do
@@ -92,6 +100,7 @@ local function makeBackup(nodeItem)
 	DB.setValue(nodeItem, 'costbak', 'string', DB.getValue(nodeItem, 'cost', ''))
 	DB.setValue(nodeItem, 'bonusbak', 'number', DB.getValue(nodeItem, 'bonus', 0))
 	DB.setValue(nodeItem, 'acbak', 'number', DB.getValue(nodeItem, 'ac', 0))
+	DB.setValue(nodeItem, 'checkpenaltybak', 'number', DB.getValue(nodeItem, 'checkpenalty', 0))
 	
 	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
 	for _,vNode in pairs(tDamagedWeapons) do
