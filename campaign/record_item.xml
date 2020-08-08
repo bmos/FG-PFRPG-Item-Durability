@@ -154,10 +154,13 @@
 							local nPercentDmg = window.itemdamage.getValue() / nItemHitpoints * 100
 							if nPercentDmg >= 100 then
 								window.itemdamage.setColor('FFB22929')
+								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 2)
 							elseif nPercentDmg >= 50 then
 								window.itemdamage.setColor('FFEB7B00')
+								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 1)
 							else
 								window.itemdamage.setColor('FF000000')
+								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
 							end
 						elseif getDatabaseNode().getChild('...').getName() == 'inventorylist' then
 							window.itemdamage.setColor('FF000000')
