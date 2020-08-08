@@ -16,7 +16,7 @@ end
 
 ---	This function checks if the damaged weapon's name matches any in the actions tab and, if so, adds their nodes to tDamagedWeapons.
 --	@param nodeItem A databasenode pointing to the damaged item.
---	@return sItemName A string containing the name of the damaged item.
+--	@return tDamagedWeapons A table of databasenodes pointing to the damaged item on the actions tab.
 local function handleWeaponNodeArgs(nodeItem)
 	local nodeChar = nodeItem.getChild('...')
 	local sItemName = DB.getValue(nodeItem, 'name')
@@ -31,7 +31,45 @@ local function handleWeaponNodeArgs(nodeItem)
 	return tDamagedWeapons
 end
 
-local function applyBrokenPenalties(nodeItem, nBrokenState)
+function brokenWeapon(nodeItem, bIsBroken)
+	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
+
+	if bIsBroken then
+		for _,vNode in pairs(tDamagedWeapons) do
+			DB.setValue(vNode, 'bonus', 'number', DB.getValue(vNode, 'bonusbak', 0) - 2)
+			DB.setValue(vNode, 'critatkrange', 'number', 20)
+			
+			for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
+				DB.setValue(vvNode, 'bonus', 'number', DB.getValue(vvNode, 'bonusbak', 0) - 2)
+				if DB.getValue(vvNode, 'critmult', 2) > 2 then
+					DB.setValue(vvNode, 'critmult', 'number', 2)
+				end
+			end
+		end
+	else
+		for _,vNode in pairs(tDamagedWeapons) do
+			DB.setValue(vNode, 'bonus', 'number', DB.getValue(vNode, 'bonusbak', 0))
+			DB.setValue(vNode, 'critatkrange', 'number', DB.getValue(vNode, 'critatkrangebak', 20))
+			
+			for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
+				DB.setValue(vvNode, 'bonus', 'number', DB.getValue(vvNode, 'bonusbak', 0))
+				if DB.getValue(vvNode, 'critmultbak', 2) > 2 then
+					DB.setValue(vvNode, 'critmult', 'number', DB.getValue(vvNode, 'critmultbak', 2))
+				end
+			end
+		end
+	end
+end
+
+local function brokenArmor(nodeItem, bIsBroken)
+	local sProps = string.lower(DB.getValue(nodeItem, 'properties', ''))
+	if sProps:match('masterwork') then local bMstwk = true end
+end
+
+local function brokenPenalties(nodeItem, bIsBroken)
+	local sItemType = string.lower(DB.getValue(nodeItem, 'type', ''))
+	if sItemType:match('weapon') then brokenWeapon(nodeItem, bIsBroken) end
+	if sItemType:match('armor') then brokenArmor(nodeItem, bIsBroken) end
 end
 
 local function removeBackup(nodeItem)
@@ -74,12 +112,13 @@ function onBrokenChanged(node)
 		if OptionsManager.isOption('DESTROY_ITEM', 'gone') then nodeItem.delete()
 		elseif OptionsManager.isOption('DESTROY_ITEM', 'unequipped') then
 			DB.setValue(nodeItem, 'carried', 'number', 0)
-			DB.setValue(nodeItem, 'name', 'string', '[DESTROYED]' .. DB.getValue(nodeItem, 'name', ''))
+			DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''))
 		end
 	elseif nBrokenState == 1 then
 		makeBackup(nodeItem)
-		applyBrokenPenalties(nodeItem, nBrokenState)
+		brokenPenalties(nodeItem, true)
 	else
+		brokenPenalties(nodeItem, false)
 		removeBackup(nodeItem)
 	end
 end
