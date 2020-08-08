@@ -67,7 +67,7 @@
 					<top anchor="top" offset="0" />
 				</anchored>
 				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
-				<tooltip textres="ps_tooltip_itemattributes" />
+				<tooltip textres="item_tooltip_attributes" />
 				<gmvisibleonly />
 				<script>
 					function onButtonPress()
@@ -96,6 +96,7 @@
 				<static textres="item_label_hardness" />
 			</label_column>
 			<number_columnh name="hardness" insertbefore="divider3" >
+				<delaykeyupdate />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
@@ -106,7 +107,7 @@
 					<top anchor="top" offset="0" />
 				</anchored>
 				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
-				<tooltip textres="ps_tooltip_itemhhp" />
+				<tooltip textres="item_tooltip_hhp" />
 				<gmvisibleonly />
 				<script>
 					function onButtonPress()
@@ -119,6 +120,7 @@
 				<static textres="item_label_hitpoints" />
 			</label_column>
 			<number_columnh name="hitpoints" insertbefore="divider3" >
+				<delaykeyupdate />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 				<script>
@@ -133,8 +135,10 @@
 			</label_column>
 			<number_columnh name="itemdamage" insertbefore="divider3" >
 				<nodrop />
+				<delaykeyupdate />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
+				<tooltip textres="item_tooltip_damage" />
 				<script>
 					function onInit()
 						onValueChanged()
