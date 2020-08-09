@@ -37,13 +37,15 @@ function calculateHHP(nodeItem)
 	local nArmorHpBonus = 0
 
 	local tSubstanceStats = getSubstanceStats(string.lower(DB.getValue(nodeItem, 'substance', '')))
-	for k,v in pairs(tSubstanceStats) do
-		if k == 'nHardness' then nHardness = v
-		elseif k == 'nItemHpPerIn' then nItemHpPerIn = v
-		elseif k == 'nWeaponHpBonus' then nWeaponHpBonus = nWeaponHpBonus + v
-		elseif k == 'nWeaponHpMult' then nWeaponHpMult = v
-		elseif k == 'nArmorHpBonus' then nArmorHpBonus = nArmorHpBonus + v
-		elseif k == 'nArmorHpMult' then nArmorHpMult = v
+	if tSubstanceStats then
+		for k,v in pairs(tSubstanceStats) do
+			if k == 'nHardness' then nHardness = v
+			elseif k == 'nItemHpPerIn' then nItemHpPerIn = v
+			elseif k == 'nWeaponHpBonus' then nWeaponHpBonus = nWeaponHpBonus + v
+			elseif k == 'nWeaponHpMult' then nWeaponHpMult = v
+			elseif k == 'nArmorHpBonus' then nArmorHpBonus = nArmorHpBonus + v
+			elseif k == 'nArmorHpMult' then nArmorHpMult = v
+			end
 		end
 	end
 	
