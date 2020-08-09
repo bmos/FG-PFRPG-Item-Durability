@@ -63,8 +63,8 @@ end
 
 local function brokenArmor(nodeItem, bIsBroken)
 	if bIsBroken then
-		DB.setValue(nodeItem, 'ac', 'number', DB.getValue(nodeItem, 'acbak', 0) / 2)
-		DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0) / 2)
+		DB.setValue(nodeItem, 'ac', 'number', math.floor(DB.getValue(nodeItem, 'acbak', 0) / 2))
+		DB.setValue(nodeItem, 'bonus', 'number', math.floor(DB.getValue(nodeItem, 'bonusbak', 0) / 2))
 		DB.setValue(nodeItem, 'checkpenalty', 'number', DB.getValue(nodeItem, 'checkpenaltybak', 0) * 2)
 	else
 		DB.setValue(nodeItem, 'ac', 'number', DB.getValue(nodeItem, 'acbak', 0))
