@@ -32,8 +32,6 @@
 				<script>
 					function onValueChanged()
 						window.update();
-						
-						window.substance.onValueChanged()
 					end
 				</script>
 			</string_columnh>
@@ -61,21 +59,35 @@
 				<static textres="item_label_substance" />
 			</label_column>
 			<string_columnh name="substance" insertbefore="divider3" >
-				<script file="campaign/scripts/item__generatehhd.lua" />
 			</string_columnh>
+			
+			<buttoncontrol name="button_rebuildattributes">
+				<anchored to="substance" width="20" height="20">
+					<right anchor="left" offset="-8" />
+					<top anchor="top" offset="0" />
+				</anchored>
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<tooltip textres="item_tooltip_attributes" />
+				<gmvisibleonly />
+				<script>
+					function onButtonPress()
+						ItemDurabilityInfo.fillAttributes(window.getDatabaseNode())
+					end
+				</script>
+			</buttoncontrol>
 			
 			<label_column name="thickness_label" insertbefore="divider3" >
 				<static textres="item_label_thickness" />
 			</label_column>
 			<number_columnh name="thickness" insertbefore="divider3" >
-				<script file="campaign/scripts/item__generatehhd.lua" />
+				<hideonvalue>0</hideonvalue>
+				<min>0</min>
 			</number_columnh>
 			
 			<label_column name="size_label" insertbefore="divider3" >
 				<static textres="item_label_size" />
 			</label_column>
 			<string_columnh name="size" insertbefore="divider3" >
-				<script file="campaign/scripts/item__generatehhd.lua" />
 			</string_columnh>
 
 			<line_column name="divider2a" insertbefore="divider3" />
@@ -84,27 +96,78 @@
 				<static textres="item_label_hardness" />
 			</label_column>
 			<number_columnh name="hardness" insertbefore="divider3" >
+				<delaykeyupdate />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
+			
+			<buttoncontrol name="button_rebuildhhp">
+				<anchored to="hardness" width="20" height="20">
+					<right anchor="left" offset="-8" />
+					<top anchor="top" offset="0" />
+				</anchored>
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<tooltip textres="item_tooltip_hhp" />
+				<gmvisibleonly />
+				<script>
+					function onButtonPress()
+						ItemDurabilityHHP.calculateHHP(window.getDatabaseNode())
+					end
+				</script>
+			</buttoncontrol>
 			
 			<label_column name="hitpoints_label" insertbefore="divider3" >
 				<static textres="item_label_hitpoints" />
 			</label_column>
 			<number_columnh name="hitpoints" insertbefore="divider3" >
-				<script file="campaign/scripts/item__calculatedamage.lua" />
+				<delaykeyupdate />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
+				<script>
+					function onValueChanged()
+						window.itemdamage.onValueChanged()
+					end
+				</script>
 			</number_columnh>
 			
-			<label_column name="item_damage_label" insertbefore="divider3" >
+			<label_column name="itemdamage_label" insertbefore="divider3" >
 				<static textres="item_label_damage" />
 			</label_column>
-			<number_columnh name="item_damage" insertbefore="divider3" >
-				<script file="campaign/scripts/item__calculatedamage.lua" />
+			<number_columnh name="itemdamage" insertbefore="divider3" >
 				<nodrop />
+				<delaykeyupdate />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
+				<tooltip textres="item_tooltip_damage" />
+				<script>
+					function onInit()
+						onValueChanged()
+					end
+					function onDrop(x, y, draginfo)
+						if string.find(draginfo.getDescription(), '%[DAMAGE', 1) then
+							ItemDurabilityDamage.splitDamageTypes(window.getDatabaseNode(), draginfo.getDescription())
+						end
+					end
+					function onValueChanged()
+						local nItemHitpoints = window.hitpoints.getValue()
+						if nItemHitpoints and getDatabaseNode().getChild('...').getName() == 'inventorylist' and nItemHitpoints >= 1 then
+							local nPercentDmg = window.itemdamage.getValue() / nItemHitpoints * 100
+							if nPercentDmg >= 100 then
+								window.itemdamage.setColor('FFB22929')
+								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 2)
+							elseif nPercentDmg >= 50 then
+								window.itemdamage.setColor('FFEB7B00')
+								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 1)
+							else
+								window.itemdamage.setColor('FF000000')
+								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
+							end
+						elseif getDatabaseNode().getChild('...').getName() == 'inventorylist' then
+							window.itemdamage.setColor('FF000000')
+							DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
+						end
+					end
+				</script>
 			</number_columnh>
 
 			<line_column name="divider3" />

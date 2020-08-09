@@ -4,7 +4,6 @@
 
 function onInit()
 	update()
-	substance.onValueChanged()
 end
 
 function VisDataCleared()
@@ -36,32 +35,32 @@ function update()
 	
 	local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous
 
-	if sType:match("weapon") then
+	if sType:match('weapon') then
 		bWeapon = true
 	else
 		bWeapon = false
 	end
-	if sType:match("armor") then
+	if sType:match('armor') then
 		bArmor = true
 	else
 		bArmor = false
 	end
-	if sType:match("wand") then
+	if sType:match('wand') then
 		bWand = true
 	else
 		bWand = false
 	end
-	if sType:match("staff") then
+	if sType:match('staff') then
 		bStaff = true
 	else
 		bStaff = false
 	end
-	if sType:match("wondrous item") then
+	if sType:match('wondrous item') then
 		bWondrous = true
 	else
 		bWondrous = false
 	end
-	if sType:match("shield") then
+	if sType:match('shield') then
 		bShield = true
 	else
 		bShield = false
@@ -85,29 +84,31 @@ function update()
 	
 	local bSection2a = false
 	if updateControl('hardness', bReadOnly, bID) then bSection2a = true; end
+	button_rebuildhhp.setVisible(updateControl('hardness', bReadOnly, bID))
 	if updateControl('hitpoints', bReadOnly, bID) then bSection2a = true; end
-	if updateControl('item_damage', bReadOnly, bID) then bSection2a = true; end
-	if updateControl('hitpoints', bReadOnly, bID) then item_damage.setVisible(true); item_damage_label.setVisible(true) end
-	item_damage.setReadOnly(false)
+	if updateControl('itemdamage', bReadOnly, bID) then bSection2a = true; end
+	if updateControl('hitpoints', bReadOnly, bID) then itemdamage.setVisible(true); itemdamage_label.setVisible(true) end
+	itemdamage.setReadOnly(false)
 		
 	local bSection3 = false
 	if updateControl('cost', bReadOnly, bID) then bSection3 = true; end
 	if updateControl('weight', bReadOnly, bID) then bSection3 = true; end
 	if updateControl('substance', bReadOnly, bID) then bSection3 = true; end
+	button_rebuildattributes.setVisible(updateControl('substance', bReadOnly, bID))
 	if bArmor then -- Don't show thickness if item is armor
 		thickness.setVisible(false); thickness_label.setVisible(false)
 	elseif
 		updateControl('thickness', bReadOnly, bID) then thickness.setVisible(true); thickness_label.setVisible(true); bSection3 = true
 	end
-	if updateControl("size", bReadOnly, bID) then bSection3 = true; end
+	if updateControl('size', bReadOnly, bID) then bSection3 = true; end
 
---	This is compatibility for "Advanced Character Inventory Manager" by rmilmine
+--	This is compatibility for 'Advanced Character Inventory Manager' by rmilmine
 	local bSection8 = false
-	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
-		if updateControl("damage", bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
-		if updateControl("damagetype", bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
-		if updateControl("critical", bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
-		if updateControl("range", bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
+	if StringManager.contains(Extension.getExtensions(), 'Advanced Character Inventory Manager for 3.5E and Pathfinder') then
+		if updateControl('damage', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
+		if updateControl('damagetype', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
+		if updateControl('critical', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
+		if updateControl('range', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
 	end
 --	End compatibility patch
 
@@ -124,13 +125,13 @@ function update()
 	if updateControl('speed30', bReadOnly, bID and bArmor) then bSection4 = true; end
 	if updateControl('speed20', bReadOnly, bID and bArmor) then bSection4 = true; end
 
---	This is compatibility for "Enhanced Items" by Llisandur
-	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), "PFRPG - Enhanced Items")
+--	This is compatibility for 'Enhanced Items' by Llisandur
+	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), 'PFRPG - Enhanced Items')
 	if bPFRPGEILoaded then
 		current_label.setVisible(false)
 		maxcharges.setVisible(false)
 		maxcharges_label.setVisible(false)
-		if updateControl("charge", bReadOnly, bID and (bWand or bStaff)) then
+		if updateControl('charge', bReadOnly, bID and (bWand or bStaff)) then
 			current_label.setVisible(true)
 			maxcharges.setVisible(true)
 			maxcharges.setReadOnly(bReadOnly)
@@ -139,7 +140,7 @@ function update()
 		end
 		charge.setReadOnly(false)
 
-		if updateControl("equipslot", bReadOnly, bID and bWondrous) then bSection8 = true; end
+		if updateControl('equipslot', bReadOnly, bID and bWondrous) then bSection8 = true; end
 	end
 --	End compatibility patch
 
@@ -155,21 +156,21 @@ function update()
 	description.setVisible(bID)
 	description.setReadOnly(bReadOnly)
 
---	This is compatibility for "Customised Item Generator for 3.5E and Pathfinder" by rmilmine
-	if bArmor and StringManager.contains(Extension.getExtensions(), "Customised Item Generator for 3.5E and Pathfinder") then bSection6 = true; end
+--	This is compatibility for 'Customised Item Generator for 3.5E and Pathfinder' by rmilmine
+	if bArmor and StringManager.contains(Extension.getExtensions(), 'Customised Item Generator for 3.5E and Pathfinder') then bSection6 = true; end
 --	End compatibility patch
 
---	This is compatibility for "Enhanced Items" by Llisandur
+--	This is compatibility for 'Enhanced Items' by Llisandur
 	if bPFRPGEILoaded then
 		local bSection7 = false
-		updateControl("sourcebook", bReadOnly, bID)
+		updateControl('sourcebook', bReadOnly, bID)
 		divider6.setVisible(false)
 		gmonly_label.setVisible(false)
 		gmonly.setVisible(false)
 		if bOptionID and User.isHost() then
-			if updateControl("gmonly", bReadOnly, true) then bSection7 = true; end
+			if updateControl('gmonly', bReadOnly, true) then bSection7 = true; end
 		else
-			updateControl("gmonly", bReadOnly, false)
+			updateControl('gmonly', bReadOnly, false)
 		end
 		if User.isHost() then 
 			divider6.setVisible((bSection1 or bSection2 or bSection3 or bSection4 or bSection5) and bSection7)
@@ -181,8 +182,8 @@ function update()
 	divider2.setVisible((bSection1 or bSection2) and bSection2a)
 	divider2a.setVisible((bSection2a or bSection4) and bSection3)
 
---	This is compatibility for "Advanced Character Inventory Manager" by rmilmine
-	if StringManager.contains(Extension.getExtensions(), "Advanced Character Inventory Manager for 3.5E and Pathfinder") then
+--	This is compatibility for 'Advanced Character Inventory Manager' by rmilmine
+	if StringManager.contains(Extension.getExtensions(), 'Advanced Character Inventory Manager for 3.5E and Pathfinder') then
 		divider8.setVisible((bSection1 or bSection2 or bSection3 or bSection4) and bSection8)
 	end
 --	End compatibility patch
