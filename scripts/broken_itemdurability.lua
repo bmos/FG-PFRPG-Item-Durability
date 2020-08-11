@@ -19,11 +19,11 @@ end
 --	@return tDamagedWeapons A table of databasenodes pointing to the damaged item on the actions tab.
 local function handleWeaponNodeArgs(nodeItem)
 	local nodeChar = nodeItem.getChild('...')
-	local sItemName = DB.getValue(nodeItem, 'name')
+	local sItemName = DB.getValue(nodeItem, 'name', '')
 	
 	local tDamagedWeapons = {}
 	for _,nodeWeapon in pairs(DB.getChildren(nodeChar, 'weaponlist')) do
-		if sItemName == nodeWeapon.getChild('name').getValue() then
+		if sItemName == DB.getValue(nodeWeapon, 'name', '') then
 			table.insert(tDamagedWeapons, nodeWeapon)
 		end
 	end
