@@ -6,7 +6,7 @@ If the item is a weapon, any attacks made with the item suffer a –2 penalty on
 If the item is a suit of armor or a shield, the bonus it grants to AC is halved, rounding down. Broken armor doubles its armor check penalty on skills.
 
 # Compatibility
-This extension has been tested with [FantasyGrounds Classic](https://www.fantasygrounds.com/home/FantasyGroundsClassic.php) 3.3.11 and [FantasyGrounds Unity](https://www.fantasygrounds.com/home/FantasyGroundsUnity.php) 4.0.0 (2020-07-16). It should be compatible with both of [rmilmine](https://www.fantasygrounds.com/forums/member.php?215591-rmilmine)'s item extensions and Llisandur's [Enhanced Items v4.21](https://www.fantasygrounds.com/forums/showthread.php?40602-Extension-Enhanced-Items-v4).
+This extension has been tested with [FantasyGrounds Classic](https://www.fantasygrounds.com/home/FantasyGroundsClassic.php) 3.3.11 and [FantasyGrounds Unity](https://www.fantasygrounds.com/home/FantasyGroundsUnity.php) 4.0.0 (2020-08-05). It should be compatible with both of [rmilmine](https://www.fantasygrounds.com/forums/member.php?215591-rmilmine)'s item extensions and Llisandur's [Enhanced Items v4.21](https://www.fantasygrounds.com/forums/showthread.php?40602-Extension-Enhanced-Items-v4).
 
 # Features
 * Simplifies tracking hitpoints of weapons, armor, and equipment.
