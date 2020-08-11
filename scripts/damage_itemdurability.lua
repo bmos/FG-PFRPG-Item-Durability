@@ -83,8 +83,8 @@ local function setItemDamage(nodeItem, nDmgTotal, nBypassThresh)
 
 	local nModifiedDamage = nDmgTotal - nHardness
 	if nModifiedDamage > 0 then
-		local nDmg = DB.getValue(nodeItem, 'itemdamage')
-		DB.setValue(nodeItem, 'itemdamage', 'number', nDmg + nModifiedDamage)
+		local nPreviousDmg = DB.getValue(nodeItem, 'itemdamage')
+		DB.setValue(nodeItem, 'itemdamage', 'number', nPreviousDmg + nModifiedDamage)
 	end
 end
 
