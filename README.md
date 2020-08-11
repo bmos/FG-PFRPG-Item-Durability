@@ -15,4 +15,4 @@ This extension has been tested with [FantasyGrounds Classic](https://www.fantasy
 * Calculate/guess hardness and hitpoints based on item type, properties, name, character size, and more. Many items require you to enter 'thickness' to get the final value.
 
 # Video Demonstration (click for video)
-[<img src="https://i.ytimg.com/vi_webp/2tm-t8s18VY/maxresdefault.webp">](https://www.youtube.com/watch?v=2tm-t8s18VY)
+[<img src="https://i.ytimg.com/vi_webp/2tm-t8s18VY/hqdefault.webp">](https://www.youtube.com/watch?v=2tm-t8s18VY)
