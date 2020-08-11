@@ -14,6 +14,7 @@ local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
 	local t35eEnergyHalf = {'electricity','fire'}
 	local t35eEnergyQuarter = {'cold'}
 
+	if not nDmgTotal then nDmgTotal = 0 end
 	if bIsRanged then nDmgTotal = nDmgTotal / 2 end
 
 	for _,v in pairs(tTypes) do
