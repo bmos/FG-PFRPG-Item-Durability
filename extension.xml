@@ -15,7 +15,7 @@
 		<loadorder>60</loadorder>
 	</properties>
 
-	<announcement text="https://github.com/bmos/FG-PFRPG-Item-Durability\nPFRPG Item Durability v2.0.1:\nThis extension adds hardness, hitpoints, and damage fields to item sheets. Damage rolled can be dragged to the item damage field, broken Weapons and Armor are penalised accordingly, and destroyed items are un-equipped." font="emotefont" />
+	<announcement text="https://github.com/bmos/FG-PFRPG-Item-Durability\nPFRPG Item Durability v2.0.1:\nThis extension adds hardness, hitpoints, and damage fields to item sheets. Damage rolled can be dragged to the item damage field, broken weapons and armor are penalised accordingly, and destroyed items are un-equipped." font="emotefont" />
 
 	<base>
 		<!-- Campaign Records -->
