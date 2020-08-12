@@ -7,7 +7,7 @@
 --	After processing, the total is rounded through the round() function in ItemDurabilityLib.
 --	Finally, it is returned to the calling function.
 local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
-	local tNone = {'nonlethal','critical'}
+	local tNone = {'nonlethal','critical','positive','negative'}
 
 	local tPFEnergyHalf = {'fire','cold','acid','lightning','sonic'}
 
