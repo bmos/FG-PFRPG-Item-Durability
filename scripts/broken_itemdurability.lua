@@ -113,6 +113,7 @@ local function brokenPenalties(nodeItem, bIsBroken)
 	if sItemType:match('weapon') then brokenWeapon(nodeItem, bIsBroken) end
 	if sItemType:match('armor') then brokenArmor(nodeItem, bIsBroken) end
 	local sItemSubtype = string.lower(DB.getValue(nodeItem, 'subtype', ''))
+	if sItemSubtype:match('shield') and StringManager.contains(Extension.getExtensions(), 'Advanced Character Inventory Manager for 3.5E and Pathfinder') then brokenWeapon(nodeItem, bIsBroken) end
 end
 
 local function removeBackup(nodeItem)
