@@ -73,10 +73,46 @@ local function brokenArmor(nodeItem, bIsBroken)
 	end
 end
 
+local function processItemCost(sItemCostBak)
+	if string.match(sItemCostBak, '%-') or string.match(sItemCostBak, '%/') then return 0 end
+	
+	local sTrimmedItemCost = sItemCostBak:gsub('[^0-9.-]', '')
+	if sTrimmedItemCost then
+		nTrimmedItemCost = tonumber(sTrimmedItemCost)
+		for k,v in pairs(TEGlobals.tDenominations) do
+			if string.match(sItemCostBak, k) then
+				return nTrimmedItemCost * v
+			end
+		end
+	end
+
+	return 0
+end
+
+local function brokenItemCost(nodeItem, bIsBroken)
+	local sItemCostBak = DB.getValue(nodeItem, 'costbak', '')
+	sItemCostBak = sItemCostBak:gsub(',+', '')
+	sItemCostBak = sItemCostBak:gsub('%s+', '')
+
+	local sItemCostSeperatorChar = string.match(sItemCostBak, '[%D]')
+	local nItemCostSeperator = string.find(sItemCostBak, sItemCostSeperatorChar)
+
+	local nItemCostNew = tonumber(string.sub(sItemCostBak, 1, nItemCostSeperator - 1))
+	local sItemCostUnit = string.sub(sItemCostBak, nItemCostSeperator)
+
+	if bIsBroken then
+		DB.setValue(nodeItem, 'cost', 'string', (nItemCostNew * .75) .. ' ' .. sItemCostUnit)
+	else
+		DB.setValue(nodeItem, 'cost', 'string', sItemCostBak)
+	end
+end
+
 local function brokenPenalties(nodeItem, bIsBroken)
+	brokenItemCost(nodeItem, bIsBroken)
 	local sItemType = string.lower(DB.getValue(nodeItem, 'type', ''))
 	if sItemType:match('weapon') then brokenWeapon(nodeItem, bIsBroken) end
 	if sItemType:match('armor') then brokenArmor(nodeItem, bIsBroken) end
+	local sItemSubtype = string.lower(DB.getValue(nodeItem, 'subtype', ''))
 end
 
 local function removeBackup(nodeItem)
