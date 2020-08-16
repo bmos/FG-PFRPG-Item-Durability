@@ -163,8 +163,11 @@ function onBrokenChanged(node)
 	elseif nBrokenState == 1 then
 		makeBackup(nodeItem)
 		brokenPenalties(nodeItem, true)
+		DB.setValue(nodeItem, 'name', 'string', '[BROKEN] ' .. DB.getValue(nodeItem, 'name', ''))
 	else
 		brokenPenalties(nodeItem, false)
 		removeBackup(nodeItem)
+		local sItemName = DB.getValue(nodeItem, 'name', '')
+		if sItemName:find('%[BROKEN%]+') then DB.setValue(nodeItem, 'name', 'string', sItemName:sub(10)) end
 	end
 end
