@@ -20,10 +20,11 @@ end
 local function handleWeaponNodeArgs(nodeItem)
 	local nodeChar = nodeItem.getChild('...')
 	local sItemName = DB.getValue(nodeItem, 'name', '')
+	local sBrokenItemName = sItemName:sub(10)
 	
 	local tDamagedWeapons = {}
 	for _,nodeWeapon in pairs(DB.getChildren(nodeChar, 'weaponlist')) do
-		if sItemName == DB.getValue(nodeWeapon, 'name', '') then
+		if sItemName == DB.getValue(nodeWeapon, 'name', '') or sBrokenItemName == DB.getValue(nodeWeapon, 'name', '') then
 			table.insert(tDamagedWeapons, nodeWeapon)
 		end
 	end
