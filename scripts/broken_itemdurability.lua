@@ -75,19 +75,20 @@ end
 
 local function brokenItemCost(nodeItem, bIsBroken)
 	local sItemCostBak = DB.getValue(nodeItem, 'costbak', '')
-	sItemCostBak = sItemCostBak:gsub(',+', '')
-	sItemCostBak = sItemCostBak:gsub('%s+', '')
 
-	local sItemCostSeperatorChar = string.match(sItemCostBak, '[%D]')
-	local nItemCostSeperator = string.find(sItemCostBak, sItemCostSeperatorChar)
-
-	local nItemCostNew = tonumber(string.sub(sItemCostBak, 1, nItemCostSeperator - 1))
-	local sItemCostUnit = string.sub(sItemCostBak, nItemCostSeperator)
-
-	if bIsBroken then
-		DB.setValue(nodeItem, 'cost', 'string', (nItemCostNew * .75) .. ' ' .. sItemCostUnit)
-	else
-		DB.setValue(nodeItem, 'cost', 'string', sItemCostBak)
+	if bIsBroken and sItemCostBak ~= '' then
+		sItemCostBak = sItemCostBak:gsub(',+', '')
+		sItemCostBak = sItemCostBak:gsub('%s+', '')
+		
+		local sItemCostSeperatorChar = string.match(sItemCostBak, '[%D]')
+		local nItemCostSeperator = string.find(sItemCostBak, sItemCostSeperatorChar)
+		
+		local nItemCostNew = tonumber(string.sub(sItemCostBak, 1, nItemCostSeperator - 1))
+		local sItemCostUnit = string.sub(sItemCostBak, nItemCostSeperator)
+		
+		DB.setValue(nodeItem, 'cost', 'string', ItemDurabilityLib.round(nItemCostNew * .75, nil) .. ' ' .. sItemCostUnit)
+	elseif not bIsBroken then
+		DB.setValue(nodeItem, 'cost', 'string', DB.getValue(nodeItem, 'costbak', ''))
 	end
 end
 
@@ -136,6 +137,7 @@ end
 
 function onBrokenChanged(node)
 	local nodeItem = node.getParent()
+	local sItemName = DB.getValue(nodeItem, 'name', '')
 
 	local nBrokenState = DB.getValue(nodeItem, 'broken', 0)
 	if nBrokenState == 2 then
