@@ -33,8 +33,11 @@ end
 
 function brokenWeapon(nodeItem, bIsBroken)
 	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
+	local sItemSubtype = string.lower(DB.getValue(nodeItem, 'subtype', ''))
 
 	if bIsBroken then
+		if not sItemSubtype:match('shield') then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0) - 2) end
+		DB.setValue(nodeItem, 'critical', 'string', 'x2')
 		for _,vNode in pairs(tDamagedWeapons) do
 			DB.setValue(vNode, 'bonus', 'number', DB.getValue(vNode, 'bonusbak', 0) - 2)
 			DB.setValue(vNode, 'critatkrange', 'number', 20)
@@ -47,10 +50,11 @@ function brokenWeapon(nodeItem, bIsBroken)
 			end
 		end
 	else
+		if not sItemSubtype:match('shield') then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0)) end
+		DB.setValue(nodeItem, 'critical', 'string', DB.getValue(nodeItem, 'criticalbak', 'x2'))
 		for _,vNode in pairs(tDamagedWeapons) do
 			DB.setValue(vNode, 'bonus', 'number', DB.getValue(vNode, 'bonusbak', 0))
 			DB.setValue(vNode, 'critatkrange', 'number', DB.getValue(vNode, 'critatkrangebak', 20))
-			
 			for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
 				DB.setValue(vvNode, 'bonus', 'number', DB.getValue(vvNode, 'bonusbak', 0))
 				if DB.getValue(vvNode, 'critmultbak', 2) > 2 then
@@ -103,10 +107,13 @@ end
 
 local function removeBackup(nodeItem)
 	if DB.getValue(nodeItem, 'costbak') then nodeItem.getChild('costbak').delete() end
+	
 	if DB.getValue(nodeItem, 'bonusbak') then nodeItem.getChild('bonusbak').delete() end
 	if DB.getValue(nodeItem, 'acbak') then nodeItem.getChild('acbak').delete() end
 	if DB.getValue(nodeItem, 'checkpenaltybak') then nodeItem.getChild('checkpenaltybak').delete() end
-	
+
+	if DB.getValue(nodeItem, 'damagebak') then nodeItem.getChild('damagebak').delete() end
+	if DB.getValue(nodeItem, 'criticalbak') then nodeItem.getChild('criticalbak').delete() end
 	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
 	for _,vNode in pairs(tDamagedWeapons) do
 		if DB.getValue(vNode, 'bonusbak') then vNode.getChild('bonusbak').delete() end
@@ -120,10 +127,13 @@ end
 
 local function makeBackup(nodeItem)
 	DB.setValue(nodeItem, 'costbak', 'string', DB.getValue(nodeItem, 'cost', ''))
+	
 	DB.setValue(nodeItem, 'bonusbak', 'number', DB.getValue(nodeItem, 'bonus', 0))
 	DB.setValue(nodeItem, 'acbak', 'number', DB.getValue(nodeItem, 'ac', 0))
 	DB.setValue(nodeItem, 'checkpenaltybak', 'number', DB.getValue(nodeItem, 'checkpenalty', 0))
 	
+	DB.setValue(nodeItem, 'damagebak', 'string', DB.getValue(nodeItem, 'damage', ''))
+	DB.setValue(nodeItem, 'criticalbak', 'string', DB.getValue(nodeItem, 'critical', 'x2'))
 	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
 	for _,vNode in pairs(tDamagedWeapons) do
 		DB.setValue(vNode, 'bonusbak', 'number', DB.getValue(vNode, 'bonus', 0))
