@@ -139,23 +139,22 @@ function onBrokenChanged(node)
 	local nodeItem = node.getParent()
 	local sItemName = DB.getValue(nodeItem, 'name', '')
 
-	local nBrokenState = DB.getValue(nodeItem, 'broken', 0)
-	if nBrokenState == 2 then
-		if OptionsManager.isOption('DESTROY_ITEM', 'gone') then nodeItem.delete()
-		elseif OptionsManager.isOption('DESTROY_ITEM', 'unequipped') then
-			DB.setValue(nodeItem, 'carried', 'number', 0)
-			DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''))
+	if sItemName ~= '' then
+		local nBrokenState = DB.getValue(nodeItem, 'broken', 0)
+		if nBrokenState == 2 and not sItemName:find('%[DESTROYED%]+') then
+			if OptionsManager.isOption('DESTROY_ITEM', 'gone') then nodeItem.delete()
+			elseif OptionsManager.isOption('DESTROY_ITEM', 'unequipped') then
+				DB.setValue(nodeItem, 'carried', 'number', 0)
+				DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''))
+			end
+		elseif nBrokenState == 1 and not sItemName:find('%[BROKEN%]+') then
+			makeBackup(nodeItem)
+			brokenPenalties(nodeItem, true)
+			DB.setValue(nodeItem, 'name', 'string', '[BROKEN] ' .. DB.getValue(nodeItem, 'name', ''))
+		else
+			brokenPenalties(nodeItem, false)
+			removeBackup(nodeItem)
+			if sItemName:find('%[BROKEN%]+') then DB.setValue(nodeItem, 'name', 'string', sItemName:sub(10)) end
 		end
-	elseif nBrokenState == 1 and not string.find(DB.getValue(nodeItem, 'name', ''), '%[BROKEN%]') then
-		Debug.chat('broken')
-		makeBackup(nodeItem)
-		brokenPenalties(nodeItem, true)
-		DB.setValue(nodeItem, 'name', 'string', '[BROKEN] ' .. DB.getValue(nodeItem, 'name', ''))
-	else
-		Debug.chat('not broken')
-		brokenPenalties(nodeItem, false)
-		removeBackup(nodeItem)
-		local sItemName = DB.getValue(nodeItem, 'name', '')
-		if sItemName:find('%[BROKEN%]+') then DB.setValue(nodeItem, 'name', 'string', sItemName:sub(10)) end
 	end
 end
