@@ -20,11 +20,11 @@ end
 local function handleWeaponNodeArgs(nodeItem)
 	local nodeChar = nodeItem.getChild('...')
 	local sItemName = DB.getValue(nodeItem, 'name', '')
-	local sBrokenItemName = sItemName:sub(10)
+	local sUnbrokenItemName = sItemName:sub(10)
 	
 	local tDamagedWeapons = {}
 	for _,nodeWeapon in pairs(DB.getChildren(nodeChar, 'weaponlist')) do
-		if sItemName == DB.getValue(nodeWeapon, 'name', '') or sBrokenItemName == DB.getValue(nodeWeapon, 'name', '') then
+		if sItemName == DB.getValue(nodeWeapon, 'name', '') or sUnbrokenItemName == DB.getValue(nodeWeapon, 'name', '') then
 			table.insert(tDamagedWeapons, nodeWeapon)
 		end
 	end
@@ -40,11 +40,11 @@ function brokenWeapon(nodeItem, bIsBroken)
 		if not sItemSubtype:match('shield') then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0) - 2) end
 		DB.setValue(nodeItem, 'critical', 'string', 'x2')
 		for _,vNode in pairs(tDamagedWeapons) do
-			DB.setValue(vNode, 'bonus', 'number', DB.getValue(vNode, 'bonusbak', 0) - 2)
+			DB.setValue(vNode, 'bonus', 'number', DB.getValue(nodeItem, 'atkbonusbak', 0) - 2)
 			DB.setValue(vNode, 'critatkrange', 'number', 20)
 			
 			for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
-				DB.setValue(vvNode, 'bonus', 'number', DB.getValue(vvNode, 'bonusbak', 0) - 2)
+				DB.setValue(vvNode, 'bonus', 'number', DB.getValue(nodeItem, 'dmgbonusbak', 0) - 2)
 				if DB.getValue(vvNode, 'critmult', 2) > 2 then
 					DB.setValue(vvNode, 'critmult', 'number', 2)
 				end
@@ -54,12 +54,12 @@ function brokenWeapon(nodeItem, bIsBroken)
 		if not sItemSubtype:match('shield') then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0)) end
 		DB.setValue(nodeItem, 'critical', 'string', DB.getValue(nodeItem, 'criticalbak', 'x2'))
 		for _,vNode in pairs(tDamagedWeapons) do
-			DB.setValue(vNode, 'bonus', 'number', DB.getValue(vNode, 'bonusbak', 0))
-			DB.setValue(vNode, 'critatkrange', 'number', DB.getValue(vNode, 'critatkrangebak', 20))
+			DB.setValue(vNode, 'bonus', 'number', DB.getValue(nodeItem, 'atkbonusbak', 0))
+			DB.setValue(vNode, 'critatkrange', 'number', DB.getValue(nodeItem, 'critatkrangebak', 20))
 			for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
-				DB.setValue(vvNode, 'bonus', 'number', DB.getValue(vvNode, 'bonusbak', 0))
+				DB.setValue(vvNode, 'bonus', 'number', DB.getValue(nodeItem, 'dmgbonusbak', 0))
 				if DB.getValue(vvNode, 'critmultbak', 2) > 2 then
-					DB.setValue(vvNode, 'critmult', 'number', DB.getValue(vvNode, 'critmultbak', 2))
+					DB.setValue(vvNode, 'critmult', 'number', DB.getValue(nodeItem, 'critmultbak', 2))
 				end
 			end
 		end
@@ -115,15 +115,12 @@ local function removeBackup(nodeItem)
 
 	if DB.getValue(nodeItem, 'damagebak') then nodeItem.getChild('damagebak').delete() end
 	if DB.getValue(nodeItem, 'criticalbak') then nodeItem.getChild('criticalbak').delete() end
-	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
-	for _,vNode in pairs(tDamagedWeapons) do
-		if DB.getValue(vNode, 'bonusbak') then vNode.getChild('bonusbak').delete() end
-		if DB.getValue(vNode, 'critatkrangebak') then vNode.getChild('critatkrangebak').delete() end
-		for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
-			if DB.getValue(vvNode, 'bonusbak') then vvNode.getChild('bonusbak').delete() end
-			if DB.getValue(vvNode, 'critmultbak') then vvNode.getChild('critmultbak').delete() end
-		end
-	end
+
+	if DB.getValue(nodeItem, 'atkbonusbak') then nodeItem.getChild('atkbonusbak').delete() end
+	if DB.getValue(nodeItem, 'critatkrangebak') then nodeItem.getChild('critatkrangebak').delete() end
+
+	if DB.getValue(nodeItem, 'dmgbonusbak') then nodeItem.getChild('dmgbonusbak').delete() end
+	if DB.getValue(nodeItem, 'critmultbak') then nodeItem.getChild('critmultbak').delete() end
 end
 
 local function makeBackup(nodeItem)
@@ -137,11 +134,11 @@ local function makeBackup(nodeItem)
 	DB.setValue(nodeItem, 'criticalbak', 'string', DB.getValue(nodeItem, 'critical', 'x2'))
 	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
 	for _,vNode in pairs(tDamagedWeapons) do
-		DB.setValue(vNode, 'bonusbak', 'number', DB.getValue(vNode, 'bonus', 0))
-		DB.setValue(vNode, 'critatkrangebak', 'number', DB.getValue(vNode, 'critatkrange', 20))
+		DB.setValue(nodeItem, 'atkbonusbak', 'number', DB.getValue(vNode, 'bonus', 0))
+		DB.setValue(nodeItem, 'critatkrangebak', 'number', DB.getValue(vNode, 'critatkrange', 20))
 		for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
-			DB.setValue(vvNode, 'bonusbak', 'number', DB.getValue(vvNode, 'bonus', 0))
-			DB.setValue(vvNode, 'critmultbak', 'number', DB.getValue(vvNode, 'critmult', 2))
+			DB.setValue(nodeItem, 'dmgbonusbak', 'number', DB.getValue(vvNode, 'bonus', 0))
+			DB.setValue(nodeItem, 'critmultbak', 'number', DB.getValue(vvNode, 'critmult', 2))
 		end
 	end
 end
