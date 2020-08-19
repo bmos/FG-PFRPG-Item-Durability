@@ -73,22 +73,6 @@ local function brokenArmor(nodeItem, bIsBroken)
 	end
 end
 
-local function processItemCost(sItemCostBak)
-	if string.match(sItemCostBak, '%-') or string.match(sItemCostBak, '%/') then return 0 end
-	
-	local sTrimmedItemCost = sItemCostBak:gsub('[^0-9.-]', '')
-	if sTrimmedItemCost then
-		nTrimmedItemCost = tonumber(sTrimmedItemCost)
-		for k,v in pairs(TEGlobals.tDenominations) do
-			if string.match(sItemCostBak, k) then
-				return nTrimmedItemCost * v
-			end
-		end
-	end
-
-	return 0
-end
-
 local function brokenItemCost(nodeItem, bIsBroken)
 	local sItemCostBak = DB.getValue(nodeItem, 'costbak', '')
 	sItemCostBak = sItemCostBak:gsub(',+', '')
@@ -160,11 +144,13 @@ function onBrokenChanged(node)
 			DB.setValue(nodeItem, 'carried', 'number', 0)
 			DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''))
 		end
-	elseif nBrokenState == 1 then
+	elseif nBrokenState == 1 and not string.find(DB.getValue(nodeItem, 'name', ''), '%[BROKEN%]') then
+		Debug.chat('broken')
 		makeBackup(nodeItem)
 		brokenPenalties(nodeItem, true)
 		DB.setValue(nodeItem, 'name', 'string', '[BROKEN] ' .. DB.getValue(nodeItem, 'name', ''))
 	else
+		Debug.chat('not broken')
 		brokenPenalties(nodeItem, false)
 		removeBackup(nodeItem)
 		local sItemName = DB.getValue(nodeItem, 'name', '')
