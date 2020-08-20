@@ -40,6 +40,7 @@ function brokenWeapon(nodeItem, bIsBroken)
 		if not sItemSubtype:match('shield') then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0) - 2) end
 		DB.setValue(nodeItem, 'critical', 'string', 'x2')
 		for _,vNode in pairs(tDamagedWeapons) do
+			DB.setValue(vNode, 'name', 'string', '[BROKEN] ' .. DB.getValue(vNode, 'name', ''))
 			DB.setValue(vNode, 'bonus', 'number', DB.getValue(nodeItem, 'atkbonusbak', 0) - 2)
 			DB.setValue(vNode, 'critatkrange', 'number', 20)
 			
@@ -54,6 +55,8 @@ function brokenWeapon(nodeItem, bIsBroken)
 		if not sItemSubtype:match('shield') then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0)) end
 		DB.setValue(nodeItem, 'critical', 'string', DB.getValue(nodeItem, 'criticalbak', 'x2'))
 		for _,vNode in pairs(tDamagedWeapons) do
+			local sItemName = DB.getValue(vNode, 'name', '')
+			if sItemName:find('%[BROKEN%]+') then DB.setValue(vNode, 'name', 'string', sItemName:sub(10)) end
 			DB.setValue(vNode, 'bonus', 'number', DB.getValue(nodeItem, 'atkbonusbak', 0))
 			DB.setValue(vNode, 'critatkrange', 'number', DB.getValue(nodeItem, 'critatkrangebak', 20))
 			for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
