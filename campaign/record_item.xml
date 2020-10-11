@@ -58,8 +58,7 @@
 			<label_column name="substance_label" insertbefore="divider3" >
 				<static textres="item_label_substance" />
 			</label_column>
-			<string_columnh name="substance" insertbefore="divider3" >
-			</string_columnh>
+			<string_columnh name="substance" insertbefore="divider3" />
 			
 			<buttoncontrol name="button_rebuildattributes">
 				<anchored to="substance" width="20" height="20">
