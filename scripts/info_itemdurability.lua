@@ -86,6 +86,8 @@ function provideValues(sK)
 
 		-- weapons
 		t['sword'] = 'steel'
+		t['rapier'] = 'steel'
+		t['halberd'] = 'steel'
 		t['axe'] = 'steel'
 		t['dagger'] = 'steel'
 		t['quarterstaff'] = 'wood'
