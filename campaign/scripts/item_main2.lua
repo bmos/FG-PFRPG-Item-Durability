@@ -29,6 +29,7 @@ end
 function getItemType()
 	local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
 	local sType = string.lower(type.getValue());
+	local sSubtype = string.lower(subtype.getValue());
 	if sType:match('weapon') then
 		bWeapon = true;
 	end
@@ -44,7 +45,7 @@ function getItemType()
 	if sType:match('wondrous item') then
 		bWondrous = true;
 	end
-	if sType:match('shield') then
+	if sType:match('shield') or sSubtype:match('shield') then
 		bShield = true;
 	end
 	return bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
@@ -94,7 +95,7 @@ function update()
 	button_rebuildattributes.setVisible(bSection3b); -- all-or-nothing hide/show of section
 	size.setVisible(bSection3b); size_label.setVisible(bSection3b);
 	substance.setVisible(bSection3b); substance_label.setVisible(bSection3b);
-	thickness.setVisible(bSection3b); thickness_label.setVisible(bSection3b);
+	thickness.setVisible(bSection3b and not bArmor); thickness_label.setVisible(bSection3b and not bArmor);
 	
 	local bSection4 = false;
 	if updateControl('damage', bReadOnly, bID and bWeapon) then bSection4 = true; end
@@ -113,29 +114,26 @@ function update()
 	local bSection5 = false
 	if updateControl('bonus', bReadOnly, bID and (bWeapon or bArmor)) then bSection5 = true; end
 	if updateControl('aura', bReadOnly, bID) then bSection5 = true; end
-	if updateControl('cl', bReadOnly, bID) then bSection5 = true; end
 	if updateControl('prerequisites', bReadOnly, bID) then bSection5 = true; end
-	fortitudesave.setVisible(bSection5); fortitudesave_label.setVisible(bSection5);
-	reflexsave.setVisible(bSection5); reflexsave_label.setVisible(bSection5);
-	willsave.setVisible(bSection5); willsave_label.setVisible(bSection5);
-	item_saves_label.setVisible(bSection5);
+	local bCL = updateControl('cl', bReadOnly, bID);
+	if bCL then bSection5 = true; end
+	fortitudesave.setVisible(bCL); fortitudesave_label.setVisible(bCL);
+	reflexsave.setVisible(bCL); reflexsave_label.setVisible(bCL);
+	willsave.setVisible(bCL); willsave_label.setVisible(bCL);
+	item_saves_label.setVisible(bCL);
 	
 	local bSection6 = bID;
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);
-	
---	This is compatibility for 'Customised Item Generator for 3.5E and Pathfinder' by rmilmine
-	--if bArmor and StringManager.contains(Extension.getExtensions(), 'Customized Item Generator for 3.5E and Pathfinder') then bSection6 = true; end
---	End compatibility patch
-	
+		
 	--	This is compatibility for 'Enhanced Items' by Llisandur
 	local bSection7 = false
 	if bPFRPGEILoaded then
 		updateControl('sourcebook', bReadOnly, bID);
 		gmonly_label.setVisible(false);
 		gmonly.setVisible(false);
-		if User.isHost() then
-			if updateControl('gmonly', bReadOnly, true) then bSection7 = true; end
+		if User.isHost() and updateControl('gmonly', bReadOnly, true) then
+			bSection7 = true;
 		else
 			updateControl('gmonly', bReadOnly, false);
 		end
