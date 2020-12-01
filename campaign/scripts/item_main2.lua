@@ -91,7 +91,7 @@ function update()
 	local bSection3b = false; -- Item Durability
 	if updateControl('size', bReadOnly, bID) then bSection3b = true; end
 	if updateControl('substance', bReadOnly, bID) then bSection3b = true; end
-	if updateControl('thickness', bReadOnly, bID and not bArmor) then bSection3b = true end
+	if updateControl('thickness', bReadOnly, bID and not bArmor) then bSection3b = true; end
 	button_rebuildattributes.setVisible(bSection3b); -- all-or-nothing hide/show of section
 	size.setVisible(bSection3b); size_label.setVisible(bSection3b);
 	substance.setVisible(bSection3b); substance_label.setVisible(bSection3b);
@@ -127,7 +127,7 @@ function update()
 	description.setReadOnly(bReadOnly);
 		
 	--	This is compatibility for 'Enhanced Items' by Llisandur
-	local bSection7 = false
+	local bSection7 = false;
 	if bPFRPGEILoaded then
 		updateControl('sourcebook', bReadOnly, bID);
 		gmonly_label.setVisible(false);
@@ -164,7 +164,7 @@ function update()
 		end
 		charge.setReadOnly(false);
 
-		if updateControl('equipslot', bReadOnly, bID and bWondrous) then bSection8 = true; end
+		updateControl('equipslot', bReadOnly, bID and bWondrous)
 	end
 --	End compatibility patch
 	
