@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!-- 
-  Please see the LICENSE.md file included with this distribution for attribution and copyright information.
--->
+<!-- Please see the LICENSE.md file included with this distribution for attribution and copyright information. -->
 
 <root>
 	<windowclass name="item_main" merge="join">
-		<margins control="0,0,0,2" />
 		<script file="campaign/scripts/item_main2.lua" />
 		<sheetdata>
-			<anchor_column name="columnanchor" />
-			
-			<label_column name="nonid_name_label">
-				<static textres="item_label_unidentified" />
-			</label_column>
-			<string_columnh name="nonid_name" />
-			
-			<label_column name="nonidentified_label">
-				<static textres="item_label_unidentifiednotes" />
-			</label_column>
-			<string_columnh name="nonidentified" />
-			
-			<line_column name="divider" />
-			
-			<label_column name="type_label">
-				<static textres="item_label_type" />
-			</label_column>
 			<string_columnh name="type">
 				<nohide />
 				<delaykeyupdate />
@@ -36,30 +16,12 @@
 				</script>
 			</string_columnh>
 
-			<label_column name="subtype_label">
-				<static textres="item_label_subtype" />
-			</label_column>
-			<string_columnh name="subtype">
-				<delaykeyupdate />
-			</string_columnh>
-
-			<line_column name="divider2" />
-
-			<label_column name="cost_label">
-				<static textres="item_label_cost" />
-			</label_column>
-			<string_columnh name="cost" />
-
-			<label_column name="weight_label">
-				<static textres="item_label_weight" />
-			</label_column>
-			<number_columnh name="weight" />
-
-			<label_column name="substance_label" insertbefore="divider3" >
+			<line_column name="divider3b" insertbefore="divider4" />
+			
+			<label_column name="substance_label" insertbefore="divider4" >
 				<static textres="item_label_substance" />
 			</label_column>
-			<string_columnh name="substance" insertbefore="divider3" />
-			
+			<string_columnh name="substance" insertbefore="divider4" />
 			<buttoncontrol name="button_rebuildattributes">
 				<anchored to="substance" width="20" height="20">
 					<right anchor="left" offset="-8" />
@@ -74,53 +36,46 @@
 					end
 				</script>
 			</buttoncontrol>
-			
-			<label_column name="thickness_label" insertbefore="divider3" >
+			<label_column name="thickness_label" insertbefore="divider4" >
 				<static textres="item_label_thickness" />
 			</label_column>
-			<number_columnh name="thickness" insertbefore="divider3" >
+			<number_columnh name="thickness" insertbefore="divider4" >
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
-			
-			<label_column name="size_label" insertbefore="divider3" >
+			<label_column name="size_label" insertbefore="divider4" >
 				<static textres="item_label_size" />
 			</label_column>
-			<string_columnh name="size" insertbefore="divider3" >
+			<string_columnh name="size" insertbefore="divider4" >
 			</string_columnh>
 
-			<line_column name="divider2a" insertbefore="divider3" />
+			<line_column name="divider3a" insertbefore="divider3b" />
 
-			<label_column name="hardness_label" insertbefore="divider3" >
-				<static textres="item_label_hardness" />
+			<label_column name="item_durability_label" insertbefore="divider3b" >
+				<anchored>
+					<top offset="20" />
+				</anchored>
+				<static textres="item_label_itemdurability" />
 			</label_column>
-			<number_columnh name="hardness" insertbefore="divider3" >
+			<number_columnh name="hardness" insertbefore="divider3b" >
+				<anchored width="40" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="20" />
+					<left offset="97" />
+				</anchored>
 				<delaykeyupdate />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
-			
-			<buttoncontrol name="button_rebuildhhp">
-				<anchored to="hardness" width="20" height="20">
-					<right anchor="left" offset="-8" />
-					<top anchor="top" offset="0" />
+			<label_fieldtop name="hardness_label">
+				<anchored to="hardness" />
+				<static textres="item_label_hardness" />
+			</label_fieldtop>
+			<number_columnh name="hitpoints" insertbefore="divider3b" >
+				<anchored width="40" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="-20" />
+					<left parent="hardness" anchor="right" offset="10" />
 				</anchored>
-				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
-				<tooltip textres="item_tooltip_hhp" />
-				<gmvisibleonly />
-				<script>
-					function onButtonPress()
-						ItemDurabilityHHP.calculateHHP(window.getDatabaseNode())
-					end
-				</script>
-			</buttoncontrol>
-			
-			<label_column name="hitpoints_label" insertbefore="divider3" >
-				<static textres="item_label_hitpoints" />
-			</label_column>
-			<number_columnh name="hitpoints" insertbefore="divider3" >
 				<delaykeyupdate />
-				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 				<script>
 					function onValueChanged()
@@ -128,14 +83,18 @@
 					end
 				</script>
 			</number_columnh>
-			
-			<label_column name="itemdamage_label" insertbefore="divider3" >
-				<static textres="item_label_damage" />
-			</label_column>
-			<number_columnh name="itemdamage" insertbefore="divider3" >
+			<label_fieldtop name="hitpoints_label">
+				<anchored to="hitpoints" />
+				<static textres="item_label_hitpoints" />
+			</label_fieldtop>
+			<number_columnh name="itemdamage" insertbefore="divider3b" >
+				<anchored width="40" height="20">
+					<top parent="hitpoints" anchor="top" relation="relative" offset="0" />
+					<left parent="hitpoints" anchor="right" offset="10" />
+				</anchored>
 				<nodrop />
 				<delaykeyupdate />
-				<hideonvalue>0</hideonvalue>
+				<nohide />
 				<min>0</min>
 				<tooltip textres="item_tooltip_damage" />
 				<script>
@@ -168,32 +127,25 @@
 					end
 				</script>
 			</number_columnh>
-
-			<line_column name="divider3" />
-
-			<label_column name="damage_label">
+			<label_fieldtop name="itemdamage_label" insertbefore="divider3b" >
+				<anchored to="itemdamage" />
 				<static textres="item_label_damage" />
-			</label_column>
-			<string_columnh name="damage" />
+			</label_fieldtop>
+			<buttoncontrol name="button_rebuildhhp">
+				<anchored to="itemdamage" width="20" height="20">
+					<left anchor="right" offset="8" />
+					<top anchor="top" offset="0" />
+				</anchored>
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<tooltip textres="item_tooltip_hhp" />
+				<gmvisibleonly />
+				<script>
+					function onButtonPress()
+						ItemDurabilityHHP.calculateHHP(window.getDatabaseNode())
+					end
+				</script>
+			</buttoncontrol>
 
-			<label_column name="damagetype_label">
-				<static textres="item_label_dmgtype" />
-			</label_column>
-			<string_columnh name="damagetype" />
-			
-			<label_column name="critical_label">
-				<static textres="item_label_critical" />
-			</label_column>
-			<string_columnh name="critical" />
-			
-			<label_column name="range_label">
-				<static textres="item_label_range" />
-			</label_column>
-			<number_columnh name="range" />
-			
-			<label_column name="ac_label">
-				<static textres="item_label_ac" />
-			</label_column>
 			<number_columnh name="ac">
 				<delaykeyupdate />
 				<displaysign />
@@ -210,18 +162,6 @@
 					end
 				</script>
 			</number_columnh>
-			
-			<label_column name="maxstatbonus_label">
-				<static textres="item_label_maxstat" />
-			</label_column>
-			<number_columnh name="maxstatbonus">
-				<delaykeyupdate />
-				<displaysign />
-			</number_columnh>
-			
-			<label_column name="checkpenalty_label">
-				<static textres="item_label_scp" />
-			</label_column>
 			<number_columnh name="checkpenalty">
 				<delaykeyupdate />
 				<displaysign />
@@ -239,33 +179,6 @@
 				</script>
 			</number_columnh>
 			
-			<label_column name="spellfailure_label">
-				<static textres="item_label_spellfail" />
-			</label_column>
-			<number_columnh name="spellfailure">
-				<delaykeyupdate />
-			</number_columnh>
-			
-			<label_column name="speed30_label">
-				<static textres="item_label_speed30" />
-			</label_column>
-			<number_columnh name="speed30" />
-			
-			<label_column name="speed20_label">
-				<static textres="item_label_speed20" />
-			</label_column>
-			<number_columnh name="speed20" />
-
-			<label_column name="properties_label">
-				<static textres="item_label_properties" />
-			</label_column>
-			<string_columnh name="properties" />
-			
-			<line_column name="divider4" />
-
-			<label_column name="bonus_label">
-				<static textres="item_label_bonus" />
-			</label_column>
 			<number_columnh name="bonus">
 				<delaykeyupdate />
 				<script>
@@ -284,25 +197,61 @@
 				</script>
 				<displaysign />
 			</number_columnh>
-
-			<label_column name="aura_label">
-				<static textres="item_label_aura" />
+			<number_columnh name="cl">
+				<script>
+					function onValueChanged()
+						local nCL = getValue() or 0;
+						window.fortitudesave.setValue(math.floor(0.5 * nCL))
+						window.reflexsave.setValue(math.floor(0.5 * nCL))
+						window.willsave.setValue(math.floor(0.5 * nCL))
+					end
+				</script>
+			</number_columnh>
+			<label_column name="item_saves_label" insertbefore="divider5" >
+				<anchored>
+					<top offset="20" />
+				</anchored>
+				<static textres="npc_label_saves" />
 			</label_column>
-			<string_columnh name="aura" />
-
-			<label_column name="cl_label">
-				<static textres="casterlevel" />
-			</label_column>
-			<number_columnh name="cl" />
-
-			<label_column name="prerequisites_label">
-				<static textres="item_label_prereq" />
-			</label_column>
-			<string_columnh name="prerequisites" />
-			
-			<line_column name="divider5" />
-
-			<ft_columnh name="description" />
+			<number_npc_save name="fortitudesave" source="saves.fortitude" insertbefore="divider5" >
+				<anchored width="40" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="20" />
+					<left offset="97" />
+				</anchored>
+				<tooltip textres="fortitude" />
+				<target>fortitude</target>
+				<readonly />
+			</number_npc_save>
+			<label_fieldtop name="fortitudesave_label">
+				<anchored to="fortitudesave" />
+				<static textres="fortitude" />
+			</label_fieldtop>
+			<number_npc_save name="reflexsave" source="saves.reflex" insertbefore="divider5" >
+				<anchored to="fortitudesave" width="40" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<tooltip textres="reflex" />
+				<target>reflex</target>
+				<readonly />
+			</number_npc_save>
+			<label_fieldtop name="reflexsave_label">
+				<anchored to="reflexsave" />
+				<static textres="reflex" />
+			</label_fieldtop>
+			<number_npc_save name="willsave" source="saves.will" insertbefore="divider5" >
+				<anchored to="reflexsave" width="40" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
+				</anchored>
+				<tooltip textres="will" />
+				<target>will</target>
+				<readonly />
+			</number_npc_save>
+			<label_fieldtop name="willsave_label">
+				<anchored to="willsave" />
+				<static textres="will" />
+			</label_fieldtop>
 		</sheetdata>
 	</windowclass>
 </root>
