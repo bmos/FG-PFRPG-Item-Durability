@@ -58,7 +58,6 @@
 					<left offset="97" />
 				</anchored>
 				<delaykeyupdate />
-				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
 			<label_fieldtop name="hardness_label">
@@ -199,9 +198,9 @@
 					end
 					function onValueChanged()
 						local nCL = getValue() or 0;
-						window.fortitudesave.setValue(math.floor(0.5 * nCL))
-						window.reflexsave.setValue(math.floor(0.5 * nCL))
-						window.willsave.setValue(math.floor(0.5 * nCL))
+						window.fortitudesave.setValue(math.floor(0.5 * nCL) + 2)
+						window.reflexsave.setValue(math.floor(0.5 * nCL) + 2)
+						window.willsave.setValue(math.floor(0.5 * nCL) + 2)
 					end
 				</script>
 			</number_columnh>
