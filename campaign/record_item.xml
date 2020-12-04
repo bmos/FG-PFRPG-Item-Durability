@@ -36,6 +36,10 @@
 					end
 				</script>
 			</buttoncontrol>
+			<label_column name="size_label" insertbefore="divider4" >
+				<static textres="item_label_size" />
+			</label_column>
+			<string_columnh name="size" insertbefore="divider4" />
 			<label_column name="thickness_label" insertbefore="divider4" >
 				<static textres="item_label_thickness" />
 			</label_column>
