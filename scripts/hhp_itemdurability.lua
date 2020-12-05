@@ -66,7 +66,7 @@ function calculateHHP(nodeItem)
 		nItemHp =  (nItemHpPerIn * nItemThickness)
 	end
 
-	DB.setValue(nodeItem, 'hardness', 'number', ItemDurabilityLib.round(nHardness + nHardnessBonus, nil))
-	DB.setValue(nodeItem, 'hitpoints', 'number', ItemDurabilityLib.round(nItemHp + nItemHpBonus, nil))
+	DB.setValue(nodeItem, 'hardness', 'number', math.floor(nHardness + nHardnessBonus, nil))
+	DB.setValue(nodeItem, 'hitpoints', 'number', math.floor(nItemHp + nItemHpBonus, nil))
 	
 end

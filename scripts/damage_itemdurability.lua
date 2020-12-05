@@ -4,7 +4,7 @@
 
 ---	This function adjusts the damage total based on a number of factors.
 --	Depending on the ruleset and damage type, the damage could be full, half, quarter, or none.
---	After processing, the total is rounded through the round() function in ItemDurabilityLib.
+--	After processing, the total is rounded down.
 --	Finally, it is returned to the calling function.
 local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
 	local tNone = {'nonlethal','critical','positive','negative'}
@@ -47,7 +47,7 @@ local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
 		end
 	end
 	
-	return ItemDurabilityLib.round(nDmgTotal)
+	return math.floor(nDmgTotal) or 0
 end
 
 ---	This function extracts damage amounts and types from sDamage.
