@@ -8,14 +8,14 @@
 --	Finally, it is returned to the calling function.
 local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
 	local tNone = {'nonlethal','critical','positive','negative'}
-
+	
 	local tPFEnergyHalf = {'fire','cold','acid','lightning','sonic'}
-
+	
 	local t35eEnergyHalf = {'electricity','fire'}
 	local t35eEnergyQuarter = {'cold'}
-
+	
 	if bIsRanged then nDmgTotal = nDmgTotal / 2 end
-
+	
 	for _,v in pairs(tTypes) do
 		v = string.gsub(v, "%s+", "")
 		for _, vv in pairs(tNone) do
@@ -46,7 +46,7 @@ local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
 			end
 		end
 	end
-
+	
 	return ItemDurabilityLib.round(nDmgTotal)
 end
 
@@ -61,10 +61,10 @@ local function findTypedDamage(sDamage, bIsRanged)
 	local sDmg = string.sub(sDamage, sDmgStart + 1, string.len(sDamage) - 1)
 	local nDmgTotalStart = string.find(sDmg, '=', nFieldStart)
 	if nDmgTotalStart then sDmg = string.sub(sDmg, nDmgTotalStart + 1, string.len(sDamage)) end
-
+	
 	local sTypes = string.lower(string.sub(sDamage, nFieldStart, sDmgStart - 2) .. ',')
 	local tTypes = {}
-
+	
 	repeat
 		local nNextI = string.find(sTypes, ',', nFieldStart)
 		table.insert(tTypes, string.sub(sTypes, nFieldStart, nNextI-1))
@@ -99,7 +99,7 @@ local function sumTypes(nodeItem, tDamageTypes, nBypassThresh)
 	
 	for _,v in ipairs(tDamageTypes) do
 		local nFieldStart = 1
-
+		
 		if string.find(v, '%[DAMAGE %(R%)%]', nFieldStart) then bIsRanged = true end
 		
 		local nTypePosition = string.find(v, '%[TYPE: ', nFieldStart)
@@ -109,7 +109,7 @@ local function sumTypes(nodeItem, tDamageTypes, nBypassThresh)
 			nDmgTotal = nDmgTotal + findTypedDamage(sDamage, bIsRanged)
 		end
 	end
-
+	
 	setItemDamage(nodeItem, nDmgTotal, nBypassThresh)
 end
 
