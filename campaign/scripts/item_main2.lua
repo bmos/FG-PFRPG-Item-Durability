@@ -93,7 +93,7 @@ function update()
 	if updateControl('substance', bReadOnly, bID) then bSection3b = true; end
 	if updateControl('thickness', bReadOnly, bID and not bArmor) then bSection3b = true; end
 	button_rebuildattributes.setVisible(bSection3b); -- all-or-nothing hide/show of section
-	size.setVisible(bSection3b); size_label.setVisible(bSection3b);
+	if size then size.setVisible(bSection3b); size_label.setVisible(bSection3b) end
 	substance.setVisible(bSection3b); substance_label.setVisible(bSection3b);
 	thickness.setVisible(bSection3b and not bArmor); thickness_label.setVisible(bSection3b and not bArmor);
 
