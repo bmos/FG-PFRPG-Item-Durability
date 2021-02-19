@@ -59,12 +59,12 @@ function update()
 	local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous = getItemType();
 
 	local bSection1 = false;
-	if User.isHost() then
+	if User.isHost then
 		if updateControl("nonid_name", bReadOnly, true) then bSection1 = true; end;
 	else
 		updateControl("nonid_name", false);
 	end
-	if (User.isHost() or not bID) then
+	if (User.isHost or not bID) then
 		if updateControl("nonidentified", bReadOnly, true) then bSection1 = true; end;
 	else
 		updateControl("nonidentified", false);
@@ -132,7 +132,7 @@ function update()
 		updateControl('sourcebook', bReadOnly, bID);
 		gmonly_label.setVisible(false);
 		gmonly.setVisible(false);
-		if User.isHost() and updateControl('gmonly', bReadOnly, true) then
+		if User.isHost and updateControl('gmonly', bReadOnly, true) then
 			bSection7 = true;
 		else
 			updateControl('gmonly', bReadOnly, false);
@@ -175,7 +175,7 @@ function update()
 	divider3b.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b) and bSection4);
 	divider4.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4) and bSection5);
 	divider5.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5) and bSection6);
-	if bPFRPGEILoaded and User.isHost() then
+	if bPFRPGEILoaded and User.isHost then
 		divider6.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5 or bSection6) and bSection7);
 	end
 	if bACIMisLoaded then
