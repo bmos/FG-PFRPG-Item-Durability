@@ -3,7 +3,7 @@
 --
 
 function onInit()
-	if User.isHost then
+	if Session.IsHost then
 		DB.addHandler(DB.getPath('charsheet.*.inventorylist.*.broken'), 'onUpdate', onBrokenChanged)
 	end
 	registerOptions()
