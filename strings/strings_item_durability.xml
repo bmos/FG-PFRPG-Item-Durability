@@ -23,4 +23,6 @@
 	<string name="enc_opt_item_destroyed_unequipped">Un-equip</string>
 
 	<!-- chat messages -->
+	<string name="char_actions_weapon_broken">%s has broken.</string>
+	<string name="char_actions_weapon_destroyed">%s is destroyed.</string>
 </root>

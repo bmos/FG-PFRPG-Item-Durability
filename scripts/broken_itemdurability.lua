@@ -145,10 +145,12 @@ function handleBrokenItem(nodeItem)
 				DB.setValue(nodeItem, 'carried', 'number', 0)
 				DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''))
 			end
+			ChatManager.Message(string.format(Interface.getString('char_weapon_destroyed'), sItemName), true, rSource);
 		elseif nBrokenState == 1 and not sItemName:find('%[BROKEN%]') then
 			makeBackup(nodeItem)
 			brokenPenalties(nodeItem, true)
 			DB.setValue(nodeItem, 'name', 'string', '[BROKEN] ' .. DB.getValue(nodeItem, 'name', ''))
+			ChatManager.Message(string.format(Interface.getString('char_weapon_broken'), sItemName), true, rSource);
 		else
 			brokenPenalties(nodeItem, false)
 			removeBackup(nodeItem)
