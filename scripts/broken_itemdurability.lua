@@ -2,13 +2,6 @@
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
-function onInit()
-	if Session.IsHost then
-		DB.addHandler(DB.getPath('charsheet.*.inventorylist.*.broken'), 'onUpdate', onBrokenChanged)
-	end
-	registerOptions()
-end
-
 function registerOptions()
 	OptionsManager.registerOption2('DESTROY_ITEM', false, 'option_header_game', 'opt_lab_item_destroyed', 'option_entry_cycler', 
 		{ labels = 'enc_opt_item_destroyed_gone', values = 'gone', baselabel = 'enc_opt_item_destroyed_unequipped', baseval = 'unequipped', default = 'unequipped' })
@@ -56,7 +49,7 @@ function brokenWeapon(nodeItem, bIsBroken)
 		DB.setValue(nodeItem, 'critical', 'string', DB.getValue(nodeItem, 'criticalbak', 'x2'))
 		for _,vNode in pairs(tDamagedWeapons) do
 			local sItemName = DB.getValue(vNode, 'name', '')
-			if sItemName:find('%[BROKEN%]+') then DB.setValue(vNode, 'name', 'string', sItemName:sub(10)) end
+			if sItemName:find('%[BROKEN%]') then DB.setValue(vNode, 'name', 'string', sItemName:sub(10)) end
 			DB.setValue(vNode, 'bonus', 'number', DB.getValue(nodeItem, 'atkbonusbak', 0))
 			DB.setValue(vNode, 'critatkrange', 'number', DB.getValue(nodeItem, 'critatkrangebak', 20))
 			for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
@@ -146,30 +139,37 @@ local function makeBackup(nodeItem)
 	end
 end
 
-local function handleBrokenItem(nodeItem)
+function handleBrokenItem(nodeItem)
 	local sItemName = DB.getValue(nodeItem, 'name', '')
 
 	if sItemName ~= '' then
 		local nBrokenState = DB.getValue(nodeItem, 'broken', 0)
-		if nBrokenState == 2 and not sItemName:find('%[DESTROYED%]+') then
+		if nBrokenState == 2 and not sItemName:find('%[DESTROYED%]') then
 			if OptionsManager.isOption('DESTROY_ITEM', 'gone') then nodeItem.delete()
 			elseif OptionsManager.isOption('DESTROY_ITEM', 'unequipped') then
 				DB.setValue(nodeItem, 'carried', 'number', 0)
 				DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''))
 			end
-		elseif nBrokenState == 1 and not sItemName:find('%[BROKEN%]+') then
+		elseif nBrokenState == 1 and not sItemName:find('%[BROKEN%]') then
 			makeBackup(nodeItem)
 			brokenPenalties(nodeItem, true)
 			DB.setValue(nodeItem, 'name', 'string', '[BROKEN] ' .. DB.getValue(nodeItem, 'name', ''))
 		else
 			brokenPenalties(nodeItem, false)
 			removeBackup(nodeItem)
-			if sItemName:find('%[BROKEN%]+') then DB.setValue(nodeItem, 'name', 'string', sItemName:sub(10)) end
+			if sItemName:find('%[BROKEN%]') then DB.setValue(nodeItem, 'name', 'string', sItemName:sub(10)) end
 		end
 	end
 end
 
-function onBrokenChanged(node)
+local function onBrokenChanged(node)
 	local nodeItem = node.getParent()
 	handleBrokenItem(nodeItem)
+end
+
+function onInit()
+	if Session.IsHost then
+		DB.addHandler(DB.getPath('charsheet.*.inventorylist.*.broken'), 'onUpdate', onBrokenChanged)
+	end
+	registerOptions()
 end
