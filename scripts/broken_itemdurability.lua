@@ -2,11 +2,6 @@
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
-function registerOptions()
-	OptionsManager.registerOption2('DESTROY_ITEM', false, 'option_header_game', 'opt_lab_item_destroyed', 'option_entry_cycler', 
-		{ labels = 'enc_opt_item_destroyed_gone', values = 'gone', baselabel = 'enc_opt_item_destroyed_unequipped', baseval = 'unequipped', default = 'unequipped' })
-end
-
 ---	This function checks if the damaged weapon's name matches any in the actions tab and, if so, adds their nodes to tDamagedWeapons.
 --	@param nodeItem A databasenode pointing to the damaged item.
 --	@return tDamagedWeapons A table of databasenodes pointing to the damaged item on the actions tab.
@@ -171,5 +166,7 @@ function onInit()
 	if Session.IsHost then
 		DB.addHandler(DB.getPath('charsheet.*.inventorylist.*.broken'), 'onUpdate', onBrokenChanged)
 	end
-	registerOptions()
+	
+	OptionsManager.registerOption2('DESTROY_ITEM', false, 'option_header_game', 'opt_lab_item_destroyed', 'option_entry_cycler', 
+		{ labels = 'enc_opt_item_destroyed_gone', values = 'gone', baselabel = 'enc_opt_item_destroyed_unequipped', baseval = 'unequipped', default = 'unequipped' })
 end
