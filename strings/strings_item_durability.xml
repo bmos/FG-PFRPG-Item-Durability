@@ -3,6 +3,7 @@
 <!-- Please see the LICENSE.md file included with this distribution for attribution and copyright information. -->
 
 <root>
+	<!-- item sheet labels -->
 	<string name="item_label_itemdurability">Item Durability</string>
 	<string name="item_label_hardness">Hardness</string>
 	<string name="item_label_hitpoints">Hitpoints</string>
@@ -11,11 +12,15 @@
 	<string name="item_label_thickness">Thickness (In.)</string>
 	<string name="item_label_size">Size Category</string>
 	
+	<!-- tooltips -->
 	<string name="item_tooltip_attributes">Guess substance and size</string>
 	<string name="item_tooltip_damage">After manual entry, save with escape key</string>
 	<string name="item_tooltip_hhp">Calculate hardness and hitpoints</string>
 	
+	<!-- options -->
 	<string name="opt_lab_item_destroyed">Destroyed Items</string>
 	<string name="enc_opt_item_destroyed_gone">Remove</string>
 	<string name="enc_opt_item_destroyed_unequipped">Un-equip</string>
+
+	<!-- chat messages -->
 </root>
