@@ -79,7 +79,7 @@ local function brokenItemCost(nodeItem, bIsBroken)
 		local sItemCostSeperatorChar = string.match(sItemCostBak, '[%D]')
 		local nItemCostSeperator = string.find(sItemCostBak, sItemCostSeperatorChar)
 		
-		local nItemCostNew = tonumber(string.sub(sItemCostBak, 1, nItemCostSeperator - 1))
+		local nItemCostNew = tonumber(string.sub(sItemCostBak, 1, nItemCostSeperator - 1)) or 0
 		local sItemCostUnit = string.sub(sItemCostBak, nItemCostSeperator)
 		
 		DB.setValue(nodeItem, 'cost', 'string', ItemDurabilityLib.round(nItemCostNew * .75, nil) .. ' ' .. sItemCostUnit)
