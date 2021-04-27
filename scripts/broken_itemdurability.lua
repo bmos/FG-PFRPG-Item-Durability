@@ -100,7 +100,7 @@ local function brokenItemCost(nodeItem, bIsBroken)
 	end
 end
 
-local function brokenPenalties(nodeItem, bIsBroken)
+function brokenPenalties(nodeItem, bIsBroken)
 	brokenItemCost(nodeItem, bIsBroken)
 	local sItemType = string.lower(DB.getValue(nodeItem, 'type', ''))
 	if sItemType:match('weapon') then brokenWeapon(nodeItem, bIsBroken) end
@@ -146,8 +146,7 @@ local function makeBackup(nodeItem)
 	end
 end
 
-function onBrokenChanged(node)
-	local nodeItem = node.getParent()
+local function handleBrokenItem(nodeItem)
 	local sItemName = DB.getValue(nodeItem, 'name', '')
 
 	if sItemName ~= '' then
@@ -168,4 +167,9 @@ function onBrokenChanged(node)
 			if sItemName:find('%[BROKEN%]+') then DB.setValue(nodeItem, 'name', 'string', sItemName:sub(10)) end
 		end
 	end
+end
+
+function onBrokenChanged(node)
+	local nodeItem = node.getParent()
+	handleBrokenItem(nodeItem)
 end
