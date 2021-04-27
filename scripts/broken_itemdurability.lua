@@ -136,11 +136,11 @@ end
 
 function handleBrokenItem(nodeItem)
 	local sItemName = DB.getValue(nodeItem, 'name', '')
-
 	if sItemName ~= '' then
 		local nBrokenState = DB.getValue(nodeItem, 'broken', 0)
 		if nBrokenState == 2 and not sItemName:find('%[DESTROYED%]') then
-			if OptionsManager.isOption('DESTROY_ITEM', 'gone') then nodeItem.delete()
+			if OptionsManager.isOption('DESTROY_ITEM', 'gone') then
+				nodeItem.delete()
 			elseif OptionsManager.isOption('DESTROY_ITEM', 'unequipped') then
 				DB.setValue(nodeItem, 'carried', 'number', 0)
 				DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''))
