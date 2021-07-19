@@ -30,6 +30,7 @@ function getItemType()
 	local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
 	local sType = string.lower(type.getValue());
 	local sSubtype = string.lower(subtype.getValue());
+
 	if sType:match('weapon') then
 		bWeapon = true;
 	end
@@ -48,6 +49,7 @@ function getItemType()
 	if sType:match('shield') or sSubtype:match('shield') then
 		bShield = true;
 	end
+
 	return bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
 end
 
@@ -127,6 +129,7 @@ function update()
 	description.setReadOnly(bReadOnly);
 
 	--	This is compatibility for 'Enhanced Items' by Llisandur
+	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), 'PFRPG - Enhanced Items');
 	local bSection7 = false;
 	if bPFRPGEILoaded then
 		updateControl('sourcebook', bReadOnly, bID);
@@ -150,21 +153,21 @@ function update()
 	end
 
 --	This is compatibility for 'Enhanced Items' by Llisandur
-	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), 'PFRPG - Enhanced Items');
 	if bPFRPGEILoaded then
-		current_label.setVisible(false);
-		maxcharges.setVisible(false);
-		maxcharges_label.setVisible(false);
-		if updateControl('charge', bReadOnly, bID and (bWand or bStaff)) then
+		if updateControl("charge", bReadOnly, bID and (bWand or bStaff)) then
+			bSection4 = true;
+			maxcharges.setReadOnly(bReadOnly);
+			charge.setReadOnly(false);
 			current_label.setVisible(true);
 			maxcharges.setVisible(true);
-			maxcharges.setReadOnly(bReadOnly);
 			maxcharges_label.setVisible(true);
-			bSection8 = true;
+		else
+			current_label.setVisible(false);
+			maxcharges.setVisible(false);
+			maxcharges_label.setVisible(false);
 		end
-		charge.setReadOnly(false);
 
-		updateControl('equipslot', bReadOnly, bID and bWondrous)
+		if updateControl("equipslot", bReadOnly, bID and bWondrous) then bSection4 = true; end
 	end
 --	End compatibility patch
 
