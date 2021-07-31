@@ -129,7 +129,7 @@ function update()
 	description.setReadOnly(bReadOnly);
 
 	--	This is compatibility for 'Enhanced Items' by Llisandur
-	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), 'FG-PFRPG-Enhanced-Items');
+	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), 'Feature Enhanced Items');
 	local bSection7 = false;
 	if bPFRPGEILoaded then
 		updateControl('sourcebook', bReadOnly, bID);
@@ -144,7 +144,7 @@ function update()
 	--	End compatibility patch
 
 	local bSection8 = false; -- Advanced Character Inventory Manager
-	local bACIMisLoaded = StringManager.contains(Extension.getExtensions(), 'FG-PFRPG-Advanced-Item-Actions');
+	local bACIMisLoaded = StringManager.contains(Extension.getExtensions(), 'Feature: Advanced Item Actions');
 	if bACIMisLoaded then
 		if updateControl('damage', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
 		if updateControl('damagetype', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
