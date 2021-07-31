@@ -181,7 +181,4 @@ function update()
 	if bPFRPGEILoaded and Session.IsHost then
 		divider6.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5 or bSection6) and bSection7);
 	end
-	if bACIMisLoaded then
-		divider8.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5 or bSection6 or bSection7) and bSection8);
-	end
 end
