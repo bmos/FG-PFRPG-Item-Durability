@@ -129,7 +129,7 @@ function update()
 	description.setReadOnly(bReadOnly);
 
 	--	This is compatibility for 'Enhanced Items' by Llisandur
-	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), 'Feature Enhanced Items');
+	local bPFRPGEILoaded = StringManager.contains(Extension.getExtensions(), 'Feature: Enhanced Items');
 	local bSection7 = false;
 	if bPFRPGEILoaded then
 		updateControl('sourcebook', bReadOnly, bID);
