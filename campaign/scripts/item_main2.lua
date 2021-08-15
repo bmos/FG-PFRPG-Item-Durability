@@ -143,15 +143,6 @@ function update()
 	end
 	--	End compatibility patch
 
-	local bSection8 = false; -- Advanced Character Inventory Manager
-	local bACIMisLoaded = StringManager.contains(Extension.getExtensions(), 'FG-PFRPG-Advanced-Item-Actions');
-	if bACIMisLoaded then
-		if updateControl('damage', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
-		if updateControl('damagetype', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
-		if updateControl('critical', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
-		if updateControl('range', bReadOnly, bID and (bWeapon or bShield)) then bSection8 = true; end
-	end
-
 	--	This is compatibility for 'Enhanced Items' by Llisandur
 	if bPFRPGEILoaded then
 		if updateControl("charge", bReadOnly, bID and (bWand or bStaff)) then
