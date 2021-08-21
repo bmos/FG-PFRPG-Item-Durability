@@ -135,10 +135,10 @@ function update()
 		updateControl('sourcebook', bReadOnly, bID);
 		gmonly_label.setVisible(false);
 		gmonly.setVisible(false);
-		if Session.IsHost and updateControl('gmonly', bReadOnly, true) then
-			bSection7 = true;
-		else
-			updateControl('gmonly', bReadOnly, false);
+		if bOptionID and Session.IsHost then
+			if updateControl("gmonly", bReadOnly, true) then bSection7 = true; end
+		elseif Session.IsHost then
+			updateControl("gmonly", bReadOnly, false);
 		end
 	end
 	--	End compatibility patch
