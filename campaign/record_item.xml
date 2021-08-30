@@ -112,7 +112,7 @@
 								window.itemdamage.setColor(ColorManager.COLOR_HEALTH_CRIT_WOUNDS)
 								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 2)
 							elseif nPercentDmg >= 50 then
-								window.itemdamage.setColor('FFEB7B00')
+								window.itemdamage.setColor(ColorManager.COLOR_HEALTH_HVY_WOUNDS)
 								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 1)
 							else
 								window.itemdamage.setColor(ColorManager.COLOR_FULL)
