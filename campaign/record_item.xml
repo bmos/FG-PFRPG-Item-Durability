@@ -106,7 +106,7 @@
 					end
 					function onValueChanged()
 						local nItemHitpoints = window.hitpoints.getValue()
-						if nItemHitpoints and getDatabaseNode().getChild('...').getName() == 'inventorylist' and nItemHitpoints >= 1 then
+						if nItemHitpoints and nItemHitpoints >= 1 then
 							local nPercentDmg = window.itemdamage.getValue() / nItemHitpoints * 100
 							if nPercentDmg >= 100 then
 								window.itemdamage.setColor(ColorManager.COLOR_HEALTH_CRIT_WOUNDS)
@@ -118,7 +118,7 @@
 								window.itemdamage.setColor(ColorManager.COLOR_FULL)
 								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
 							end
-						elseif getDatabaseNode().getChild('...').getName() == 'inventorylist' then
+						else
 							window.itemdamage.setColor(ColorManager.COLOR_FULL)
 							DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
 						end
