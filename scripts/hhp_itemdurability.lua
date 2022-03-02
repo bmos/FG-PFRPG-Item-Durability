@@ -3,9 +3,7 @@
 --
 
 local function getSubstanceStats(sItemSubstance)
-	local aSubstances = ItemDurabilityInfo.provideValues('materials')
-
-	for k,v in pairs(aSubstances) do
+	for k,v in pairs(ItemDurabilityInfo.aMaterials) do
 		if k == sItemSubstance then
 			return v
 		end
@@ -48,16 +46,18 @@ function calculateHHP(nodeItem)
 			end
 		end
 	end
-	
+
 	local nArmorHpAc = DB.getValue(nodeItem, 'ac', 0) * 5
-	
+
 	local sItemSize = string.lower(DB.getValue(nodeItem, 'size', ''))
-	local tSizeMult = ItemDurabilityInfo.provideValues('sizes')
-	for k,v in pairs(tSizeMult) do
-		if k == sItemSize then nArmorHpAc = nArmorHpAc * tSizeMult[k] end
+	for k,v in pairs(ItemDurabilityInfo.tSizes) do
+		if k == sItemSize then
+			nArmorHpAc = nArmorHpAc * ItemDurabilityInfo.tSizes[k]
+		end
+
 		break
 	end
-	
+
 	if bIsArmor then
 		nItemHp = (nArmorHpAc * nArmorHpMult) + nArmorHpBonus
 	elseif bIsWeapon then
@@ -68,5 +68,4 @@ function calculateHHP(nodeItem)
 
 	DB.setValue(nodeItem, 'hardness', 'number', math.floor(nHardness + nHardnessBonus, nil))
 	DB.setValue(nodeItem, 'hitpoints', 'number', math.floor(nItemHp + nItemHpBonus, nil))
-	
 end
