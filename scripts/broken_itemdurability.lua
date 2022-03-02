@@ -69,6 +69,13 @@ local function brokenArmor(nodeItem, bIsBroken)
 	end
 end
 
+---	This function rounds nNum to nDecimalPlaces (or to a whole number)
+local function round(nNum, nDecimalPlaces)
+	if not nNum then return 0; end
+	local nMult = 10^(nDecimalPlaces or 0)
+	return math.floor(nNum * nMult + 0.5) / nMult
+end
+
 local function brokenItemCost(nodeItem, bIsBroken)
 	local sItemCostBak = DB.getValue(nodeItem, 'costbak', '')
 
@@ -82,7 +89,7 @@ local function brokenItemCost(nodeItem, bIsBroken)
 		local nItemCostNew = tonumber(string.sub(sItemCostBak, 1, nItemCostSeperator - 1)) or 0
 		local sItemCostUnit = string.sub(sItemCostBak, nItemCostSeperator)
 		
-		DB.setValue(nodeItem, 'cost', 'string', ItemDurabilityLib.round(nItemCostNew * .75, nil) .. ' ' .. sItemCostUnit)
+		DB.setValue(nodeItem, 'cost', 'string', round(nItemCostNew * .75, nil) .. ' ' .. sItemCostUnit)
 	elseif not bIsBroken then
 		DB.setValue(nodeItem, 'cost', 'string', DB.getValue(nodeItem, 'costbak', ''))
 	end
