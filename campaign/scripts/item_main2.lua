@@ -6,14 +6,17 @@ function onInit()
 	update();
 end
 
+--	luacheck: globals VisDataCleared
 function VisDataCleared()
 	update();
 end
 
+--	luacheck: globals InvisDataAdded
 function InvisDataAdded()
 	update();
 end
 
+--	luacheck: globals updateControl
 function updateControl(sControl, bReadOnly, bID)
 	if not self[sControl] then
 		return false;
@@ -28,6 +31,7 @@ end
 
 function getItemType()
 	local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
+	--	luacheck: globals type
 	local sType = string.lower(type.getValue());
 	local sSubtype = string.lower(subtype.getValue());
 
@@ -58,7 +62,7 @@ function update()
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
 	local bID = LibraryData.getIDState("item", nodeRecord);
 
-	local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous = getItemType();
+	local bWeapon, bArmor, _, bWand, bStaff, bWondrous = getItemType();
 
 	local bSection1 = false;
 	if Session.IsHost then

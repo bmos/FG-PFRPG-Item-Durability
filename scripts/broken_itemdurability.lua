@@ -1,4 +1,4 @@
--- 
+--
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
@@ -9,18 +9,18 @@ local function handleWeaponNodeArgs(nodeItem)
 	local nodeChar = nodeItem.getChild('...')
 	local sItemName = DB.getValue(nodeItem, 'name', '')
 	local sUnbrokenItemName = sItemName:sub(10)
-	
+
 	local tDamagedWeapons = {}
 	for _,nodeWeapon in pairs(DB.getChildren(nodeChar, 'weaponlist')) do
 		if sItemName == DB.getValue(nodeWeapon, 'name', '') or sUnbrokenItemName == DB.getValue(nodeWeapon, 'name', '') then
 			table.insert(tDamagedWeapons, nodeWeapon)
 		end
 	end
-	
+
 	return tDamagedWeapons
 end
 
-function brokenWeapon(nodeItem, bIsBroken)
+local function brokenWeapon(nodeItem, bIsBroken)
 	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
 	local sItemSubtype = string.lower(DB.getValue(nodeItem, 'subtype', ''))
 
@@ -31,7 +31,7 @@ function brokenWeapon(nodeItem, bIsBroken)
 			DB.setValue(vNode, 'name', 'string', '[BROKEN] ' .. DB.getValue(vNode, 'name', ''))
 			DB.setValue(vNode, 'bonus', 'number', DB.getValue(nodeItem, 'atkbonusbak', 0) - 2)
 			DB.setValue(vNode, 'critatkrange', 'number', 20)
-			
+
 			for _,vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
 				DB.setValue(vvNode, 'bonus', 'number', DB.getValue(nodeItem, 'dmgbonusbak', 0) - 2)
 				if DB.getValue(vvNode, 'critmult', 2) > 2 then
@@ -82,31 +82,33 @@ local function brokenItemCost(nodeItem, bIsBroken)
 	if bIsBroken and sItemCostBak ~= '' then
 		sItemCostBak = sItemCostBak:gsub(',+', '')
 		sItemCostBak = sItemCostBak:gsub('%s+', '')
-		
+
 		local sItemCostSeperatorChar = string.match(sItemCostBak, '[%D]')
 		local nItemCostSeperator = string.find(sItemCostBak, sItemCostSeperatorChar)
-		
+
 		local nItemCostNew = tonumber(string.sub(sItemCostBak, 1, nItemCostSeperator - 1)) or 0
 		local sItemCostUnit = string.sub(sItemCostBak, nItemCostSeperator)
-		
+
 		DB.setValue(nodeItem, 'cost', 'string', round(nItemCostNew * .75, nil) .. ' ' .. sItemCostUnit)
 	elseif not bIsBroken then
 		DB.setValue(nodeItem, 'cost', 'string', DB.getValue(nodeItem, 'costbak', ''))
 	end
 end
 
-function brokenPenalties(nodeItem, bIsBroken)
+local function brokenPenalties(nodeItem, bIsBroken)
 	brokenItemCost(nodeItem, bIsBroken)
 	local sItemType = string.lower(DB.getValue(nodeItem, 'type', ''))
 	if sItemType:match('weapon') then brokenWeapon(nodeItem, bIsBroken) end
 	if sItemType:match('armor') then brokenArmor(nodeItem, bIsBroken) end
 	local sItemSubtype = string.lower(DB.getValue(nodeItem, 'subtype', ''))
-	if sItemSubtype:match('shield') and StringManager.contains(Extension.getExtensions(), 'FG-PFRPG-Advanced-Item-Actions') then brokenWeapon(nodeItem, bIsBroken) end
+	if sItemSubtype:match('shield') and StringManager.contains(Extension.getExtensions(), 'FG-PFRPG-Advanced-Item-Actions') then
+		brokenWeapon(nodeItem, bIsBroken)
+	end
 end
 
 local function removeBackup(nodeItem)
 	if DB.getValue(nodeItem, 'costbak') then nodeItem.getChild('costbak').delete() end
-	
+
 	if DB.getValue(nodeItem, 'bonusbak') then nodeItem.getChild('bonusbak').delete() end
 	if DB.getValue(nodeItem, 'acbak') then nodeItem.getChild('acbak').delete() end
 	if DB.getValue(nodeItem, 'checkpenaltybak') then nodeItem.getChild('checkpenaltybak').delete() end
@@ -123,11 +125,11 @@ end
 
 local function makeBackup(nodeItem)
 	DB.setValue(nodeItem, 'costbak', 'string', DB.getValue(nodeItem, 'cost', ''))
-	
+
 	DB.setValue(nodeItem, 'bonusbak', 'number', DB.getValue(nodeItem, 'bonus', 0))
 	DB.setValue(nodeItem, 'acbak', 'number', DB.getValue(nodeItem, 'ac', 0))
 	DB.setValue(nodeItem, 'checkpenaltybak', 'number', DB.getValue(nodeItem, 'checkpenalty', 0))
-	
+
 	DB.setValue(nodeItem, 'damagebak', 'string', DB.getValue(nodeItem, 'damage', ''))
 	DB.setValue(nodeItem, 'criticalbak', 'string', DB.getValue(nodeItem, 'critical', 'x2'))
 	local tDamagedWeapons = handleWeaponNodeArgs(nodeItem)
@@ -175,7 +177,19 @@ function onInit()
 	if Session.IsHost then
 		DB.addHandler(DB.getPath('charsheet.*.inventorylist.*.broken'), 'onUpdate', onBrokenChanged)
 	end
-	
-	OptionsManager.registerOption2('DESTROY_ITEM', false, 'option_header_game', 'opt_lab_item_destroyed', 'option_entry_cycler', 
-		{ labels = 'enc_opt_item_destroyed_gone', values = 'gone', baselabel = 'enc_opt_item_destroyed_unequipped', baseval = 'unequipped', default = 'unequipped' })
+
+	OptionsManager.registerOption2(
+		'DESTROY_ITEM',
+		false,
+		'option_header_game',
+		'opt_lab_item_destroyed',
+		'option_entry_cycler',
+		{
+			labels = 'enc_opt_item_destroyed_gone',
+			values = 'gone',
+			baselabel = 'enc_opt_item_destroyed_unequipped',
+			baseval = 'unequipped',
+			default = 'unequipped'
+		}
+	)
 end

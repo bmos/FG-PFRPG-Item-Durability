@@ -1,4 +1,4 @@
--- 
+--
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
@@ -8,14 +8,14 @@
 --	Finally, it is returned to the calling function.
 local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
 	local tNone = {'nonlethal','critical','positive','negative'}
-	
+
 	local tPFEnergyHalf = {'fire','cold','acid','lightning','sonic'}
-	
+
 	local t35eEnergyHalf = {'electricity','fire'}
 	local t35eEnergyQuarter = {'cold'}
-	
+
 	if bIsRanged then nDmgTotal = nDmgTotal / 2 end
-	
+
 	for _,v in pairs(tTypes) do
 		v = string.gsub(v, "%s+", "")
 		for _, vv in pairs(tNone) do
@@ -46,7 +46,7 @@ local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
 			end
 		end
 	end
-	
+
 	return math.floor(nDmgTotal) or 0
 end
 
@@ -56,25 +56,25 @@ end
 --	@see adjustDamageTypes(sDmg, tTypes, bIsRanged)
 local function findTypedDamage(sDamage, bIsRanged)
 	local nFieldStart = 1
-	
+
 	local sDmgStart = string.find(sDamage, '%(', nFieldStart)
 	local sDmg = string.sub(sDamage, sDmgStart + 1, string.len(sDamage) - 1)
 	local nDmgTotalStart = string.find(sDmg, '=', nFieldStart)
 	if nDmgTotalStart then sDmg = string.sub(sDmg, nDmgTotalStart + 1, string.len(sDamage)) end
-	
+
 	local sTypes = string.lower(string.sub(sDamage, nFieldStart, sDmgStart - 2) .. ',')
 	local tTypes = {}
-	
+
 	repeat
 		local nNextI = string.find(sTypes, ',', nFieldStart)
 		table.insert(tTypes, string.sub(sTypes, nFieldStart, nNextI-1))
 		nFieldStart = nNextI + 1
 	until nFieldStart > string.len(sTypes)
-	
+
 	return adjustDamageTypes(tonumber(sDmg), tTypes, bIsRanged)
 end
 
----	This function 
+---	This function
 local function setItemDamage(nodeItem, nDmgTotal, nBypassThresh)
 	local nHardness = DB.getValue(nodeItem, 'hardness')
 	if nBypassThresh then
@@ -96,12 +96,12 @@ end
 local function sumTypes(nodeItem, tDamageTypes, nBypassThresh)
 	local nDmgTotal = 0
 	local bIsRanged = false
-	
+
 	for _,v in ipairs(tDamageTypes) do
 		local nFieldStart = 1
-		
+
 		if string.find(v, '%[DAMAGE %(R%)%]', nFieldStart) then bIsRanged = true end
-		
+
 		local nTypePosition = string.find(v, '%[TYPE: ', nFieldStart)
 		if nTypePosition then
 			local nFieldStop = string.len(v)
@@ -109,7 +109,7 @@ local function sumTypes(nodeItem, tDamageTypes, nBypassThresh)
 			nDmgTotal = nDmgTotal + findTypedDamage(sDamage, bIsRanged)
 		end
 	end
-	
+
 	setItemDamage(nodeItem, nDmgTotal, nBypassThresh)
 end
 
@@ -117,9 +117,9 @@ end
 --	The resulting table is supplied to sumTypes().
 --	If the damage type is adamantine, it also passes a damage bypass threshold of 20.
 --	@see sumTypes(nodeItem, tDamageTypes, nBypassThresh)
+--	luacheck: globals splitDamageTypes
 function splitDamageTypes(nodeItem, sDragInfo)
 	local nFieldStart = 1
-	local fieldend = string.len(sDragInfo)
 	local tDamageTypes = {}
 	repeat
 		local nexti_s = string.find(sDragInfo, '%[', nFieldStart)
@@ -127,7 +127,7 @@ function splitDamageTypes(nodeItem, sDragInfo)
 		table.insert(tDamageTypes, string.sub(sDragInfo, nexti_s, nexti_e))
 		nFieldStart = nexti_e + 1
 	until nFieldStart > string.len(sDragInfo)
-	
+
 	local nBypassThresh = nil
 	if string.find(string.lower(sDragInfo), 'adamantine', 1) then nBypassThresh = 20 end
 	sumTypes(nodeItem, tDamageTypes, nBypassThresh)

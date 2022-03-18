@@ -1,4 +1,4 @@
--- 
+--
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
@@ -10,6 +10,7 @@ local function getSubstanceStats(sItemSubstance)
 	end
 end
 
+--	luacheck: globals calculateHHP
 function calculateHHP(nodeItem)
 	local sItemType = string.lower(DB.getValue(nodeItem, 'type', ''))
 	local bIsArmor = false
@@ -18,13 +19,13 @@ function calculateHHP(nodeItem)
 	if sItemType:match('weapon') then bIsWeapon = true end
 
 	local nItemEnhancementBonus = DB.getValue(nodeItem, 'bonus', 0)
-	
-	local nItemHp = 0
+
+	local nItemHp
 	local nItemHpBonus = nItemEnhancementBonus * 10
-	
+
 	local nHardness = 0
 	local nHardnessBonus = nItemEnhancementBonus * 2
-	
+
 	local nItemThickness = DB.getValue(nodeItem, 'thickness', 0)
 	local nItemHpPerIn = 0
 
@@ -50,7 +51,7 @@ function calculateHHP(nodeItem)
 	local nArmorHpAc = DB.getValue(nodeItem, 'ac', 0) * 5
 
 	local sItemSize = string.lower(DB.getValue(nodeItem, 'size', ''))
-	for k,v in pairs(ItemDurabilityInfo.tSizes) do
+	for k,v in pairs(ItemDurabilityInfo.tSizes) do --luacheck: ignore
 		if k == sItemSize then
 			nArmorHpAc = nArmorHpAc * ItemDurabilityInfo.tSizes[k]
 		end

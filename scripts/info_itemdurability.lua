@@ -1,9 +1,9 @@
--- 
--- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
+--
+--	Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
+--	luacheck: globals aMaterials
 aMaterials = {
-
 	-- materials from Special Materials list
 	['abysium'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
 	['angelskin'] = { ['nHardness'] = 5, ['nItemHpPerIn'] = 5 },
@@ -18,11 +18,13 @@ aMaterials = {
 	['blood crystal'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 10, ['nWeaponHpMult'] = 0.5 },
 	['darkleaf cloth'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 20 },
 	['darkwood'] = { ['nHardness'] = 5, ['nItemHpPerIn'] = 10 },
-	['dragonhide'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 10 },				-- hide of a dragon is typically between 1/2 inch and 1 inch thick
+	['dragonhide'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 10 },
+	-- hide of a dragon is typically between 1/2 inch and 1 inch thick
 	['druchite'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 40 },
 	['eel hide'] = { ['nHardness'] = 2, ['nItemHpPerIn'] = 5 },
 	['elysian bronze'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
-	-- ['bronze'] = { ['nHardness'] = 9, ['nItemHpPerIn'] = 10 },					-- bronze armor has hardness 9 and bronze weapons use the same hardness as their base weapon
+	-- ['bronze'] = { ['nHardness'] = 9, ['nItemHpPerIn'] = 10 },
+	-- bronze armor has hardness 9 and bronze weapons use the same hardness as their base weapon
 	['gold'] = { ['nHardness'] = 5, ['nItemHpPerIn'] = 12 },						-- I made up this nItemHpPerIn
 	['greenwood'] = { ['nHardness'] = 5, ['nItemHpPerIn'] = 10 },
 	['griffon mane'] = { ['nHardness'] = 1, ['nItemHpPerIn'] = 2 },
@@ -31,7 +33,8 @@ aMaterials = {
 	['cold iron'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
 	['mindglass'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
 	['noqual'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
-	-- ['obsidian'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },				-- obsidian weapons have half the hardness of their base weapon 
+	-- ['obsidian'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
+	-- obsidian weapons have half the hardness of their base weapon
 	['siccatite'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },				-- I made this up based on iron/steel
 	['alchemical silver'] = { ['nHardness'] = 8, ['nItemHpPerIn'] = 10 },		-- I made this up based on iron/steel
 	['silversheen'] = { ['nHardness'] = 8, ['nItemHpPerIn'] = 10 },
@@ -41,11 +44,12 @@ aMaterials = {
 	['living steel'] = { ['nHardness'] = 15, ['nItemHpPerIn'] = 35 },
 	['singing steel'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 20 },
 	['sunsilver'] = { ['nHardness'] = 8, ['nItemHpPerIn'] = 10 },
-	['silver'] = { ['nHardness'] = 8, ['nItemHpPerIn'] = 10 },					-- This is a workaround because nobody says "alchemical silver" in their weapon names
-	-- ['viridium'] = { ['nHardness'] = 8, ['nItemHpPerIn'] = 10 },					-- viridium weapons have half the hardness of their base weapon 
+	['silver'] = { ['nHardness'] = 8, ['nItemHpPerIn'] = 10 },
+	-- This silver entry is a workaround because nobody says "alchemical silver" in their weapon names
+	-- ['viridium'] = { ['nHardness'] = 8, ['nItemHpPerIn'] = 10 },
+	-- viridium weapons have half the hardness of their base weapon
 	['voidglass'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
 	['whipwood'] = { ['nHardness'] = 8, ['nItemHpPerIn'] = 10, ['nWeaponHpBonus'] = 5 },
-	['voidglass'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
 	['wyroot'] = { ['nHardness'] = 5, ['nItemHpPerIn'] = 10 },
 
 	-- substances from Damaging Items list
@@ -62,12 +66,12 @@ aMaterials = {
 	['stone'] = { ['nHardness'] = 8, ['nItemHpPerIn'] = 15 },
 	['iron'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
 	['steel'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },
-	['metal'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },					-- This is an oversimplification, but I think it's warranted
+	['metal'] = { ['nHardness'] = 10, ['nItemHpPerIn'] = 30 },					-- This isn't accurate but it's ok
 	['mithral'] = { ['nHardness'] = 15, ['nItemHpPerIn'] = 30 },
 	['adamantine'] = { ['nHardness'] = 20, ['nItemHpPerIn'] = 40, ['nArmorHpMult'] = 1.33 }
+}
 
-	}
-
+--	luacheck: globals tItems
 tItems = {
 	-- adventuring supplies
 	['vial'] = 'glass',
@@ -104,8 +108,9 @@ tItems = {
 	['mail'] = 'steel',
 	['buckler'] = 'steel',
 	['tower'] = 'steel'
-	}
+}
 
+--	luacheck: globals tSizes
 tSizes = {
 	-- hitpoint multipliers for each size category
 	['colossal'] = 16,
@@ -117,7 +122,7 @@ tSizes = {
 	['tiny'] = 0.25,
 	['diminutive'] = 0.125,
 	['fine'] = 0.0625
-	}
+}
 
 ---	This function searches sItemProps, sItemName, and tItemParser for any of the keys in aSubstances.
 --	If it ever finds one, it stops searching and returns the key.
@@ -156,6 +161,7 @@ end
 --	If the substance field is empty, findSubstance() is called.
 --	Once these pieces of information are known, they are written back to the item sheet.
 --	@see findSubstance(nodeItem)
+--	luacheck: globals fillAttributes
 function fillAttributes(nodeItem)
 	local sCharSize = string.lower(DB.getValue(nodeItem.getChild('...'), 'size', 'medium'))
 	local sItemSize = string.lower(DB.getValue(nodeItem, 'size', ''))
@@ -166,6 +172,6 @@ function fillAttributes(nodeItem)
 	if sItemSubstance == '' then
 		DB.setValue(nodeItem, 'substance', 'string', findSubstance(nodeItem))
 	end
-	
+
 	if DB.getValue(nodeItem, 'hardness', 0) == 0 and DB.getValue(nodeItem, 'hitpoints', 0) == 0 then ItemDurabilityHHP.calculateHHP(nodeItem) end
 end
