@@ -17,7 +17,7 @@
 			</string_columnh>
 
 			<line_column name="divider3b" insertbefore="divider4" />
-			
+
 			<label_column name="substance_label" insertbefore="divider4" >
 				<static textres="item_label_substance" />
 			</label_column>
@@ -47,9 +47,9 @@
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
 			</number_columnh>
-						
+
 			<line_column name="divider3a" insertbefore="divider3b" />
-			
+
 			<label_column name="item_durability_label" insertbefore="divider3b" >
 				<anchored>
 					<top offset="20" />
@@ -147,52 +147,17 @@
 			<number_columnh name="ac">
 				<delaykeyupdate />
 				<displaysign />
-				<script>
-					function onValueChanged()
-						local nodeItem = window.getDatabaseNode()
-
-						local nItemBrokenState = DB.getValue(nodeItem, 'broken')
-						local nItemAc = DB.getValue(nodeItem, 'ac')
-
-						if nItemBrokenState == 0 and string.lower(window.type.getValue()) == 'armor' then
-							DB.setValue(nodeItem, 'ac.backup', 'number', nItemAc)
-						end
-					end
-				</script>
+				<script file="campaign/scripts/backupitemstat.lua" />
 			</number_columnh>
 			<number_columnh name="checkpenalty">
 				<delaykeyupdate />
 				<displaysign />
-				<script>
-					function onValueChanged()
-						local nodeItem = window.getDatabaseNode()
-
-						local nItemBrokenState = DB.getValue(nodeItem, 'broken')
-						local nItemCheckPen = DB.getValue(nodeItem, 'checkpenalty')
-
-						if nItemBrokenState == 0 and string.lower(window.type.getValue()) == 'armor' then
-							DB.setValue(nodeItem, 'checkpenalty.backup', 'number', nItemCheckPen)
-						end
-					end
-				</script>
+				<script file="campaign/scripts/backupitemstat.lua" />
 			</number_columnh>
-			
+
 			<number_columnh name="bonus">
 				<delaykeyupdate />
-				<script>
-					function onValueChanged()
-						local nodeItem = window.getDatabaseNode()
-
-						local nItemBrokenState = DB.getValue(nodeItem, 'broken')
-						local nItemBonus = DB.getValue(nodeItem, 'bonus')
-
-						if nItemBrokenState == 0 and string.lower(window.type.getValue()) == 'armor' then
-							DB.setValue(nodeItem, 'bonus.backup', 'number', nItemBonus)
-						end
-						
-						window.substance.onValueChanged()
-					end
-				</script>
+				<script file="campaign/scripts/backupitemstat.lua" />
 				<displaysign />
 			</number_columnh>
 			<number_columnh name="cl">
