@@ -1,30 +1,19 @@
 --
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
-
-function onInit()
-	update();
-end
+function onInit() update(); end
 
 --	luacheck: globals VisDataCleared
-function VisDataCleared()
-	update();
-end
+function VisDataCleared() update(); end
 
 --	luacheck: globals InvisDataAdded
-function InvisDataAdded()
-	update();
-end
+function InvisDataAdded() update(); end
 
 --	luacheck: globals updateControl
 function updateControl(sControl, bReadOnly, bID)
-	if not self[sControl] then
-		return false;
-	end
+	if not self[sControl] then return false; end
 
-	if not bID then
-		return self[sControl].update(bReadOnly, true);
-	end
+	if not bID then return self[sControl].update(bReadOnly, true); end
 
 	return self[sControl].update(bReadOnly);
 end
@@ -35,24 +24,12 @@ function getItemType()
 	local sType = string.lower(type.getValue());
 	local sSubtype = string.lower(subtype.getValue());
 
-	if sType:match('weapon') then
-		bWeapon = true;
-	end
-	if sType:match('armor') then
-		bArmor = true;
-	end
-	if sType:match('wand') then
-		bWand = true;
-	end
-	if sType:match('staff') then
-		bStaff = true;
-	end
-	if sType:match('wondrous item') then
-		bWondrous = true;
-	end
-	if sType:match('shield') or sSubtype:match('shield') then
-		bShield = true;
-	end
+	if sType:match('weapon') then bWeapon = true; end
+	if sType:match('armor') then bArmor = true; end
+	if sType:match('wand') then bWand = true; end
+	if sType:match('staff') then bStaff = true; end
+	if sType:match('wondrous item') then bWondrous = true; end
+	if sType:match('shield') or sSubtype:match('shield') then bShield = true; end
 
 	return bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
 end
@@ -60,20 +37,20 @@ end
 function update()
 	local nodeRecord = getDatabaseNode();
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
-	local bID = LibraryData.getIDState("item", nodeRecord);
+	local bID = LibraryData.getIDState('item', nodeRecord);
 
 	local bWeapon, bArmor, _, bWand, bStaff, bWondrous = getItemType();
 
 	local bSection1 = false;
 	if Session.IsHost then
-		if updateControl("nonid_name", bReadOnly, true) then bSection1 = true; end;
+		if updateControl('nonid_name', bReadOnly, true) then bSection1 = true; end
 	else
-		updateControl("nonid_name", false);
+		updateControl('nonid_name', false);
 	end
 	if (Session.IsHost or not bID) then
-		if updateControl("nonidentified", bReadOnly, true) then bSection1 = true; end;
+		if updateControl('nonidentified', bReadOnly, true) then bSection1 = true; end
 	else
-		updateControl("nonidentified", false);
+		updateControl('nonidentified', false);
 	end
 
 	local bSection2 = false;
@@ -89,9 +66,13 @@ function update()
 	if updateControl('hitpoints', bReadOnly, bID) then bSection3a = true; end
 	if updateControl('itemdamage', bReadOnly, bID) then bSection3a = true; end
 	item_durability_label.setVisible(bSection3a); -- all-or-nothing hide/show of section
-	hardness.setVisible(bSection3a); hardness_label.setVisible(bSection3a);
-	hitpoints.setVisible(bSection3a); hitpoints_label.setVisible(bSection3a);
-	itemdamage.setVisible(bSection3a); itemdamage_label.setVisible(bSection3a); itemdamage.setReadOnly(false);
+	hardness.setVisible(bSection3a);
+	hardness_label.setVisible(bSection3a);
+	hitpoints.setVisible(bSection3a);
+	hitpoints_label.setVisible(bSection3a);
+	itemdamage.setVisible(bSection3a);
+	itemdamage_label.setVisible(bSection3a);
+	itemdamage.setReadOnly(false);
 	button_rebuildhhp.setVisible(bSection3a);
 
 	local bSection3b = false; -- Item Durability
@@ -99,9 +80,14 @@ function update()
 	if updateControl('substance', bReadOnly, bID) then bSection3b = true; end
 	if updateControl('thickness', bReadOnly, bID and not bArmor) then bSection3b = true; end
 	button_rebuildattributes.setVisible(bSection3b); -- all-or-nothing hide/show of section
-	if size then size.setVisible(bSection3b); size_label.setVisible(bSection3b) end
-	substance.setVisible(bSection3b); substance_label.setVisible(bSection3b);
-	thickness.setVisible(bSection3b and not bArmor); thickness_label.setVisible(bSection3b and not bArmor);
+	if size then
+		size.setVisible(bSection3b);
+		size_label.setVisible(bSection3b)
+	end
+	substance.setVisible(bSection3b);
+	substance_label.setVisible(bSection3b);
+	thickness.setVisible(bSection3b and not bArmor);
+	thickness_label.setVisible(bSection3b and not bArmor);
 
 	local bSection4 = false;
 	if updateControl('damage', bReadOnly, bID and bWeapon) then bSection4 = true; end
@@ -123,9 +109,12 @@ function update()
 	if updateControl('prerequisites', bReadOnly, bID) then bSection5 = true; end
 	local bCL = updateControl('cl', bReadOnly, bID);
 	if bCL then bSection5 = true; end
-	fortitudesave.setVisible(bCL); fortitudesave_label.setVisible(bCL);
-	reflexsave.setVisible(bCL); reflexsave_label.setVisible(bCL);
-	willsave.setVisible(bCL); willsave_label.setVisible(bCL);
+	fortitudesave.setVisible(bCL);
+	fortitudesave_label.setVisible(bCL);
+	reflexsave.setVisible(bCL);
+	reflexsave_label.setVisible(bCL);
+	willsave.setVisible(bCL);
+	willsave_label.setVisible(bCL);
 	item_saves_label.setVisible(bCL);
 
 	local bSection6 = bID;
@@ -140,16 +129,16 @@ function update()
 		gmonly_label.setVisible(false);
 		gmonly.setVisible(false);
 		if bOptionID and Session.IsHost then
-			if updateControl("gmonly", bReadOnly, true) then bSection7 = true; end
+			if updateControl('gmonly', bReadOnly, true) then bSection7 = true; end
 		elseif Session.IsHost then
-			updateControl("gmonly", bReadOnly, false);
+			updateControl('gmonly', bReadOnly, false);
 		end
 	end
 	--	End compatibility patch
 
 	--	This is compatibility for 'Enhanced Items' by Llisandur
 	if bPFRPGEILoaded then
-		if updateControl("charge", bReadOnly, bID and (bWand or bStaff)) then
+		if updateControl('charge', bReadOnly, bID and (bWand or bStaff)) then
 			bSection4 = true;
 			maxcharges.setReadOnly(bReadOnly);
 			charge.setReadOnly(false);
@@ -162,9 +151,9 @@ function update()
 			maxcharges_label.setVisible(false);
 		end
 
-		if updateControl("equipslot", bReadOnly, bID and bWondrous) then bSection4 = true; end
+		if updateControl('equipslot', bReadOnly, bID and bWondrous) then bSection4 = true; end
 	end
---	End compatibility patch
+	--	End compatibility patch
 
 	divider.setVisible(bSection1 and bSection2);
 	divider2.setVisible((bSection1 or bSection2) and bSection3);
@@ -174,6 +163,8 @@ function update()
 	divider4.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4) and bSection5);
 	divider5.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5) and bSection6);
 	if bPFRPGEILoaded and Session.IsHost then
-		divider6.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5 or bSection6) and bSection7);
+		divider6.setVisible(
+						(bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5 or bSection6) and bSection7
+		);
 	end
 end
