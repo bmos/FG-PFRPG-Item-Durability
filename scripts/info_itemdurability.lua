@@ -1,6 +1,7 @@
 --
 --	Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
+
 --	luacheck: globals aMaterials
 aMaterials = {
 	-- materials from Special Materials list
@@ -123,38 +124,6 @@ tSizes = {
 	['fine'] = 0.0625,
 }
 
----	This function searches sItemProps, sItemName, and tItemParser for any of the keys in aSubstances.
---	If it ever finds one, it stops searching and returns the key.
---	If none of the materials in tItemParser are a match, it returns an empty string.
---	@param nodeItem The item to be examined.
---	@return sSubstance A string containing the material the item is most likely constructed of.
-local function findSubstance(nodeItem)
-	local sSubstance = ''
-	local sItemName = string.lower(DB.getValue(nodeItem, 'name', ''))
-	local sItemProps = string.lower(DB.getValue(nodeItem, 'properties', ''))
-
-	for k, _ in pairs(aMaterials) do
-		if sItemProps:match(k) then
-			sSubstance = k
-			break
-		end
-		if sItemName:match(k) then
-			sSubstance = k
-			break
-		end
-	end
-	if sSubstance == '' then
-		for kk, vv in pairs(tItems) do
-			if sItemName:match(kk) then
-				sSubstance = vv
-				break
-			end
-		end
-	end
-
-	return sSubstance
-end
-
 ---	This function fills the size and substance fields, if empty.
 --	If the size field is empty and the item is held by a PC, its size is assumed to match the PC (otherwise medium).
 --	If the substance field is empty, findSubstance() is called.
@@ -162,13 +131,37 @@ end
 --	@see findSubstance(nodeItem)
 --	luacheck: globals fillAttributes
 function fillAttributes(nodeItem)
-	local sCharSize = string.lower(DB.getValue(nodeItem.getChild('...'), 'size', 'medium'))
-	local sItemSize = string.lower(DB.getValue(nodeItem, 'size', ''))
-	if sItemSize == '' then sItemSize = sCharSize end
+	local sItemSize = DB.getValue(nodeItem, 'size', ''):lower()
+	if sItemSize == '' then sItemSize = DB.getValue(nodeItem.getChild('...'), 'size', 'medium'):lower() end
 	DB.setValue(nodeItem, 'size', 'string', sItemSize)
 
-	local sItemSubstance = string.lower(DB.getValue(nodeItem, 'substance', ''))
-	if sItemSubstance == '' then DB.setValue(nodeItem, 'substance', 'string', findSubstance(nodeItem)) end
+	---	This function searches sItemProps, sItemName, and tItemParser for any of the keys in aSubstances.
+	--	If it ever finds one, it stops searching and returns the key.
+	--	If none of the materials in tItemParser are a match, it returns an empty string.
+	--	@param nodeItem The item to be examined.
+	--	@return sSubstance A string containing the material the item is most likely constructed of.
+	local function findSubstance()
+		local sSubstance = ''
+
+		local function setSubstance(string, searchterm, material)
+			if string:match(searchterm) then
+				sSubstance = material
+				return
+			end
+		end
+
+		for kk, vv in pairs(tItems) do
+			if setSubstance(DB.getValue(nodeItem, 'name', ''):lower(), kk, vv) then break; end
+		end
+		for k, _ in pairs(aMaterials) do
+			if setSubstance(DB.getValue(nodeItem, 'properties', ''):lower(), k, k) then break; end
+			if setSubstance(DB.getValue(nodeItem, 'name', ''):lower(), k, k) then break; end
+		end
+
+		return sSubstance
+	end
+
+	if DB.getValue(nodeItem, 'substance', '') == '' then DB.setValue(nodeItem, 'substance', 'string', findSubstance()) end
 
 	if DB.getValue(nodeItem, 'hardness', 0) == 0 and DB.getValue(nodeItem, 'hitpoints', 0) == 0 then
 		ItemDurabilityHHP.calculateHHP(nodeItem)

@@ -1,13 +1,6 @@
 --
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
-function onInit() update(); end
-
---	luacheck: globals VisDataCleared
-function VisDataCleared() update(); end
-
---	luacheck: globals InvisDataAdded
-function InvisDataAdded() update(); end
 
 --	luacheck: globals updateControl
 function updateControl(sControl, bReadOnly, bID)
@@ -18,26 +11,27 @@ function updateControl(sControl, bReadOnly, bID)
 	return self[sControl].update(bReadOnly);
 end
 
-function getItemType()
-	local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
-	--	luacheck: globals type
-	local sType = string.lower(type.getValue());
-	local sSubtype = string.lower(subtype.getValue());
-
-	if sType:match('weapon') then bWeapon = true; end
-	if sType:match('armor') then bArmor = true; end
-	if sType:match('wand') then bWand = true; end
-	if sType:match('staff') then bStaff = true; end
-	if sType:match('wondrous item') then bWondrous = true; end
-	if sType:match('shield') or sSubtype:match('shield') then bShield = true; end
-
-	return bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
-end
-
+-- luacheck: globals update
 function update()
 	local nodeRecord = getDatabaseNode();
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
 	local bID = LibraryData.getIDState('item', nodeRecord);
+
+	function getItemType()
+		local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
+		--	luacheck: globals type
+		local sType = string.lower(type.getValue());
+		local sSubtype = string.lower(subtype.getValue());
+
+		if sType:match('weapon') then bWeapon = true; end
+		if sType:match('armor') then bArmor = true; end
+		if sType:match('wand') then bWand = true; end
+		if sType:match('staff') then bStaff = true; end
+		if sType:match('wondrous item') then bWondrous = true; end
+		if sType:match('shield') or sSubtype:match('shield') then bShield = true; end
+
+		return bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
+	end
 
 	local bWeapon, bArmor, _, bWand, bStaff, bWondrous = getItemType();
 
@@ -168,3 +162,11 @@ function update()
 		);
 	end
 end
+
+--	luacheck: globals VisDataCleared
+function VisDataCleared() update(); end
+
+--	luacheck: globals InvisDataAdded
+function InvisDataAdded() update(); end
+
+function onInit() update(); end
