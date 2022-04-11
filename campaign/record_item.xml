@@ -95,35 +95,7 @@
 				<nohide />
 				<min>0</min>
 				<tooltip textres="item_tooltip_damage" />
-				<script>
-					function onInit()
-						onValueChanged()
-					end
-					function onDrop(x, y, draginfo)
-						if string.find(draginfo.getDescription(), '%[DAMAGE', 1) then
-							ItemDurabilityDamage.splitDamageTypes(window.getDatabaseNode(), draginfo.getDescription())
-						end
-					end
-					function onValueChanged()
-						local nItemHitpoints = window.hitpoints.getValue()
-						if nItemHitpoints and nItemHitpoints >= 1 then
-							local nPercentDmg = window.itemdamage.getValue() / nItemHitpoints * 100
-							if nPercentDmg >= 100 then
-								window.itemdamage.setColor(ColorManager.COLOR_HEALTH_CRIT_WOUNDS)
-								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 2)
-							elseif nPercentDmg >= 50 then
-								window.itemdamage.setColor(ColorManager.COLOR_HEALTH_HVY_WOUNDS)
-								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 1)
-							else
-								window.itemdamage.setColor(ColorManager.COLOR_FULL)
-								DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
-							end
-						else
-							window.itemdamage.setColor(ColorManager.COLOR_FULL)
-							DB.setValue(window.getDatabaseNode(), 'broken', 'number', 0)
-						end
-					end
-				</script>
+				<script file="campaign/scripts/itemdamage.lua" />
 			</number_columnh>
 			<label_fieldtop name="itemdamage_label">
 				<anchored to="itemdamage" />
