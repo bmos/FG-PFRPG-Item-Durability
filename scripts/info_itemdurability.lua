@@ -1,7 +1,6 @@
 --
 --	Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
-
 --	luacheck: globals aMaterials
 aMaterials = {
 	-- materials from Special Materials list
@@ -150,12 +149,10 @@ function fillAttributes(nodeItem)
 			end
 		end
 
-		for kk, vv in pairs(tItems) do
-			if setSubstance(DB.getValue(nodeItem, 'name', ''):lower(), kk, vv) then break; end
-		end
+		for kk, vv in pairs(tItems) do if setSubstance(DB.getValue(nodeItem, 'name', ''):lower(), kk, vv) then break end end
 		for k, _ in pairs(aMaterials) do
-			if setSubstance(DB.getValue(nodeItem, 'properties', ''):lower(), k, k) then break; end
-			if setSubstance(DB.getValue(nodeItem, 'name', ''):lower(), k, k) then break; end
+			if setSubstance(DB.getValue(nodeItem, 'properties', ''):lower(), k, k) then break end
+			if setSubstance(DB.getValue(nodeItem, 'name', ''):lower(), k, k) then break end
 		end
 
 		return sSubstance
@@ -163,7 +160,5 @@ function fillAttributes(nodeItem)
 
 	if DB.getValue(nodeItem, 'substance', '') == '' then DB.setValue(nodeItem, 'substance', 'string', findSubstance()) end
 
-	if DB.getValue(nodeItem, 'hardness', 0) == 0 and DB.getValue(nodeItem, 'hitpoints', 0) == 0 then
-		ItemDurabilityHHP.calculateHHP(nodeItem)
-	end
+	if DB.getValue(nodeItem, 'hardness', 0) == 0 and DB.getValue(nodeItem, 'hitpoints', 0) == 0 then ItemDurabilityHHP.calculateHHP(nodeItem) end
 end

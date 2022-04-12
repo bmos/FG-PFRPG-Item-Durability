@@ -1,7 +1,6 @@
 --
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
-
 --	luacheck: globals updateControl
 function updateControl(sControl, bReadOnly, bID)
 	if not self[sControl] then return false; end
@@ -11,27 +10,28 @@ function updateControl(sControl, bReadOnly, bID)
 	return self[sControl].update(bReadOnly);
 end
 
+-- luacheck: globals getItemType
+function getItemType()
+	local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
+	--	luacheck: globals type
+	local sType = string.lower(type.getValue());
+	local sSubtype = string.lower(subtype.getValue());
+
+	if sType:match('weapon') then bWeapon = true; end
+	if sType:match('armor') then bArmor = true; end
+	if sType:match('wand') then bWand = true; end
+	if sType:match('staff') then bStaff = true; end
+	if sType:match('wondrous item') then bWondrous = true; end
+	if sType:match('shield') or sSubtype:match('shield') then bShield = true; end
+
+	return bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
+end
+
 -- luacheck: globals update
 function update()
 	local nodeRecord = getDatabaseNode();
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
-	local bID = LibraryData.getIDState('item', nodeRecord);
-
-	function getItemType()
-		local bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
-		--	luacheck: globals type
-		local sType = string.lower(type.getValue());
-		local sSubtype = string.lower(subtype.getValue());
-
-		if sType:match('weapon') then bWeapon = true; end
-		if sType:match('armor') then bArmor = true; end
-		if sType:match('wand') then bWand = true; end
-		if sType:match('staff') then bStaff = true; end
-		if sType:match('wondrous item') then bWondrous = true; end
-		if sType:match('shield') or sSubtype:match('shield') then bShield = true; end
-
-		return bWeapon, bArmor, bShield, bWand, bStaff, bWondrous;
-	end
+	local bID, bOptionID = LibraryData.getIDState('item', nodeRecord);
 
 	local bWeapon, bArmor, _, bWand, bStaff, bWondrous = getItemType();
 
@@ -157,9 +157,7 @@ function update()
 	divider4.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4) and bSection5);
 	divider5.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5) and bSection6);
 	if bPFRPGEILoaded and Session.IsHost then
-		divider6.setVisible(
-						(bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5 or bSection6) and bSection7
-		);
+		divider6.setVisible((bSection1 or bSection2 or bSection3 or bSection3a or bSection3b or bSection4 or bSection5 or bSection6) and bSection7);
 	end
 end
 
