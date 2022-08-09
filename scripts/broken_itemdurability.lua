@@ -133,6 +133,8 @@ function handleBrokenItem(nodeItem)
 	if sItemName ~= '' then
 		local nBrokenState = DB.getValue(nodeItem, 'broken', 0);
 		local rActor = ActorManager.resolveActor(nodeItem.getChild('...'));
+		local messagedata = { text = '', sender = rActor.sName, font = "emotefont" }
+
 		if nBrokenState == 2 and not sItemName:find('%[DESTROYED%]') then
 			if OptionsManager.isOption('DESTROY_ITEM', 'gone') then
 				nodeItem.delete();
@@ -140,12 +142,16 @@ function handleBrokenItem(nodeItem)
 				DB.setValue(nodeItem, 'carried', 'number', 0);
 				DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''));
 			end
-			ChatManager.Message(string.format(Interface.getString('char_actions_weapon_destroyed'), sItemName), true, rActor);
+
+			messagedata.text = string.format(Interface.getString('char_actions_weapon_destroyed'), sItemName)
+			Comm.deliverChatMessage(messagedata)
 		elseif nBrokenState == 1 and not sItemName:find('%[BROKEN%]') then
 			makeBackup();
 			brokenPenalties(true);
 			DB.setValue(nodeItem, 'name', 'string', '[BROKEN] ' .. DB.getValue(nodeItem, 'name', ''));
-			ChatManager.Message(string.format(Interface.getString('char_actions_weapon_broken'), sItemName), true, rActor);
+
+			messagedata.text = string.format(Interface.getString('char_actions_weapon_broken'), sItemName)
+			Comm.deliverChatMessage(messagedata)
 		else
 			brokenPenalties(false);
 			removeBackup();
