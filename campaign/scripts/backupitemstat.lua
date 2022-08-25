@@ -4,6 +4,8 @@
 
 --	luacheck: globals onValueChanged getName
 function onValueChanged()
+	if super and super.onValueChanged then super.onValueChanged(); end
+
 	local nodeItem = window.getDatabaseNode()
 
 	local nItemBrokenState = DB.getValue(nodeItem, 'broken')

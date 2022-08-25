@@ -6,16 +6,6 @@
 	<windowclass name="item_main" merge="join">
 		<script file="campaign/scripts/item_main2.lua" />
 		<sheetdata>
-			<string_columnh name="type">
-				<nohide />
-				<delaykeyupdate />
-				<script>
-					function onValueChanged()
-						window.update();
-					end
-				</script>
-			</string_columnh>
-
 			<line_column name="divider3b" insertbefore="divider4" />
 
 			<label_column name="substance_label" insertbefore="divider4" >
@@ -135,13 +125,15 @@
 			<number_columnh name="cl">
 				<script>
 					function onInit()
+						if super and super.onInit then super.onInit(); end
 						onValueChanged()
 					end
 					function onValueChanged()
-						local nCL = getValue() or 0;
-						window.fortitudesave.setValue(math.floor(0.5 * nCL) + 2)
-						window.reflexsave.setValue(math.floor(0.5 * nCL) + 2)
-						window.willsave.setValue(math.floor(0.5 * nCL) + 2)
+						if super and super.onValueChanged then super.onValueChanged(); end
+						local nCL = getValue();
+						window.fortitudesave.onValueChanged(nCL)
+						window.reflexsave.onValueChanged(nCL)
+						window.willsave.onValueChanged(nCL)
 					end
 				</script>
 			</number_columnh>

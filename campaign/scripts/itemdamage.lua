@@ -9,27 +9,27 @@ function onDrop(_, _, draginfo)
 	end
 end
 
+local function setDamageLevel(color, damageLevel)
+	window.itemdamage.setColor(color)
+	DB.setValue(window.getDatabaseNode(), 'broken', 'number', damageLevel)
+end
+
 -- luacheck: globals onValueChanged
 function onValueChanged()
-
-	local function setDamageLevel(color, damageLevel)
-		window.itemdamage.setColor(color)
-		DB.setValue(window.getDatabaseNode(), 'broken', 'number', damageLevel)
-	end
+	if super and super.onValueChanged then super.onValueChanged(); end
 
 	local nItemHitpoints = window.hitpoints.getValue() or 0
 	if nItemHitpoints >= 1 then
 		local nPercentDmg = window.itemdamage.getValue() / nItemHitpoints * 100
 		if nPercentDmg >= 100 then
 			setDamageLevel(ColorManager.COLOR_HEALTH_CRIT_WOUNDS, 2)
+			return
 		elseif nPercentDmg >= 50 then
 			setDamageLevel(ColorManager.COLOR_HEALTH_HVY_WOUNDS, 1)
-		else
-			setDamageLevel(ColorManager.COLOR_FULL, 0)
+			return
 		end
-	else
-		setDamageLevel(ColorManager.COLOR_FULL, 0)
 	end
+	setDamageLevel(ColorManager.COLOR_FULL, 0)
 end
 
 function onInit() onValueChanged() end
