@@ -5,7 +5,7 @@
 --	luacheck: globals onValueChanged getValue getVisible update updateSaves updateSaveVisibility
 
 function updateSaveVisibility()
-	local bCL = ((getValue() or 0) > 0) and window.cl.getVisible();
+	local bCL = ((getValue() or 0) > 0);
 
 	window.fortitudesave.setVisible(bCL);
 	window.fortitudesave_label.setVisible(bCL);
