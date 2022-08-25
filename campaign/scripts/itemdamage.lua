@@ -1,6 +1,7 @@
 --
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
+
 -- luacheck: globals onDrop
 function onDrop(_, _, draginfo)
 	if string.find(draginfo.getDescription(), '%[DAMAGE', 1) then

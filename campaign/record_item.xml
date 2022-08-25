@@ -159,6 +159,7 @@
 				<tooltip textres="fortitude" />
 				<target>fortitude</target>
 				<readonly />
+				<script file="campaign/scripts/calculatesave.lua" />
 			</number_npc_save>
 			<label_fieldtop name="fortitudesave_label">
 				<anchored to="fortitudesave" />
@@ -172,6 +173,7 @@
 				<tooltip textres="reflex" />
 				<target>reflex</target>
 				<readonly />
+				<script file="campaign/scripts/calculatesave.lua" />
 			</number_npc_save>
 			<label_fieldtop name="reflexsave_label">
 				<anchored to="reflexsave" />
@@ -185,6 +187,7 @@
 				<tooltip textres="will" />
 				<target>will</target>
 				<readonly />
+				<script file="campaign/scripts/calculatesave.lua" />
 			</number_npc_save>
 			<label_fieldtop name="willsave_label">
 				<anchored to="willsave" />
