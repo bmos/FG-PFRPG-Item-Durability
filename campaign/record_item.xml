@@ -6,47 +6,15 @@
 	<windowclass name="item_main" merge="join">
 		<script file="campaign/scripts/item_main2.lua" />
 		<sheetdata>
-			<line_column name="divider3b" insertbefore="divider4" />
 
-			<label_column name="substance_label" insertbefore="divider4" >
-				<static textres="item_label_substance" />
-			</label_column>
-			<string_columnh name="substance" insertbefore="divider4" />
-			<buttoncontrol name="button_rebuildattributes">
-				<anchored to="substance" width="20" height="20">
-					<right anchor="left" offset="-8" />
-					<top anchor="top" offset="0" />
-				</anchored>
-				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
-				<tooltip textres="item_tooltip_attributes" />
-				<gmvisibleonly />
-				<script>
-					function onButtonPress()
-						ItemDurabilityInfo.fillAttributes(window.getDatabaseNode())
-					end
-				</script>
-			</buttoncontrol>
-			<label_column name="size_label" insertbefore="divider4" >
-				<static textres="item_label_size" />
-			</label_column>
-			<string_columnh name="size" insertbefore="divider4" />
-			<label_column name="thickness_label" insertbefore="divider4" >
-				<static textres="item_label_thickness" />
-			</label_column>
-			<number_columnh name="thickness" insertbefore="divider4" >
-				<hideonvalue>0</hideonvalue>
-				<min>0</min>
-			</number_columnh>
-
-			<line_column name="divider3a" insertbefore="divider3b" />
-
-			<label_column name="item_durability_label" insertbefore="divider3b" >
+			<!-- Hardness, Hitpoints, Damage -->
+			<label_column name="item_durability_label" insertbefore="weight_label">
 				<anchored>
 					<top offset="20" />
 				</anchored>
 				<static textres="item_label_itemdurability" />
 			</label_column>
-			<number_columnh name="hardness" insertbefore="divider3b" >
+			<number_columnh name="hardness" insertbefore="weight_label">
 				<anchored width="40" height="20">
 					<top parent="columnanchor" anchor="bottom" relation="relative" offset="20" />
 					<left offset="97" />
@@ -58,7 +26,8 @@
 				<anchored to="hardness" />
 				<static textres="item_label_hardness" />
 			</label_fieldtop>
-			<number_columnh name="hitpoints" insertbefore="divider3b" >
+
+			<number_columnh name="hitpoints" insertbefore="weight_label">
 				<anchored width="40" height="20">
 					<top parent="hardness" anchor="top" relation="relative" offset="0" />
 					<left parent="hardness" anchor="right" offset="10" />
@@ -75,7 +44,8 @@
 				<anchored to="hitpoints" />
 				<static textres="item_label_hitpoints" />
 			</label_fieldtop>
-			<number_columnh name="itemdamage" insertbefore="substance" >
+
+			<number_columnh name="itemdamage" insertbefore="weight_label">
 				<anchored width="40" height="20">
 					<top parent="hitpoints" anchor="top" relation="relative" offset="0" />
 					<left parent="hitpoints" anchor="right" offset="10" />
@@ -91,7 +61,8 @@
 				<anchored to="itemdamage" />
 				<static textres="item_label_damage" />
 			</label_fieldtop>
-			<buttoncontrol name="button_rebuildhhp">
+
+			<buttoncontrol name="button_rebuildhhp" insertbefore="weight_label">
 				<anchored to="itemdamage" width="20" height="20">
 					<left anchor="right" offset="8" />
 					<top anchor="top" offset="0" />
@@ -106,85 +77,124 @@
 				</script>
 			</buttoncontrol>
 
-			<number_columnh name="ac">
-				<delaykeyupdate />
-				<displaysign />
-				<script file="campaign/scripts/backupitemstat.lua" />
-			</number_columnh>
-			<number_columnh name="checkpenalty">
-				<delaykeyupdate />
-				<displaysign />
-				<script file="campaign/scripts/backupitemstat.lua" />
-			</number_columnh>
+			<!-- Substance, Size, Thickness -->
+			<label_column name="substance_label" insertbefore="weight_label">
+				<static textres="item_label_substance" />
+			</label_column>
+			<string_columnh name="substance" insertbefore="weight_label" />
 
-			<number_columnh name="bonus">
-				<delaykeyupdate />
-				<script file="campaign/scripts/backupitemstat.lua" />
-				<displaysign />
-			</number_columnh>
-			<number_columnh name="cl">
+			<buttoncontrol name="button_rebuildattributes">
+				<anchored to="substance" width="20" height="20">
+					<right anchor="left" offset="-8" />
+					<top anchor="top" offset="0" />
+				</anchored>
+				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<tooltip textres="item_tooltip_attributes" />
+				<gmvisibleonly />
 				<script>
-					function onInit()
-						if super and super.onInit then super.onInit(); end
-						onValueChanged()
-					end
-					function onValueChanged()
-						if super and super.onValueChanged then super.onValueChanged(); end
-						local nCL = getValue();
-						window.fortitudesave.onValueChanged(nCL)
-						window.reflexsave.onValueChanged(nCL)
-						window.willsave.onValueChanged(nCL)
+					function onButtonPress()
+						ItemDurabilityInfo.fillAttributes(window.getDatabaseNode())
 					end
 				</script>
+			</buttoncontrol>
+
+			<label_column name="size_label" insertbefore="weight_label">
+				<static textres="item_label_size" />
+			</label_column>
+			<string_columnh name="size" insertbefore="weight_label" />
+			<label_column name="thickness_label" insertbefore="weight_label">
+				<static textres="item_label_thickness" />
+			</label_column>
+
+			<number_columnh name="thickness" insertbefore="weight_label">
+				<hideonvalue>0</hideonvalue>
+				<min>0</min>
 			</number_columnh>
-			<label_column name="item_saves_label" insertbefore="divider5" >
+
+			<!-- CL and Saves -->
+			<label_column name="cl_label">
+				<anchored>
+					<top offset="20" /> 
+				</anchored>
+				<static textres="casterlevel" />
+			</label_column>
+			<number_columnh name="cl">
 				<anchored>
 					<top offset="20" />
 				</anchored>
-				<static textres="npc_label_saves" />
-			</label_column>
-			<number_npc_save name="fortitudesave" source="saves.fortitude" insertbefore="divider5" >
-				<anchored width="40" height="20">
-					<top parent="columnanchor" anchor="bottom" relation="relative" offset="20" />
-					<left offset="97" />
+				<script file="campaign/scripts/calculatesave.lua" />
+			</number_columnh>
+			<number_npc_save name="fortitudesave" source="saves.fortitude">
+				<anchored to="cl" width="40" height="20">
+					<top />
+					<left anchor="right" relation="relative" offset="10" />
 				</anchored>
 				<tooltip textres="fortitude" />
 				<target>fortitude</target>
 				<readonly />
-				<script file="campaign/scripts/calculatesave.lua" />
 			</number_npc_save>
 			<label_fieldtop name="fortitudesave_label">
 				<anchored to="fortitudesave" />
 				<static textres="fortitude" />
 			</label_fieldtop>
-			<number_npc_save name="reflexsave" source="saves.reflex" insertbefore="divider5" >
-				<anchored to="fortitudesave" width="40" height="20">
+			<number_npc_save name="reflexsave" source="saves.reflex">
+				<anchored to="cl" width="40" height="20">
 					<top />
 					<left anchor="right" relation="relative" offset="10" />
 				</anchored>
 				<tooltip textres="reflex" />
 				<target>reflex</target>
 				<readonly />
-				<script file="campaign/scripts/calculatesave.lua" />
 			</number_npc_save>
 			<label_fieldtop name="reflexsave_label">
 				<anchored to="reflexsave" />
 				<static textres="reflex" />
 			</label_fieldtop>
-			<number_npc_save name="willsave" source="saves.will" insertbefore="divider5" >
-				<anchored to="reflexsave" width="40" height="20">
+			<number_npc_save name="willsave" source="saves.will">
+				<anchored to="cl" width="40" height="20">
 					<top />
 					<left anchor="right" relation="relative" offset="10" />
 				</anchored>
 				<tooltip textres="will" />
 				<target>will</target>
 				<readonly />
-				<script file="campaign/scripts/calculatesave.lua" />
 			</number_npc_save>
 			<label_fieldtop name="willsave_label">
 				<anchored to="willsave" />
 				<static textres="will" />
 			</label_fieldtop>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="item_main_armor" merge="join">
+		<sheetdata>
+			<number_columnh name="bonus">
+				<delaykeyupdate />
+				<displaysign />
+				<script file="campaign/scripts/backupitemstat.lua" />
+			</number_columnh>
+
+			<number_columnh name="ac">
+				<delaykeyupdate />
+				<displaysign />
+				<script file="campaign/scripts/backupitemstat.lua" />
+			</number_columnh>
+			
+			<number_columnh name="checkpenalty">
+				<delaykeyupdate />
+				<displaysign />
+				<script file="campaign/scripts/backupitemstat.lua" />
+			</number_columnh>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="item_main_weapon" merge="join">
+		<sheetdata>
+			<number_columnh name="bonus">
+				<delaykeyupdate />
+				<displaysign />
+				<script file="campaign/scripts/backupitemstat.lua" />
+			</number_columnh>
 		</sheetdata>
 	</windowclass>
 </root>

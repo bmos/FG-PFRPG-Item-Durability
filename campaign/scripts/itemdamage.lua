@@ -2,22 +2,20 @@
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
--- luacheck: globals onDrop
+-- luacheck: globals onDrop onValueChanged setDamageLevel checkDamageLevel
+
 function onDrop(_, _, draginfo)
 	if string.find(draginfo.getDescription(), '%[DAMAGE', 1) then
 		ItemDurabilityDamage.splitDamageTypes(window.getDatabaseNode(), draginfo.getDescription())
 	end
 end
 
-local function setDamageLevel(color, damageLevel)
+function setDamageLevel(color, damageLevel)
 	window.itemdamage.setColor(color)
 	DB.setValue(window.getDatabaseNode(), 'broken', 'number', damageLevel)
 end
 
--- luacheck: globals onValueChanged
-function onValueChanged()
-	if super and super.onValueChanged then super.onValueChanged(); end
-
+function checkDamageLevel()
 	local nItemHitpoints = window.hitpoints.getValue() or 0
 	if nItemHitpoints >= 1 then
 		local nPercentDmg = window.itemdamage.getValue() / nItemHitpoints * 100
@@ -29,7 +27,14 @@ function onValueChanged()
 			return
 		end
 	end
+
 	setDamageLevel(ColorManager.COLOR_FULL, 0)
+end
+
+function onValueChanged()
+	if super and super.onValueChanged then super.onValueChanged(); end
+
+	checkDamageLevel()
 end
 
 function onInit() onValueChanged() end
