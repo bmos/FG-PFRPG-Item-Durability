@@ -14,10 +14,10 @@ function update()
 
 	self.updateControl("hardness", bReadOnly, bID);
 	self.updateControl("hitpoints", bReadOnly, bID);
-	self.updateControl("itemdamage", false, false);
+	self.updateControl("itemdamage", false, true);
 	self.updateControl("substance", bReadOnly, bID);
-	self.updateControl("size", bReadOnly, false);
-	self.updateControl("thickness", bReadOnly, false);
+	self.updateControl("size", bReadOnly, true);
+	self.updateControl("thickness", bReadOnly, true);
 
 	if sItemSubwindow == 'item_main_armor' then
 		thickness.setVisible(false);
