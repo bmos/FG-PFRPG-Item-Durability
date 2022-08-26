@@ -2,7 +2,7 @@
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
--- luacheck: globals onDrop onValueChanged setDamageLevel checkDamageLevel
+-- luacheck: globals onDrop onValueChanged setDamageLevel checkDamageLevel update
 
 function onDrop(_, _, draginfo)
 	if string.find(draginfo.getDescription(), '%[DAMAGE', 1) then
@@ -37,4 +37,8 @@ function onValueChanged()
 	checkDamageLevel()
 end
 
-function onInit() onValueChanged() end
+function onInit()
+	if super and super.onInit then super.onInit(); end
+
+	onValueChanged()
+end

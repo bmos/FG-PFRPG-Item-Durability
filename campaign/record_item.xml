@@ -14,9 +14,10 @@
 				</anchored>
 				<static textres="item_label_itemdurability" />
 			</label_column>
+
 			<number_columnh name="hardness" insertbefore="weight_label">
 				<anchored width="40" height="20">
-					<top parent="columnanchor" anchor="bottom" relation="relative" offset="20" />
+					<top offset="20" />
 					<left offset="97" />
 				</anchored>
 				<delaykeyupdate />
@@ -29,8 +30,8 @@
 
 			<number_columnh name="hitpoints" insertbefore="weight_label">
 				<anchored width="40" height="20">
-					<top parent="hardness" anchor="top" relation="relative" offset="0" />
-					<left parent="hardness" anchor="right" offset="10" />
+					<top parent="hardness" anchor="top" offset="0" />
+					<left parent="hardness" anchor="right" relation="relative" offset="10" />
 				</anchored>
 				<delaykeyupdate />
 				<min>0</min>
@@ -47,12 +48,11 @@
 
 			<number_columnh name="itemdamage" insertbefore="weight_label">
 				<anchored width="40" height="20">
-					<top parent="hitpoints" anchor="top" relation="relative" offset="0" />
-					<left parent="hitpoints" anchor="right" offset="10" />
+					<top parent="hardness" anchor="top" offset="0" />
+					<left parent="hardness" anchor="right" relation="relative" offset="10" />
 				</anchored>
 				<nodrop />
 				<delaykeyupdate />
-				<nohide />
 				<min>0</min>
 				<tooltip textres="item_tooltip_damage" />
 				<script file="campaign/scripts/itemdamage.lua" />
@@ -63,13 +63,12 @@
 			</label_fieldtop>
 
 			<buttoncontrol name="button_rebuildhhp" insertbefore="weight_label">
-				<anchored to="itemdamage" width="20" height="20">
-					<left anchor="right" offset="8" />
-					<top anchor="top" offset="0" />
+				<anchored width="20" height="20">
+					<top parent="itemdamage" anchor="top" />
+					<left parent="hardness" anchor="right" relation="relative" offset="10" />
 				</anchored>
 				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
 				<tooltip textres="item_tooltip_hhp" />
-				<gmvisibleonly />
 				<script>
 					function onButtonPress()
 						ItemDurabilityHHP.calculateHHP(window.getDatabaseNode())
@@ -90,7 +89,6 @@
 				</anchored>
 				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
 				<tooltip textres="item_tooltip_attributes" />
-				<gmvisibleonly />
 				<script>
 					function onButtonPress()
 						ItemDurabilityInfo.fillAttributes(window.getDatabaseNode())
