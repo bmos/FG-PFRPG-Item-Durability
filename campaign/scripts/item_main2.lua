@@ -17,7 +17,7 @@ function update()
 	self.updateControl("substance", bReadOnly, bID)
 	self.updateControl("size", bReadOnly, bID)
 	self.updateControl("thickness", bReadOnly, bID)
-	if sItemSubwindow ~= 'item_main_armor' then
+	if sItemSubwindow == 'item_main_armor' then
 		thickness.setVisible(false);
 		thickness_label.setVisible(false);
 	end
