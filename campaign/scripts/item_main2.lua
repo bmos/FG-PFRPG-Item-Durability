@@ -2,7 +2,19 @@
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
 
--- luacheck: globals update
+-- luacheck: globals update HHDVisibility
+
+function HHDVisibility()
+	local bHHD = (hardness.getValue() ~= 0) or (hitpoints.getValue() ~= 0) or (itemdamage.getValue() ~= 0);
+	item_durability_label.setVisible(bHHD);
+	hardness.setVisible(bHHD);
+	hardness_label.setVisible(bHHD);
+	hitpoints.setVisible(bHHD);
+	hitpoints_label.setVisible(bHHD);
+	itemdamage.setVisible(bHHD);
+	itemdamage_label.setVisible(bHHD);
+end
+
 function update()
 	if super and super.update then super.update(); end
 
@@ -24,11 +36,7 @@ function update()
 		thickness_label.setVisible(false);
 	end
 
-	local bHHD = (hardness.getValue() ~= 0) or (hitpoints.getValue() ~= 0) or (itemdamage.getValue() ~= 0);
-	item_durability_label.setVisible(bHHD);
-	hardness.setVisible(bHHD);
-	hitpoints.setVisible(bHHD);
-	itemdamage.setVisible(bHHD);
+	HHDVisibility();
 	button_rebuildhhp.setVisible(not bReadOnly);
 	button_rebuildattributes.setVisible(not bReadOnly);
 end

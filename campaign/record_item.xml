@@ -100,10 +100,10 @@
 				<static textres="item_label_size" />
 			</label_column>
 			<string_columnh name="size" insertbefore="weight_label" />
+
 			<label_column name="thickness_label" insertbefore="weight_label">
 				<static textres="item_label_thickness" />
 			</label_column>
-
 			<number_columnh name="thickness" insertbefore="weight_label">
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
@@ -122,6 +122,7 @@
 				</anchored>
 				<script file="campaign/scripts/calculatesave.lua" />
 			</number_columnh>
+
 			<number_npc_save name="fortitudesave" source="saves.fortitude">
 				<anchored to="cl" width="40" height="20">
 					<top />
@@ -135,6 +136,7 @@
 				<anchored to="fortitudesave" />
 				<static textres="fortitude" />
 			</label_fieldtop>
+
 			<number_npc_save name="reflexsave" source="saves.reflex">
 				<anchored to="cl" width="40" height="20">
 					<top />
@@ -148,6 +150,7 @@
 				<anchored to="reflexsave" />
 				<static textres="reflex" />
 			</label_fieldtop>
+
 			<number_npc_save name="willsave" source="saves.will">
 				<anchored to="cl" width="40" height="20">
 					<top />
