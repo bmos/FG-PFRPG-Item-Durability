@@ -14,18 +14,21 @@ function update()
 
 	self.updateControl("hardness", bReadOnly, bID);
 	self.updateControl("hitpoints", bReadOnly, bID);
-	self.updateControl("itemdamage", bReadOnly, bID);
+	self.updateControl("itemdamage", false, false);
 	self.updateControl("substance", bReadOnly, bID);
-	self.updateControl("size", bReadOnly, bID);
-	self.updateControl("thickness", bReadOnly, bID);
+	self.updateControl("size", bReadOnly, false);
+	self.updateControl("thickness", bReadOnly, false);
 
 	if sItemSubwindow == 'item_main_armor' then
 		thickness.setVisible(false);
 		thickness_label.setVisible(false);
 	end
 
-	bHHD = (hardness.getValue() ~= 0) or (hitpoints.getValue() ~= 0) or (itemdamage.getValue() ~= 0);
+	local bHHD = (hardness.getValue() ~= 0) or (hitpoints.getValue() ~= 0) or (itemdamage.getValue() ~= 0);
 	item_durability_label.setVisible(bHHD);
+	hardness.setVisible(bHHD);
+	hitpoints.setVisible(bHHD);
+	itemdamage.setVisible(bHHD);
 	button_rebuildhhp.setVisible(not bReadOnly);
 	button_rebuildattributes.setVisible(not bReadOnly);
 end
