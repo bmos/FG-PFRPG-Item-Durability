@@ -3,6 +3,14 @@
 <!-- Please see the LICENSE.md file included with this distribution for attribution and copyright information. -->
 
 <root>
+	<!-- Slightly increase item window minimum width to fit saves -->
+	<windowclass name="item" merge="join">
+		<sizelimits>
+			<minimum width="363" />
+		</sizelimits>
+	</windowclass>
+
+	<!-- Fields added to all items -->
 	<windowclass name="item_main" merge="join">
 		<script file="campaign/scripts/item_main2.lua" />
 		<sheetdata>
