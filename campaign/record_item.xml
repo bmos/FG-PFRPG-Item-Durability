@@ -36,7 +36,7 @@
 				<static textres="item_label_hardness" />
 			</label_fieldtop>
 
-			<number_columnh name="hitpoints" insertbefore="weight_label">
+			<number_column name="hitpoints" insertbefore="weight_label">
 				<anchored width="40" height="20">
 					<top parent="hardness" anchor="top" offset="0" />
 					<left parent="hardness" anchor="right" relation="relative" offset="10" />
@@ -48,13 +48,13 @@
 						window.itemdamage.onValueChanged()
 					end
 				</script>
-			</number_columnh>
+			</number_column>
 			<label_fieldtop name="hitpoints_label">
 				<anchored to="hitpoints" />
 				<static textres="item_label_hitpoints" />
 			</label_fieldtop>
 
-			<number_columnh name="itemdamage" insertbefore="weight_label">
+			<number_column name="itemdamage" insertbefore="weight_label">
 				<anchored width="40" height="20">
 					<top parent="hardness" anchor="top" offset="0" />
 					<left parent="hardness" anchor="right" relation="relative" offset="10" />
@@ -64,7 +64,7 @@
 				<min>0</min>
 				<tooltip textres="item_tooltip_damage" />
 				<script file="campaign/scripts/itemdamage.lua" />
-			</number_columnh>
+			</number_column>
 			<label_fieldtop name="itemdamage_label">
 				<anchored to="itemdamage" />
 				<static textres="item_label_damage" />
