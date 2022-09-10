@@ -1,7 +1,7 @@
 --
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
--- luacheck: globals handleBrokenItem
+-- luacheck: globals handleBrokenItem ItemManager.isArmor ItemManager.isShield ItemManager.isWeapon
 function handleBrokenItem(nodeItem)
 
 	---	This function checks if the damaged weapon's name matches any in the actions tab and, if so, adds their nodes to tDamagedWeapons.
@@ -24,11 +24,11 @@ function handleBrokenItem(nodeItem)
 
 	local function brokenPenalties(bIsBroken)
 
-		local function brokenWeapon(sItemSubtype)
+		local function brokenWeapon()
 			local tDamagedWeapons = handleWeaponNodeArgs()
 
 			if bIsBroken then
-				if not sItemSubtype:match('shield') then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0) - 2) end
+				if not ItemManager.isShield(nodeItem) then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0) - 2) end
 				DB.setValue(nodeItem, 'critical', 'string', 'x2')
 				for _, vNode in pairs(tDamagedWeapons) do
 					DB.setValue(vNode, 'name', 'string', '[BROKEN] ' .. DB.getValue(vNode, 'name', ''))
@@ -41,7 +41,7 @@ function handleBrokenItem(nodeItem)
 					end
 				end
 			else
-				if not sItemSubtype:match('shield') then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0)) end
+				if not ItemManager.isShield(nodeItem) then DB.setValue(nodeItem, 'bonus', 'number', DB.getValue(nodeItem, 'bonusbak', 0)) end
 				DB.setValue(nodeItem, 'critical', 'string', DB.getValue(nodeItem, 'criticalbak', 'x2'))
 				for _, vNode in pairs(tDamagedWeapons) do
 					local sItemName = DB.getValue(vNode, 'name', '')
@@ -81,9 +81,7 @@ function handleBrokenItem(nodeItem)
 		end
 
 		brokenItemCost()
-		local sItemType = string.lower(DB.getValue(nodeItem, 'type', ''))
-		local sItemSubtype = string.lower(DB.getValue(nodeItem, 'subtype', ''))
-		if sItemType:match('weapon') then brokenWeapon(sItemSubtype) end
+		if ItemManager.isWeapon(nodeItem) then brokenWeapon() end
 
 		local function brokenArmor()
 			for _, nodeName in ipairs({ 'bonus', 'ac', 'checkpenalty' }) do
@@ -97,9 +95,9 @@ function handleBrokenItem(nodeItem)
 			end
 		end
 
-		if sItemType:match('armor') then brokenArmor() end
-		if sItemSubtype:match('shield') and StringManager.contains(Extension.getExtensions(), 'FG-PFRPG-Advanced-Item-Actions') then
-			brokenWeapon(sItemSubtype)
+		if ItemManager.isArmor(nodeItem) then brokenArmor() end
+		if ItemManager.isShield(nodeItem) and StringManager.contains(Extension.getExtensions(), 'FG-PFRPG-Advanced-Item-Actions') then
+			brokenWeapon()
 		end
 	end
 
