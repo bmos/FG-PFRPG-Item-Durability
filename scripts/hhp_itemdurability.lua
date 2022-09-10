@@ -1,12 +1,7 @@
 --
 -- Please see the LICENSE.md file included with this distribution for attribution and copyright information.
 --
---	luacheck: globals calculateHHP miscHP miscHardness
-
-local function getTypes(nodeItem)
-	local sItemType = DB.getValue(nodeItem, 'type', ''):lower()
-	return sItemType:match('armor') ~= nil, sItemType:match('weapon') ~= nil
-end
+--	luacheck: globals calculateHHP miscHP miscHardness ItemManager.isArmor ItemManager.isWeapon
 
 local function getSubstanceStats(sItemSubstance)
 	if ItemDurabilityInfo and ItemDurabilityInfo.aMaterials and ItemDurabilityInfo.aMaterials[sItemSubstance] then
@@ -36,10 +31,9 @@ local function getItemHp(nodeItem, tSubstanceStats)
 	local nItemThickness = DB.getValue(nodeItem, 'thickness', 0)
 
 	local nItemHp
-	local bIsArmor, bIsWeapon = getTypes(nodeItem)
-	if bIsArmor then
+	if ItemManager.isArmor(nodeItem) then
 		nItemHp = (nArmorHpAc * (tSubstanceStats.nArmorHpMult or 1)) + (tSubstanceStats.nArmorHpBonus or 0)
-	elseif bIsWeapon then
+	elseif ItemManager.isWeapon(nodeItem) then
 		nItemHp = (nItemHpPerIn * nItemThickness * (tSubstanceStats.nWeaponHpMult or 1)) + (tSubstanceStats.nWeaponHpBonus or 0)
 	else
 		nItemHp = (nItemHpPerIn * nItemThickness)
@@ -65,7 +59,6 @@ function miscHardness(nodeItem) -- luacheck: ignore
 end
 
 function calculateHHP(nodeItem)
-
 	local tSubstanceStats = getSubstanceStats(DB.getValue(nodeItem, 'substance', ''):lower())
 
 	local nItemEnhancementBonus = DB.getValue(nodeItem, 'bonus', 0)
