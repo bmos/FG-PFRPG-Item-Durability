@@ -32,13 +32,13 @@ function checkDamageLevel()
 end
 
 function onValueChanged()
-	if super and super.onValueChanged then super.onValueChanged(); end
+	if super and super.onValueChanged then super.onValueChanged() end
 
 	checkDamageLevel()
 end
 
 function onInit()
-	if super and super.onInit then super.onInit(); end
+	if super and super.onInit then super.onInit() end
 
 	onValueChanged()
 end
