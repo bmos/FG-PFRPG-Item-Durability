@@ -8,7 +8,7 @@ function handleBrokenItem(nodeItem)
 	--	@param nodeItem A databasenode pointing to the damaged item.
 	--	@return tDamagedWeapons A table of databasenodes pointing to the damaged item on the actions tab.
 	local function handleWeaponNodeArgs()
-		local nodeChar = nodeItem.getChild('...')
+		local nodeChar = DB.getChild(nodeItem, '...')
 		local sItemName = DB.getValue(nodeItem, 'name', '')
 		local sUnbrokenItemName = sItemName:sub(10)
 
@@ -104,7 +104,7 @@ function handleBrokenItem(nodeItem)
 	local function removeBackup()
 		for _, nodeName in ipairs(
 						                   { 'cost', 'bonus', 'ac', 'checkpenalty', 'damage', 'critical', 'atkbonus', 'critatkrange', 'dmgbonus', 'critmult' }
-		                   ) do if DB.getValue(nodeItem, nodeName .. 'bak') then nodeItem.getChild(nodeName .. 'bak').delete() end end
+		                   ) do if DB.getValue(nodeItem, nodeName .. 'bak') then DB.deleteChild(nodeItem, nodeName .. 'bak') end end
 	end
 
 	local function makeBackup()
@@ -130,7 +130,7 @@ function handleBrokenItem(nodeItem)
 	local sItemName = DB.getValue(nodeItem, 'name', '');
 	if sItemName ~= '' then
 		local nBrokenState = DB.getValue(nodeItem, 'broken', 0);
-		local rActor = ActorManager.resolveActor(nodeItem.getChild('...'));
+		local rActor = ActorManager.resolveActor(DB.getChild(nodeItem, '...'));
 		local messagedata = { text = '', sender = rActor.sName, font = "emotefont" }
 
 		if nBrokenState == 2 and not sItemName:find('%[DESTROYED%]') then
@@ -158,7 +158,7 @@ function handleBrokenItem(nodeItem)
 	end
 end
 
-local function onBrokenChanged(node) handleBrokenItem(node.getParent()) end
+local function onBrokenChanged(node) handleBrokenItem(DB.getParent(node)) end
 
 function onInit()
 	if Session.IsHost then DB.addHandler(DB.getPath('charsheet.*.inventorylist.*.broken'), 'onUpdate', onBrokenChanged) end
