@@ -46,7 +46,7 @@ local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
 		end
 	end
 
-	return math.floor(nDmgTotal) or 0
+	return math.floor(nDmgTotal or 0)
 end
 
 ---	This function extracts damage amounts and types from sDamage.
