@@ -149,7 +149,9 @@ function fillAttributes(nodeItem)
 			end
 		end
 
-		for kk, vv in pairs(tItems) do if setSubstance(DB.getValue(nodeItem, 'name', ''):lower(), kk, vv) then break end end
+		for kk, vv in pairs(tItems) do
+			if setSubstance(DB.getValue(nodeItem, 'name', ''):lower(), kk, vv) then break end
+		end
 		for k, _ in pairs(aMaterials) do
 			if setSubstance(DB.getValue(nodeItem, 'properties', ''):lower(), k, k) then break end
 			if setSubstance(DB.getValue(nodeItem, 'name', ''):lower(), k, k) then break end

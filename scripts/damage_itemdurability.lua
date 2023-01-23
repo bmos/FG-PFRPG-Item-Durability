@@ -76,7 +76,9 @@ end
 ---	This function
 local function setItemDamage(nodeItem, nDmgTotal, nBypassThresh)
 	local nHardness = DB.getValue(nodeItem, 'hardness')
-	if nBypassThresh then if nBypassThresh > nHardness then nHardness = 0 end end
+	if nBypassThresh then
+		if nBypassThresh > nHardness then nHardness = 0 end
+	end
 
 	local nModifiedDamage = nDmgTotal - nHardness
 	if nModifiedDamage > 0 then

@@ -12,7 +12,6 @@ local function getSubstanceStats(sItemSubstance)
 end
 
 local function getItemHp(nodeItem, tSubstanceStats)
-
 	local function getArmorHpFromAc()
 		local nArmorHpAc = DB.getValue(nodeItem, 'ac', 0) * 5
 		local sItemSize = DB.getValue(nodeItem, 'size', ''):lower()

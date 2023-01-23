@@ -3,7 +3,6 @@
 --
 -- luacheck: globals handleBrokenItem ItemManager.isArmor ItemManager.isShield ItemManager.isWeapon
 function handleBrokenItem(nodeItem)
-
 	---	This function checks if the damaged weapon's name matches any in the actions tab and, if so, adds their nodes to tDamagedWeapons.
 	--	@param nodeItem A databasenode pointing to the damaged item.
 	--	@return tDamagedWeapons A table of databasenodes pointing to the damaged item on the actions tab.
@@ -23,7 +22,6 @@ function handleBrokenItem(nodeItem)
 	end
 
 	local function brokenPenalties(bIsBroken)
-
 		local function brokenWeapon()
 			local tDamagedWeapons = handleWeaponNodeArgs()
 
@@ -62,18 +60,21 @@ function handleBrokenItem(nodeItem)
 			local sItemCostBak = DB.getValue(nodeItem, 'costbak', ''):gsub(',+', ''):gsub('%s+', '')
 
 			if bIsBroken and sItemCostBak ~= '' then
-
 				---	This function rounds nNum to nDecimalPlaces (or to a whole number)
 				local function round(nNum, nDecimalPlaces)
-					if not nNum then return 0; end
+					if not nNum then return 0 end
 					local nMult = 10 ^ (nDecimalPlaces or 0)
 					return math.floor(nNum * nMult + 0.5) / nMult
 				end
 
 				local nItemCostSeperator = string.find(sItemCostBak, string.match(sItemCostBak, '[%D]'))
 				DB.setValue(
-								nodeItem, 'cost', 'string', round(tonumber(string.sub(sItemCostBak, 1, nItemCostSeperator - 1)) or 0 * .75, nil) .. ' ' ..
-												string.sub(sItemCostBak, nItemCostSeperator)
+					nodeItem,
+					'cost',
+					'string',
+					round(tonumber(string.sub(sItemCostBak, 1, nItemCostSeperator - 1)) or 0 * 0.75, nil)
+						.. ' '
+						.. string.sub(sItemCostBak, nItemCostSeperator)
 				)
 			elseif not bIsBroken then
 				DB.setValue(nodeItem, 'cost', 'string', DB.getValue(nodeItem, 'costbak', ''))
@@ -102,57 +103,57 @@ function handleBrokenItem(nodeItem)
 	end
 
 	local function removeBackup()
-		for _, nodeName in ipairs(
-						                   { 'cost', 'bonus', 'ac', 'checkpenalty', 'damage', 'critical', 'atkbonus', 'critatkrange', 'dmgbonus', 'critmult' }
-		                   ) do if DB.getValue(nodeItem, nodeName .. 'bak') then DB.deleteChild(nodeItem, nodeName .. 'bak') end end
+		for _, nodeName in ipairs({ 'cost', 'bonus', 'ac', 'checkpenalty', 'damage', 'critical', 'atkbonus', 'critatkrange', 'dmgbonus', 'critmult' }) do
+			if DB.getValue(nodeItem, nodeName .. 'bak') then DB.deleteChild(nodeItem, nodeName .. 'bak') end
+		end
 	end
 
 	local function makeBackup()
-		DB.setValue(nodeItem, 'costbak', 'string', DB.getValue(nodeItem, 'cost', ''));
+		DB.setValue(nodeItem, 'costbak', 'string', DB.getValue(nodeItem, 'cost', ''))
 
 		for _, nodeName in ipairs({ 'bonus', 'ac', 'checkpenalty' }) do
-			DB.setValue(nodeItem, nodeName .. 'bak', 'number', DB.getValue(nodeItem, nodeName, 0));
+			DB.setValue(nodeItem, nodeName .. 'bak', 'number', DB.getValue(nodeItem, nodeName, 0))
 		end
 
-		DB.setValue(nodeItem, 'damagebak', 'string', DB.getValue(nodeItem, 'damage', ''));
-		DB.setValue(nodeItem, 'criticalbak', 'string', DB.getValue(nodeItem, 'critical', 'x2'));
-		local tDamagedWeapons = handleWeaponNodeArgs();
+		DB.setValue(nodeItem, 'damagebak', 'string', DB.getValue(nodeItem, 'damage', ''))
+		DB.setValue(nodeItem, 'criticalbak', 'string', DB.getValue(nodeItem, 'critical', 'x2'))
+		local tDamagedWeapons = handleWeaponNodeArgs()
 		for _, vNode in pairs(tDamagedWeapons) do
-			DB.setValue(nodeItem, 'atkbonusbak', 'number', DB.getValue(vNode, 'bonus', 0));
-			DB.setValue(nodeItem, 'critatkrangebak', 'number', DB.getValue(vNode, 'critatkrange', 20));
+			DB.setValue(nodeItem, 'atkbonusbak', 'number', DB.getValue(vNode, 'bonus', 0))
+			DB.setValue(nodeItem, 'critatkrangebak', 'number', DB.getValue(vNode, 'critatkrange', 20))
 			for _, vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
-				DB.setValue(nodeItem, 'dmgbonusbak', 'number', DB.getValue(vvNode, 'bonus', 0));
-				DB.setValue(nodeItem, 'critmultbak', 'number', DB.getValue(vvNode, 'critmult', 2));
+				DB.setValue(nodeItem, 'dmgbonusbak', 'number', DB.getValue(vvNode, 'bonus', 0))
+				DB.setValue(nodeItem, 'critmultbak', 'number', DB.getValue(vvNode, 'critmult', 2))
 			end
 		end
 	end
 
-	local sItemName = DB.getValue(nodeItem, 'name', '');
+	local sItemName = DB.getValue(nodeItem, 'name', '')
 	if sItemName ~= '' then
-		local nBrokenState = DB.getValue(nodeItem, 'broken', 0);
-		local rActor = ActorManager.resolveActor(DB.getChild(nodeItem, '...'));
-		local messagedata = { text = '', sender = rActor.sName, font = "emotefont" }
+		local nBrokenState = DB.getValue(nodeItem, 'broken', 0)
+		local rActor = ActorManager.resolveActor(DB.getChild(nodeItem, '...'))
+		local messagedata = { text = '', sender = rActor.sName, font = 'emotefont' }
 
 		if nBrokenState == 2 and not sItemName:find('%[DESTROYED%]') then
 			if OptionsManager.isOption('DESTROY_ITEM', 'gone') then
-				DB.deleteNode(nodeItem);
+				DB.deleteNode(nodeItem)
 			elseif OptionsManager.isOption('DESTROY_ITEM', 'unequipped') then
-				DB.setValue(nodeItem, 'carried', 'number', 0);
-				DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''));
+				DB.setValue(nodeItem, 'carried', 'number', 0)
+				DB.setValue(nodeItem, 'name', 'string', '[DESTROYED] ' .. DB.getValue(nodeItem, 'name', ''))
 			end
 
 			messagedata.text = string.format(Interface.getString('char_actions_weapon_destroyed'), sItemName)
 			Comm.deliverChatMessage(messagedata)
 		elseif nBrokenState == 1 and not sItemName:find('%[BROKEN%]') then
-			makeBackup();
-			brokenPenalties(true);
-			DB.setValue(nodeItem, 'name', 'string', '[BROKEN] ' .. DB.getValue(nodeItem, 'name', ''));
+			makeBackup()
+			brokenPenalties(true)
+			DB.setValue(nodeItem, 'name', 'string', '[BROKEN] ' .. DB.getValue(nodeItem, 'name', ''))
 
 			messagedata.text = string.format(Interface.getString('char_actions_weapon_broken'), sItemName)
 			Comm.deliverChatMessage(messagedata)
 		else
-			brokenPenalties(false);
-			removeBackup();
+			brokenPenalties(false)
+			removeBackup()
 			if sItemName:find('%[BROKEN%]') then DB.setValue(nodeItem, 'name', 'string', sItemName:sub(10)) end
 		end
 	end
@@ -163,13 +164,11 @@ local function onBrokenChanged(node) handleBrokenItem(DB.getParent(node)) end
 function onInit()
 	if Session.IsHost then DB.addHandler(DB.getPath('charsheet.*.inventorylist.*.broken'), 'onUpdate', onBrokenChanged) end
 
-	OptionsManager.registerOption2(
-					'DESTROY_ITEM', false, 'option_header_game', 'opt_lab_item_destroyed', 'option_entry_cycler', {
-						labels = 'enc_opt_item_destroyed_gone',
-						values = 'gone',
-						baselabel = 'enc_opt_item_destroyed_unequipped',
-						baseval = 'unequipped',
-						default = 'unequipped',
-					}
-	)
+	OptionsManager.registerOption2('DESTROY_ITEM', false, 'option_header_game', 'opt_lab_item_destroyed', 'option_entry_cycler', {
+		labels = 'enc_opt_item_destroyed_gone',
+		values = 'gone',
+		baselabel = 'enc_opt_item_destroyed_unequipped',
+		baseval = 'unequipped',
+		default = 'unequipped',
+	})
 end
