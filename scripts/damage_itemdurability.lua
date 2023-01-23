@@ -6,6 +6,8 @@
 --	After processing, the total is rounded down.
 --	Finally, it is returned to the calling function.
 local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
+	if not nDmgTotal then return 0 end
+
 	local tNone = { 'nonlethal', 'critical', 'positive', 'negative' }
 
 	local tPFEnergyHalf = { 'fire', 'cold', 'acid', 'lightning', 'sonic' }
@@ -23,14 +25,14 @@ local function adjustDamageTypes(nDmgTotal, tTypes, bIsRanged)
 				break
 			end
 		end
-		if DataCommon.isPFRPG() and nDmgTotal then
+		if DataCommon.isPFRPG() then
 			for _, vv in pairs(tPFEnergyHalf) do
 				if vv == v then
 					nDmgTotal = nDmgTotal / 2
 					break
 				end
 			end
-		elseif nDmgTotal then
+		else
 			for _, vv in pairs(t35eEnergyHalf) do
 				if vv == v then
 					nDmgTotal = nDmgTotal / 2
