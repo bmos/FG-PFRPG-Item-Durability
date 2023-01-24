@@ -12,7 +12,7 @@ function handleBrokenItem(nodeItem)
 		local sUnbrokenItemName = sItemName:sub(10)
 
 		local tDamagedWeapons = {}
-		for _, nodeWeapon in pairs(DB.getChildren(nodeChar, 'weaponlist')) do
+		for _, nodeWeapon in ipairs(DB.getChildList(nodeChar, 'weaponlist')) do
 			if sItemName == DB.getValue(nodeWeapon, 'name', '') or sUnbrokenItemName == DB.getValue(nodeWeapon, 'name', '') then
 				table.insert(tDamagedWeapons, nodeWeapon)
 			end
@@ -33,7 +33,7 @@ function handleBrokenItem(nodeItem)
 					DB.setValue(vNode, 'bonus', 'number', DB.getValue(nodeItem, 'atkbonusbak', 0) - 2)
 					DB.setValue(vNode, 'critatkrange', 'number', 20)
 
-					for _, vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
+					for _, vvNode in ipairs(DB.getChildList(vNode, 'damagelist')) do
 						DB.setValue(vvNode, 'bonus', 'number', DB.getValue(nodeItem, 'dmgbonusbak', 0) - 2)
 						if DB.getValue(vvNode, 'critmult', 2) > 2 then DB.setValue(vvNode, 'critmult', 'number', 2) end
 					end
@@ -46,7 +46,7 @@ function handleBrokenItem(nodeItem)
 					if sItemName:find('%[BROKEN%]') then DB.setValue(vNode, 'name', 'string', sItemName:sub(10)) end
 					DB.setValue(vNode, 'bonus', 'number', DB.getValue(nodeItem, 'atkbonusbak', 0))
 					DB.setValue(vNode, 'critatkrange', 'number', DB.getValue(nodeItem, 'critatkrangebak', 20))
-					for _, vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
+					for _, vvNode in ipairs(DB.getChildList(vNode, 'damagelist')) do
 						DB.setValue(vvNode, 'bonus', 'number', DB.getValue(nodeItem, 'dmgbonusbak', 0))
 						if DB.getValue(vvNode, 'critmultbak', 2) > 2 then
 							DB.setValue(vvNode, 'critmult', 'number', DB.getValue(nodeItem, 'critmultbak', 2))
@@ -121,7 +121,7 @@ function handleBrokenItem(nodeItem)
 		for _, vNode in pairs(tDamagedWeapons) do
 			DB.setValue(nodeItem, 'atkbonusbak', 'number', DB.getValue(vNode, 'bonus', 0))
 			DB.setValue(nodeItem, 'critatkrangebak', 'number', DB.getValue(vNode, 'critatkrange', 20))
-			for _, vvNode in pairs(DB.getChildren(vNode, 'damagelist')) do
+			for _, vvNode in ipairs(DB.getChildList(vNode, 'damagelist')) do
 				DB.setValue(nodeItem, 'dmgbonusbak', 'number', DB.getValue(vvNode, 'bonus', 0))
 				DB.setValue(nodeItem, 'critmultbak', 'number', DB.getValue(vvNode, 'critmult', 2))
 			end
