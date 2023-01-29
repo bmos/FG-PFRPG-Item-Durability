@@ -131,7 +131,7 @@ tSizes = {
 --	luacheck: globals fillAttributes
 function fillAttributes(nodeItem)
 	local sItemSize = DB.getValue(nodeItem, 'size', ''):lower()
-	if sItemSize == '' then sItemSize = DB.getValue(DB.getChild(nodeItem, '...'), 'size', 'medium'):lower() end
+	if sItemSize == '' then sItemSize = DB.getValue(nodeItem, '...size', 'medium'):lower() end
 	DB.setValue(nodeItem, 'size', 'string', sItemSize)
 
 	---	This function searches sItemProps, sItemName, and tItemParser for any of the keys in aSubstances.
