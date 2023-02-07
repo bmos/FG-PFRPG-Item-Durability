@@ -25,4 +25,5 @@
 	<!-- chat messages -->
 	<string name="char_actions_weapon_broken">%s has broken.</string>
 	<string name="char_actions_weapon_destroyed">%s is destroyed.</string>
+	<string name="char_actions_fragile">%s is a fragile weapon, vulnerable to breaking on fumbled attacks.</string>
 </root>
