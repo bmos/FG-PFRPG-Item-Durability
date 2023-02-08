@@ -193,7 +193,6 @@ end
 
 --	if weapon is fragile, set as broken or destroyed and post a chat message.
 local function breakWeapon(nodeWeapon, sWeaponName, rSource)
-
 	if not nodeWeapon or not isFragile(nodeWeapon) then return end
 
 	local nBroken = DB.getValue(nodeWeapon, 'broken', 0)
@@ -202,11 +201,17 @@ local function breakWeapon(nodeWeapon, sWeaponName, rSource)
 
 	if nBroken == 0 then
 		DB.setValue(nodeWeapon, 'broken', 'number', 1)
-		if nItemHitpoints == 0 then	notifyNoHitpoints(rSource, sWeaponName); return end
+		if nItemHitpoints == 0 then
+			notifyNoHitpoints(rSource, sWeaponName)
+			return
+		end
 		DB.setValue(nodeWeapon, 'itemdamage', 'number', math.floor(nItemHitpoints / 2) + math.max(nItemDamage, 1))
 	elseif nBroken == 1 then
 		DB.setValue(nodeWeapon, 'broken', 'number', 2)
-		if nItemHitpoints == 0 then	notifyNoHitpoints(rSource, sWeaponName); return end
+		if nItemHitpoints == 0 then
+			notifyNoHitpoints(rSource, sWeaponName)
+			return
+		end
 		DB.setValue(nodeWeapon, 'itemdamage', 'number', nItemHitpoints + math.max(nItemDamage, 1))
 	end
 
@@ -240,26 +245,17 @@ end
 local onPostAttackResolve_old
 local function onPostAttackResolve_new(rSource, rTarget, rRoll, rMessage, ...)
 	onPostAttackResolve_old(rSource, rTarget, rRoll, rMessage, ...)
-	if rRoll.sResult == 'fumble' then
-		onFumbleBreakWeapon(rSource, rRoll.sDesc)
-	end
+	if rRoll.sResult == 'fumble' then onFumbleBreakWeapon(rSource, rRoll.sDesc) end
 end
 
 function onInit()
-	OptionsManager.registerOption2(
-		'DESTROY_ITEM',
-		false,
-		'option_header_game',
-		'opt_lab_item_destroyed',
-		'option_entry_cycler',
-		{
-			labels = 'enc_opt_item_destroyed_gone',
-			values = 'gone',
-			baselabel = 'enc_opt_item_destroyed_unequipped',
-			baseval = 'unequipped',
-			default = 'unequipped',
-		}
-	)
+	OptionsManager.registerOption2('DESTROY_ITEM', false, 'option_header_game', 'opt_lab_item_destroyed', 'option_entry_cycler', {
+		labels = 'enc_opt_item_destroyed_gone',
+		values = 'gone',
+		baselabel = 'enc_opt_item_destroyed_unequipped',
+		baseval = 'unequipped',
+		default = 'unequipped',
+	})
 
 	if Session.IsHost then DB.addHandler(DB.getPath('charsheet.*.inventorylist.*.broken'), 'onUpdate', onBrokenChanged) end
 
