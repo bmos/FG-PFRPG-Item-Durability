@@ -17,6 +17,8 @@ end
 
 function checkDamageLevel()
 	local nItemHitpoints = window.hitpoints.getValue() or 0
+	if nItemHitpoints == 0 then return end
+
 	if nItemHitpoints >= 1 then
 		local nPercentDmg = window.itemdamage.getValue() / nItemHitpoints * 100
 		if nPercentDmg >= 100 then

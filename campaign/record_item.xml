@@ -142,7 +142,7 @@
 			</number_npc_save>
 			<label_fieldtop name="fortitudesave_label">
 				<anchored to="fortitudesave" />
-				<static textres="fortitude" />
+				<static textres="fort" />
 			</label_fieldtop>
 
 			<number_npc_save name="reflexsave" source="saves.reflex">
