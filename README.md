@@ -12,7 +12,7 @@ If the item is a suit of armor or a shield, the bonus it grants to AC is halved,
 When attacking with a weapon, it will be checked for the "fragile" quality and broken automatically on a natural 1. If the weapon is already broken, the weapon will be destroyed instead.
 
 # Compatibility and Instructions
-This extension has been tested with [FantasyGrounds Unity](https://www.fantasygrounds.com/home/FantasyGroundsUnity.php) 4.3.3 (2023-02-21).
+This extension has been tested with [FantasyGrounds Unity](https://www.fantasygrounds.com/home/FantasyGroundsUnity.php) 4.3.3 (2023-02-23).
 
 # Features
 * Simplifies tracking hitpoints of weapons, armor, and equipment.
