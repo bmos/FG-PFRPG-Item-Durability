@@ -31,9 +31,9 @@ function update()
 
 	local sItemSubwindow = type_stats.getValue() -- 'item_main_armor', 'item_main_weapon', or ''
 
-	self.updateControl('substance', bReadOnly, bID)
-	self.updateControl('size', bReadOnly, true)
-	self.updateControl('thickness', bReadOnly, true)
+	WindowManager.callSafeControlUpdate(self, 'substance', bReadOnly, not bID)
+	WindowManager.callSafeControlUpdate(self, 'size', bReadOnly)
+	WindowManager.callSafeControlUpdate(self, 'thickness', bReadOnly)
 
 	if sItemSubwindow == 'item_main_armor' then
 		thickness.setVisible(false)
