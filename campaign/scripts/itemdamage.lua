@@ -24,15 +24,15 @@ function checkDamageLevel()
 	if nItemHitpoints >= 1 then
 		local nPercentDmg = window.itemdamage.getValue() / nItemHitpoints * 100
 		if nPercentDmg >= 100 then
-			setDamageLevel(ColorManager.COLOR_HEALTH_CRIT_WOUNDS, 2)
+			setDamageLevel(ColorManager.getUIColor("health_wounds_critical"), 2)
 			return
 		elseif nPercentDmg >= 50 then
-			setDamageLevel(ColorManager.COLOR_HEALTH_HVY_WOUNDS, 1)
+			setDamageLevel(ColorManager.getUIColor("health_wounds_heavy"), 1)
 			return
 		end
 	end
 
-	setDamageLevel(ColorManager.COLOR_FULL, 0)
+	setDamageLevel(ColorManager.getUIColor("usage_full"), 0)
 end
 
 function onValueChanged()
