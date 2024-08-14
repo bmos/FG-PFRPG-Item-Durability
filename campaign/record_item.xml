@@ -75,7 +75,7 @@
 					<top parent="itemdamage" anchor="top" />
 					<left parent="hardness" anchor="right" relation="relative" offset="10" />
 				</anchored>
-				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<icon normal="button_star" pressed="button_star_down" />
 				<tooltip textres="item_tooltip_hhp" />
 				<script>
 					function onButtonPress()
@@ -95,7 +95,7 @@
 					<right anchor="left" offset="-8" />
 					<top anchor="top" offset="0" />
 				</anchored>
-				<icon normal="button_ctnextround" pressed="button_ctnextround_down" />
+				<icon normal="button_star" pressed="button_star_down" />
 				<tooltip textres="item_tooltip_attributes" />
 				<script>
 					function onButtonPress()
