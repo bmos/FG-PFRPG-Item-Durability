@@ -118,7 +118,7 @@
 			</number_content_columnh>
 
 			<!-- CL and Saves -->
-			<label_content_column name="cl_label">
+			<!-- <label_content_column name="cl_label">
 				<anchored>
 					<top offset="20" /> 
 				</anchored>
@@ -131,7 +131,7 @@
 				<script file="campaign/scripts/calculatesave.lua" />
 			</number_content_columnh>
 
-			<number_npc_save name="fortitudesave" source="saves.fortitude">
+			<number_npc_save name="fortitudesave">
 				<anchored to="cl" width="40" height="20">
 					<top />
 					<left anchor="right" relation="relative" offset="10" />
@@ -139,13 +139,14 @@
 				<tooltip textres="fortitude" />
 				<target>fortitude</target>
 				<readonly />
+				<script file="campaign/scripts/item_save.lua" />
 			</number_npc_save>
 			<label_fieldtop name="fortitudesave_label">
 				<anchored to="fortitudesave" />
 				<static textres="fort" />
 			</label_fieldtop>
 
-			<number_npc_save name="reflexsave" source="saves.reflex">
+			<number_npc_save name="reflexsave">
 				<anchored to="cl" width="40" height="20">
 					<top />
 					<left anchor="right" relation="relative" offset="10" />
@@ -159,7 +160,7 @@
 				<static textres="reflex" />
 			</label_fieldtop>
 
-			<number_npc_save name="willsave" source="saves.will">
+			<number_npc_save name="willsave">
 				<anchored to="cl" width="40" height="20">
 					<top />
 					<left anchor="right" relation="relative" offset="10" />
@@ -171,7 +172,7 @@
 			<label_fieldtop name="willsave_label">
 				<anchored to="willsave" />
 				<static textres="will" />
-			</label_fieldtop>
+			</label_fieldtop> -->
 		</sheetdata>
 	</windowclass>
 
